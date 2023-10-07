@@ -21,3 +21,25 @@ body {
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+/*Boton global*/
+
+.boton-global {
+  background-color: #fbb6b6;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+}
+
+.boton-global:hover {
+  background-color: #ed8f8f;
+}
+
+/*Input global*/
+
+.input-global {
+  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #d1d5db;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
