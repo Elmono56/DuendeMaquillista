@@ -1,5 +1,6 @@
 import React from "react";
 import BasicCard from "@/app/components/BasicCard";
+import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const Login = () => {
@@ -16,6 +17,7 @@ const Login = () => {
           <button className="boton-global">Iniciar</button>
         </BasicCard>
       </div>
+      <Footer/>
     </div>
   );
 };
