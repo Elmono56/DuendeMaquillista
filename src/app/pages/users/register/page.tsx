@@ -8,7 +8,7 @@ const Register = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
+        <BasicCard size="large">
         <div className="text-2xl text-black font-bold lg:pb-[20px]">Crear Cuenta</div>
           <input
             type="text"
