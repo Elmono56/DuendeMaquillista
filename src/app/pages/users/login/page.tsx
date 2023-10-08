@@ -9,15 +9,23 @@ const Login = () => {
       <Navbar />
       <div className="flex justify-center items-center h-screen">
         <BasicCard>
+          <div className="text-2xl text-black font-bold lg:pb-[20px]">
+            Inicio de seisón
+          </div>
           <input
             type="text"
             className="input-global"
-            placeholder="Escribe tu nombre de usuario"
+            placeholder="Correo electrónico"
           />
-          <button className="boton-global">Iniciar</button>
+          <input
+            type="password"
+            className="input-global"
+            placeholder="Contraseña"
+          />
+          <button className="boton-global">Iniciar sesión</button>
         </BasicCard>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
