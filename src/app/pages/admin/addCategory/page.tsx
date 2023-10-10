@@ -3,7 +3,7 @@ import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
-const page = () => {
+const AddCategory = () => {
   return (
     <div>
       <Navbar />
@@ -22,4 +22,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AddCategory;
