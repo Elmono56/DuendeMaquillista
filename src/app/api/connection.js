@@ -14,7 +14,7 @@ app.get("/", (req,res) => {
 })
 
 //mongodb connection
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect("mongodb+srv://axelchavesr:tGfpOZBhreznmEQU@cluster0.jqlfuzl.mongodb.net/?retryWrites=true&w=majority")
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.log(err));
 app.listen(port, () => console.log(`Server running on port ${port}`));
