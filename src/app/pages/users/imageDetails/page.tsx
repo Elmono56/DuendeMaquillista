@@ -1,8 +1,6 @@
 import React from "react";
-import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
-import { Container } from "postcss";
 
 const ImageDetails = () => {
   return (
