@@ -3,30 +3,28 @@ import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
-const Login = () => {
+const AddSubcategory = () => {
   return (
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
         <BasicCard>
           <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Inicio de seisón
+            Categoría principal
           </div>
           <input
             type="text"
             className="input-global"
-            placeholder="Correo electrónico"
+            placeholder="Categoría principal"
           />
-          <input
-            type="password"
-            className="input-global"
-            placeholder="Contraseña"
-          />
-          <button className="boton-global">Iniciar sesión</button>
+          <input type="text" className="input-global" placeholder="Categoría" />
+
+          <button className="boton-global">Agregar</button>
         </BasicCard>
       </div>
       <Footer />
     </div>
   );
 };
-export default Login;
+
+export default AddSubcategory;

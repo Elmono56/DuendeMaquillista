@@ -9,17 +9,11 @@ const Register = () => {
       <Navbar />
       <div className="flex justify-center items-center h-screen">
         <BasicCard>
-        <div className="text-2xl text-black font-bold lg:pb-[20px]">Crear Cuenta</div>
-          <input
-            type="text"
-            className="input-global"
-            placeholder="Nombre"
-          />
-          <input
-            type="text"
-            className="input-global"
-            placeholder="Apellido"
-          />
+          <div className="text-2xl text-black font-bold lg:pb-[20px]">
+            Crear Cuenta
+          </div>
+          <input type="text" className="input-global" placeholder="Nombre" />
+          <input type="text" className="input-global" placeholder="Apellido" />
           <input
             type="text"
             className="input-global"
@@ -31,10 +25,9 @@ const Register = () => {
             placeholder="Contraseña"
           />
           <button className="boton-global">Iniciar</button>
-          <button className="boton-global">Volver</button>
         </BasicCard>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
