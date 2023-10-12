@@ -12,4 +12,11 @@ router.post("/user", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+router.get("/user",(req, res)=>{
+  const {id} = req.params;
+  userSchema.remove({__id:id})
+  .then((data) => res.json(data))
+  .catch((error) => res.json({ message: error }));
+});
+
 module.exports = router;

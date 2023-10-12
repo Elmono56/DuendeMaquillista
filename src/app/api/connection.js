@@ -1,9 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const portDefault = 4000;
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || portDefault;
 const userRoutes = require("./routes/users");
 //middlewares
 app.use(express.json());
