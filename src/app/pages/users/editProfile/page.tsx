@@ -9,11 +9,17 @@ const EditProfile = () => {
       <Navbar />
       <div className="flex justify-center items-center h-screen">
         <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Editar Perfil
-          </div>
-          <input type="text" className="input-global" placeholder="Nombre" />
-          <input type="text" className="input-global" placeholder="Apellido" />
+        <div className="text-2xl text-black font-bold lg:pb-[20px]">Editar Perfil</div>
+          <input
+            type="text"
+            className="input-global"
+            placeholder="Nombre"
+          />
+          <input
+            type="text"
+            className="input-global"
+            placeholder="Apellido"
+          />
           <input
             type="text"
             className="input-global"
@@ -30,9 +36,10 @@ const EditProfile = () => {
             placeholder="Contraseña nueva"
           />
           <button className="boton-global">Guardar cambios</button>
+          <button className="boton-global">Volver</button>
         </BasicCard>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
