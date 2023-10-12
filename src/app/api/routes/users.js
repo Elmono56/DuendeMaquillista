@@ -1,5 +1,6 @@
 const express = require("express");
 const userSchema = require("../models/user");
+const user = require("../models/user");
 
 const router = express.Router();
 
@@ -12,11 +13,18 @@ router.post("/user", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-router.get("/user",(req, res)=>{
+/*router.get("/user",(req, res)=>{
   const {id} = req.params;
   userSchema.remove({__id:id})
   .then((data) => res.json(data))
   .catch((error) => res.json({ message: error }));
-});
-
+});*/
+router.put("/user/:email", (req, res) => {
+  const {email} = req.params;
+  const {name, lastName, password, status} = req.body;
+  console.log(email);
+  userSchema.updateOne({email}, {name, lastName, password, status})
+  .then((data) => res.json(data))
+  .catch((error) => res.json({ message: error }));
+})
 module.exports = router;
