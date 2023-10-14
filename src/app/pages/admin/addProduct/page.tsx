@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const AddProduct = () => {
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  const handleProductUpload = () => {
+    console.log("Categoría:", category);
+    console.log("Subcategoría:", subCategory);
+    console.log("Título:", title);
+    console.log("Precio:", price);
+    console.log("Cantidad:", quantity);
+    console.log("¿Disponible?", isAvailable);
+  };
+
   return (
     <div>
       <Navbar />
@@ -24,40 +40,53 @@ const AddProduct = () => {
                 type="text"
                 className="input-global"
                 placeholder="Categoría"
-              />{" "}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
-                placeholder="Subcategoria"
-              />{" "}
+                placeholder="Subcategoría"
+                value={subCategory}
+                onChange={(e) => setSubCategory(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
-                placeholder="Titulo"
-              />{" "}
+                placeholder="Título"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
                 placeholder="Precio"
-              />{" "}
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
                 placeholder="Cantidad"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
               />
               <div>
                 <input
-                  type="checkbox" // Primer checkbox
+                  type="checkbox"
                   id="checkbox1"
                   className="input-global"
+                  checked={isAvailable}
+                  onChange={() => setIsAvailable(!isAvailable)}
                 />
                 <label htmlFor="checkbox1" className="text-black">
-                  {" "}
                   ¿El producto se encuentra disponible?
                 </label>
               </div>
               <div className="m-4">
-                <button className="boton-global ">Subir a la tienda</button>
+                <button className="boton-global" onClick={handleProductUpload}>
+                  Subir a la tienda
+                </button>
               </div>
             </div>
           </div>
@@ -68,4 +97,5 @@ const AddProduct = () => {
     </div>
   );
 };
+
 export default AddProduct;
