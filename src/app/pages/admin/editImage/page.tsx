@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const EditImage = () => {
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [title, setTitle] = useState("");
+  const [tag, setTag] = useState("");
+  const [description, setDescription] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
+
+  const handleSaveImage = () => {
+    console.log("Categoría:", category);
+    console.log("Subcategoría:", subCategory);
+    console.log("Título:", title);
+    console.log("Tag:", tag);
+    console.log("Descripción:", description);
+    console.log("¿Público?", isPublic);
+  };
+
   return (
     <div>
       <Navbar />
@@ -24,36 +40,53 @@ const EditImage = () => {
                 type="text"
                 className="input-global"
                 placeholder="Categoría"
-              />{" "}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
-                placeholder="Subcategoria"
-              />{" "}
+                placeholder="Subcategoría"
+                value={subCategory}
+                onChange={(e) => setSubCategory(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
-                placeholder="Titulo"
-              />{" "}
-              <input type="text" className="input-global" placeholder="Tag" />{" "}
+                placeholder="Título"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                type="text"
+                className="input-global"
+                placeholder="Tag"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+              />
               <input
                 type="text"
                 className="input-global"
                 placeholder="Descripción"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
               <div>
                 <input
-                  type="checkbox" // Primer checkbox
+                  type="checkbox"
                   id="checkbox1"
                   className="input-global"
+                  checked={isPublic}
+                  onChange={() => setIsPublic(!isPublic)}
                 />
                 <label htmlFor="checkbox1" className="text-black">
-                  {" "}
                   ¿Quieres subirlo público?
                 </label>
               </div>
               <div className="m-4">
-                <button className="boton-global ">Guardar</button>
+                <button className="boton-global" onClick={handleSaveImage}>
+                  Guardar
+                </button>
               </div>
             </div>
           </div>
@@ -64,4 +97,5 @@ const EditImage = () => {
     </div>
   );
 };
+
 export default EditImage;
