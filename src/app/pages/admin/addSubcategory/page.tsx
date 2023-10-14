@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const AddSubcategory = () => {
+  const [mainCategory, setMainCategory] = useState("");
+  const [subcategory, setSubcategory] = useState("");
+
+  const handleAddSubcategory = () => {
+    console.log("Categoría principal:", mainCategory);
+    console.log("Subcategoría:", subcategory);
+  };
+
   return (
     <div>
       <Navbar />
@@ -16,10 +24,20 @@ const AddSubcategory = () => {
             type="text"
             className="input-global"
             placeholder="Categoría principal"
+            value={mainCategory}
+            onChange={(e) => setMainCategory(e.target.value)}
           />
-          <input type="text" className="input-global" placeholder="Categoría" />
+          <input
+            type="text"
+            className="input-global"
+            placeholder="Categoría"
+            value={subcategory}
+            onChange={(e) => setSubcategory(e.target.value)}
+          />
 
-          <button className="boton-global">Agregar</button>
+          <button className="boton-global" onClick={handleAddSubcategory}>
+            Agregar
+          </button>
         </BasicCard>
       </div>
       <Footer />
