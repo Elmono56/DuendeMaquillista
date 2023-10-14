@@ -3,9 +3,9 @@ POST http://localhost:4000/api/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "javier ",
+    "name": "Sebas",
     "lastName": "Chaves",
-    "email": "axelchaves@estudiantec.cr",
+    "email": "sebasch@estudiantec.cr",
     "password": "1234",
     "status": "Active"}
 
@@ -14,9 +14,13 @@ PUT http://localhost:4000/api/user/axelchaves.r@estudiantec.cr HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "playo  ",
-    "lastName": "playazo",
-    "email": "axelchaves.r@estudiantec.cr",
+    "name": "Pablo",
+    "lastName": "Hidalgo",
+    "email": "pablohidalgo@estudiantec.cr",
     "password": "1234",
     "status": "Active"
 }
+
+
+###
+GET http://localhost:4000/
