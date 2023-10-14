@@ -1,40 +1,58 @@
-import React from "react";
+"use client";
+
+import { useState } from "react"; // Importa useState desde React
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const ProductDetails = () => {
+  const [cantidad, setCantidad] = useState(1);
+  const precioUnitario = 10;
+
+  const actualizarTotal = () => {
+    const total = cantidad * precioUnitario;
+
+    setCantidad(total);
+  };
+
   return (
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <div className="w-2/4 bg-white rounded-lg h-549 w-384">
-          <div className="text-2xl text-black font-bold text-center">
-            Nombre del producto
+        <div className="bg-white rounded-lg h-[18rem] w-[40.5rem] flex flex-row">
+          <div className="flex-1 flex justify-center items-center">
+            <div className="rounded-xl border border-black w-48 h-48"></div>
           </div>
-          <div className="flex items-center space-between">
-            <div className="w-80 h-80 rounded-xl border border-black m-4"></div>
-            <div className="text-center w-72">
-              <div className="text-base text-black mt-10">Descripción:</div>
-              <div className="text-base text-black mt-10">Disponibles: 2</div>
-              <div className="text-base text-black mt-10">Precio: 4.00</div>
-              <div className="mt-10">
-                <button className="boton-global ">Contactar</button>
-              </div>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="flex flex-col items-center space-y-8">
+              <label>Descripción:</label>
+              <label>Disponibles:</label>
+              <label>Precio: {precioUnitario}</label>
             </div>
-            <div className="text-center w-72">
-              <div className="text-base text-black mt-10">Cantidad:</div>
-              <input className="border border-black w-6  mt-10"></input>
-              <div className="text-base text-black mt-10">Total: 0.00</div>
-              <div className="mt-10">
-                <button className="boton-global ">Agregar al carrito</button>
+          </div>
+
+          <div className="flex-1 flex items-center justify-center">
+            <div className="flex flex-col items-center space-y-8">
+              <div className="flex flex-row items-center">
+                <label className="text-sm">Cantidad:</label>
+                <input
+                  type="number"
+                  id="cantidad"
+                  className="w-20 h-8 p-2 text-sm border rounded"
+                  value={cantidad}
+                  onChange={(e) => setCantidad(parseInt(e.target.value))}
+                />
               </div>
+              <label>Total: {cantidad * precioUnitario}</label>
+              <button className="boton-global" onClick={actualizarTotal}>
+                Agregar al carrito
+              </button>
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );
 };
+
 export default ProductDetails;
