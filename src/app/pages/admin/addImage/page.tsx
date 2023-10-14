@@ -2,14 +2,14 @@ import React from "react";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
-const AddProduct = () => {
+const AddImage = () => {
   return (
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
         <div className="w-2/4 bg-white rounded-lg h-549 w-384">
           <div className="text-2xl text-black font-bold text-center m-4">
-            Agregar a la tienda
+            Agregar a la galería
           </div>
           <div className="flex items-center space-between">
             <div>
@@ -35,15 +35,11 @@ const AddProduct = () => {
                 className="input-global"
                 placeholder="Titulo"
               />{" "}
+              <input type="text" className="input-global" placeholder="Tag" />{" "}
               <input
                 type="text"
                 className="input-global"
-                placeholder="Precio"
-              />{" "}
-              <input
-                type="text"
-                className="input-global"
-                placeholder="Cantidad"
+                placeholder="Descripción"
               />
               <div>
                 <input
@@ -53,11 +49,11 @@ const AddProduct = () => {
                 />
                 <label htmlFor="checkbox1" className="text-black">
                   {" "}
-                  ¿El producto se encuentra disponible?
+                  ¿Quieres subirlo público?
                 </label>
               </div>
               <div className="m-4">
-                <button className="boton-global ">Subir a la tienda</button>
+                <button className="boton-global ">Subir a la galería</button>
               </div>
             </div>
           </div>
@@ -68,4 +64,4 @@ const AddProduct = () => {
     </div>
   );
 };
-export default AddProduct;
+export default AddImage;
