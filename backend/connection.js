@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
+//const cors = require("cors");
 const portDefault = 4000;
 dotenv.config();
 const app = express();
@@ -9,14 +11,18 @@ const port = process.env.PORT || portDefault;
 //rutas
 const userRoutes = require("./routes/usersRoute");
 const productRoutes = require("./routes/productsRoute");
+const loginRoute = require("./routes/loginRoute");
 app.get("/", (req, res) => {
   res.send("API for Duende Maquillista");
 });
 
 //middlewares
+//app.use(cors());
+app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api", userRoutes);
 app.use("/api" ,productRoutes);
+app.use("/api", loginRoute);
 
 //mongodb connection
 mongoose.connect("mongodb+srv://axelchavesr:tGfpOZBhreznmEQU@cluster0.jqlfuzl.mongodb.net/?retryWrites=true&w=majority")

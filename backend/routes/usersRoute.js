@@ -3,7 +3,7 @@ const userSchema = require("../models/user");
 
 const router = express.Router();
 
-//create user
+//crear user
 router.post("/user", (req, res) => {
   const user = userSchema(req.body);
   user
@@ -12,12 +12,15 @@ router.post("/user", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-router.put("/user/:email", (req, res) => {
-  const {email} = req.params;
-  const {name, lastName, password, status} = req.body;
-  console.log(email);
-  userSchema.updateOne({email}, {name, lastName, password, status})
-  .then((data) => res.json(data))
-  .catch((error) => res.json({ message: error }));
-})
+// actualizar/recuperar contraseña
+router.put("/updateP", async (req, res)=>{
+  const {email,newPassword} = req.body;
+  const user = await userSchema.findOne({email});
+  if (user){
+    await userSchema.updateOne({ _id: user._id }, { $set: { password: newPassword } });
+    res.status(200).json({Mensaje: "Contraseña actualizada"})
+  }
+
+});
+
 module.exports = router;
