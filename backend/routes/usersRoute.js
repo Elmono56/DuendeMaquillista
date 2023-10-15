@@ -18,7 +18,7 @@ router.put("/updateP", async (req, res)=>{
   const user = await userSchema.findOne({email});
   if (user){
     await userSchema.updateOne({ _id: user._id }, { $set: { password: newPassword } });
-    res.status(200).json({Mensaje: "Contraseña actualizada"})
+    res.status(200).json({Mensaje: "Contraseña actualizada"});
   }
 
 });

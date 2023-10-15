@@ -12,5 +12,16 @@ router.post("/product", (req, res) => {
       .catch((error) => res.json({ message: error }));
   });
 
+// get todos productos
+router.get("/getProducts",async (req,res)=>{
+  const productos = await productSchema.find();
+  if (productos){
+    res.status(200).json(productos);
+  }
+  else{
+    res.status(404).json({Mensaje:"No hay productos registrados"})
+  }
+})
+
 
 module.exports = router;

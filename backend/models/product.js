@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+const { File } = require("buffer");
+const mongoose = require("mongoose");
+const { default: Image } = require("next/image");
 const productSchema = mongoose.Schema({
     name:{
         type: String,
@@ -17,8 +19,9 @@ const productSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: String, //cambiar por Image
-        required: true
+        type: String,
+        default: null,
+        required: false,
 
     },
     description:{
