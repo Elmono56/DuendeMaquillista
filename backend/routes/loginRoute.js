@@ -12,13 +12,18 @@ router.post("/login", async (req, res) => {
   if (user) {
     //contraseña no coinciden (deberíamos cifrarlas)
     if (password !== user.password) {
-      console.log(password);
-      console.log(user.password);
       res.status(401).json({ Mensaje: "La contraseña no es válida" });
     }
     //todo bien
     else{
-      res.status(200).json(user);
+      if (!user.isAdmin){
+        console.log({Mensaje:"Inició como Usuario"})
+        res.status(200).json(user);
+      }
+      else{
+        console.log({Mensaje:"Inició como Administrador"})
+        res.status(200).json(user);
+      }
     }
   }
   //no existe el usuario (email)
