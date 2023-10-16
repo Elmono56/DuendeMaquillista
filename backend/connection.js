@@ -1,18 +1,31 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
+//const cors = require("cors");
 const portDefault = 4000;
 dotenv.config();
 const app = express();
 const port = process.env.PORT || portDefault;
-const userRoutes = require("./routes/users");
-//middlewares
-app.use(express.json());
-app.use("/api", userRoutes);
-//routes
+
+//rutas
+const userRoutes = require("./routes/usersRoute");
+const productRoutes = require("./routes/productsRoute");
+const loginRoute = require("./routes/loginRoute");
+const galPhoto = require("./routes/galPhotoRoutes")
 app.get("/", (req, res) => {
   res.send("API for Duende Maquillista");
 });
+
+//middlewares
+//app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json());
+app.use("/api", userRoutes);
+app.use("/api" ,productRoutes);
+app.use("/api", loginRoute);
+app.use("/api", galPhoto);
+
 //mongodb connection
 mongoose.connect("mongodb+srv://axelchavesr:tGfpOZBhreznmEQU@cluster0.jqlfuzl.mongodb.net/?retryWrites=true&w=majority")
 .then(() => console.log("MongoDB connected"))

@@ -1,9 +1,7 @@
-const mongoose = require('mongoose');
+const { File } = require("buffer");
+const mongoose = require("mongoose");
+const { default: Image } = require("next/image");
 const productSchema = mongoose.Schema({
-    id:{
-        type: Number,
-        required: true
-    },
     name:{
         type: String,
         required: true
@@ -20,9 +18,10 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    imageURL: {
+    image: {
         type: String,
-        required: true
+        default: null,
+        required: false,
 
     },
     description:{
@@ -30,11 +29,13 @@ const productSchema = mongoose.Schema({
         required: true
     },
     category:{
-        type: Number,
+        type: String,
         required: true
     },
     subcategory:{
-        type: Number,
+        type: String,
         required: true
     }
 });
+
+module.exports = mongoose.model("Product", productSchema);
