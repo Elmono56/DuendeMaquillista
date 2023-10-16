@@ -2,8 +2,22 @@ import React from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
+const axios = require('axios');
+
+async function makeRequest() {
+
+    const config = {
+        method: 'get',
+        url: 'http://localhost:4000/'
+    }
+
+    let res = await axios(config)
+
+    console.log(res.data);
+}
 
 const Login = () => {
+  makeRequest();
   return (
     <div>
       <Navbar />
