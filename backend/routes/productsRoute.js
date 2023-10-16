@@ -4,7 +4,7 @@ const productSchema = require("../models/product");
 const router = express.Router();
 
 //add product
-router.post("/product", (req, res) => {
+router.post("/addProduct", (req, res) => {
     const product = productSchema(req.body);
     product
       .save()
@@ -12,7 +12,7 @@ router.post("/product", (req, res) => {
       .catch((error) => res.json({ message: error }));
   });
 
-// get todos productos
+// get all products
 router.get("/getProducts",async (req,res)=>{
   const productos = await productSchema.find();
   if (productos){
@@ -21,7 +21,6 @@ router.get("/getProducts",async (req,res)=>{
   else{
     res.status(404).json({Mensaje:"No hay productos registrados"})
   }
-})
-
+});
 
 module.exports = router;

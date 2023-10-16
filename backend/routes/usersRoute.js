@@ -3,8 +3,8 @@ const userSchema = require("../models/user");
 
 const router = express.Router();
 
-//crear user
-router.post("/user", (req, res) => {
+//create user
+router.post("/createUser", (req, res) => {
   const user = userSchema(req.body);
   user
     .save()
@@ -12,8 +12,8 @@ router.post("/user", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// actualizar/recuperar contraseña
-router.put("/updateP", async (req, res)=>{
+// update/recover password
+router.put("/updatePassword", async (req, res)=>{
   const {email,newPassword} = req.body;
   const user = await userSchema.findOne({email});
   if (user){

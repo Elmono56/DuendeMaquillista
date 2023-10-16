@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 const galleryPhotoSchema = mongoose.Schema({
-    id:
-{
-    type: Number,
-    required: true
-},
-url:{
+imageURL:{
     type: String,
     required: true
 },
@@ -13,8 +8,8 @@ description: {
     type: String,
     required: true
 },
-dateR:{
-    type: Date,
+dateUpload:{
+    type: Date, //'yy-mm-dd'
     required: true
 },
 status:
@@ -23,7 +18,7 @@ status:
     required: true
 },
 tags: {
-    type: String,
+    type: Array,
     required: true
 },
 categories: {

@@ -12,6 +12,7 @@ const port = process.env.PORT || portDefault;
 const userRoutes = require("./routes/usersRoute");
 const productRoutes = require("./routes/productsRoute");
 const loginRoute = require("./routes/loginRoute");
+const galPhoto = require("./routes/galPhotoRoutes")
 app.get("/", (req, res) => {
   res.send("API for Duende Maquillista");
 });
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api", userRoutes);
 app.use("/api" ,productRoutes);
 app.use("/api", loginRoute);
+app.use("/api", galPhoto);
 
 //mongodb connection
 mongoose.connect("mongodb+srv://axelchavesr:tGfpOZBhreznmEQU@cluster0.jqlfuzl.mongodb.net/?retryWrites=true&w=majority")
