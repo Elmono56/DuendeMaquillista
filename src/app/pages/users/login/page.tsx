@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
-const axios = require('axios');
+import axios from "axios";
 
 async function makeRequest() {
 
@@ -19,13 +19,24 @@ async function makeRequest() {
 }
 
 const Login = () => {
-  makeRequest();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleLogin = async () => {
+    try{
+      const res = await axios.post('http://localhost:4000/api/login', {
+        email,
+        password
+      });
+      if(res.data.type =="admin")
+      console.log("se logueó un admin")
+      else if(res.data.type =="user")
+      console.log(" se logueó un user")
+    }
+    catch(error: any){
+      console.log(error);
+      console.log("Este usuario no existe o la contraseña es incorrecta");
+    }
   };
 
   return (
@@ -50,7 +61,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="boton-global" onClick={handleLogin}>
+          <button className="boton-global" onClick={() => {handleLogin()}}>
             Iniciar sesión
           </button>
         </BasicCard>

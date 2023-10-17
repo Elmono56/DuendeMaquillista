@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-//const cors = require("cors");
+const cors = require("cors");
 const portDefault = 4000;
 dotenv.config();
 const app = express();
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 //middlewares
-//app.use(cors());
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api", userRoutes);
