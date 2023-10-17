@@ -4,7 +4,8 @@ const { default: Image } = require("next/image");
 const productSchema = mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     price:{
         type: Number,
@@ -32,7 +33,7 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    subcategory:{
+    brand:{
         type: String,
         required: true
     }
