@@ -7,7 +7,7 @@ const ImageDetails = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <div className="w-2/4 bg-white rounded-lg h-549 w-384">
+        <div className="bg-white rounded-lg h-549 w-384">
           <div className="text-2xl text-black font-bold text-center">
             Nombre del producto
           </div>
