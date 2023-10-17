@@ -1,12 +1,12 @@
+"use client";
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
-const axios = require('axios');
+const axios = require("axios");
 
 async function doGetRequest() {
-
-  let res = await axios.get('http://localhost:5000/');
+  let res = await axios.get("http://localhost:5000/");
 
   let data = res.data;
   console.log(data);

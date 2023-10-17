@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Order from "@/app/components/Order";
 import Footer from "@/app/components/Footer";
@@ -14,12 +16,12 @@ const Orders = () => {
             Pedidos
           </div>
           <div className="scrolling-auto">
-            < Order idOrder="11928663" />
-            < Order idOrder="11928664" />
-            < Order idOrder="11928665" />
-            < Order idOrder="11928666" />
-            < Order idOrder="11928667" />
-            < Order idOrder="11928668" />
+            <Order idOrder="11928663" />
+            <Order idOrder="11928664" />
+            <Order idOrder="11928665" />
+            <Order idOrder="11928666" />
+            <Order idOrder="11928667" />
+            <Order idOrder="11928668" />
           </div>
         </BasicCard>
       </div>

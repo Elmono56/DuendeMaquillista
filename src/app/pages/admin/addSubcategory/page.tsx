@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
