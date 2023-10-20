@@ -3,6 +3,7 @@ import Navbar from "@/app/components/Navbar";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
 import Cart from "@/app/components/Cart";
+import Link from "next/link";
 
 const ShoppingCart = () => {
   return (
@@ -38,9 +39,11 @@ const ShoppingCart = () => {
               <p className="bg-white text-black text-center pb-5">
                 Subtotal: 128
               </p>
-              <button className="bg-red-200 rounded-3xl text-black w-52">
-                Finalizar compra
-              </button>
+              <Link href="/pages/users/endPurchase">
+                <button className="bg-red-200 rounded-3xl text-black w-52">
+                  Finalizar compra
+                </button>
+              </Link>
             </div>
           </div>
         </BasicCard>
