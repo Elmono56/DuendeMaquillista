@@ -1,19 +1,10 @@
 "use client";
 
-import { useState } from "react"; // Importa useState desde React
+import Link from "next/link";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const ProductDetails = () => {
-  const [cantidad, setCantidad] = useState(1);
-  const precioUnitario = 10;
-
-  const actualizarTotal = () => {
-    const total = cantidad * precioUnitario;
-
-    setCantidad(total);
-  };
-
   return (
     <div>
       <Navbar />
@@ -26,7 +17,7 @@ const ProductDetails = () => {
             <div className="flex flex-col items-center space-y-8">
               <label>Descripción:</label>
               <label>Disponibles:</label>
-              <label>Precio: {precioUnitario}</label>
+              <label>Precio:</label>
             </div>
           </div>
 
@@ -38,14 +29,13 @@ const ProductDetails = () => {
                   type="number"
                   id="cantidad"
                   className="w-20 h-8 p-2 text-sm border rounded"
-                  value={cantidad}
-                  onChange={(e) => setCantidad(parseInt(e.target.value))}
+                  value="2"
                 />
               </div>
-              <label>Total: {cantidad * precioUnitario}</label>
-              <button className="boton-global" onClick={actualizarTotal}>
-                Agregar al carrito
-              </button>
+              <label>Total: </label>
+              <Link href="/pages/users/shoppingCart">
+                <button className="boton-global">Agregar al carrito</button>
+              </Link>
             </div>
           </div>
         </div>
