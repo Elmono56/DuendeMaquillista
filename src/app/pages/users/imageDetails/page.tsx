@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
@@ -20,7 +21,9 @@ const ImageDetails = () => {
               <div className="text-base text-black mt-10">Subcategoría:</div>
               <div className="text-base text-black mt-10">Descripción:</div>
               <div className="mt-10">
-                <button className="boton-global ">Contactar</button>
+                <Link href="/pages/users/productDetails">
+                  <button className="boton-global ">Contactar</button>
+                </Link>
               </div>
             </div>
           </div>
@@ -31,4 +34,5 @@ const ImageDetails = () => {
     </div>
   );
 };
+
 export default ImageDetails;
