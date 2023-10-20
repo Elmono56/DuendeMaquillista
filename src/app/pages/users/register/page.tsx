@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Navbar from "@/app/components/Navbar";
 import BasicCard from "@/app/components/BasicCard";
 import Footer from "@/app/components/Footer";
+import Link from "next/link";
 
 const Register = () => {
   const [nombre, setNombre] = useState("");
@@ -54,9 +55,11 @@ const Register = () => {
             value={contraseña}
             onChange={(e) => setContraseña(e.target.value)}
           />
-          <button className="boton-global" onClick={handleSubmit}>
-            Iniciar
-          </button>
+          <Link href="/">
+            <button className="boton-global" onClick={handleSubmit}>
+              Iniciar
+            </button>
+          </Link>
         </BasicCard>
       </div>
       <Footer />
