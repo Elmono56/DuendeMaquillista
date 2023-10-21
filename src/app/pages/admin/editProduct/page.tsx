@@ -41,7 +41,7 @@ const EditProduct = () => {
             <div className="flex flex-col space-y-4 w-2/3 items-center">
               <input
                 type="text"
-                className="bg-gray-input border border-black rounded-lg p-2 w-full focus:outline-none mb-4"
+                className="bg-gray-input border border-black rounded-lg p-2 w-full focus:outline-none "
                 placeholder="Categoría"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
