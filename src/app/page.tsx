@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 import axios from "axios";
 
@@ -39,9 +38,11 @@ const Login = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
+        <div
+          className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[24.6875rem] justify-between`}
+        >
           <div className="text-2xl text-black font-semibold lg:pb-[20px]">
-            Inicio de sesión
+            Ingresar
           </div>
           <input
             type="text"
@@ -57,6 +58,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div>¿Olvidó la contraseña?</div>
           <button
             className="boton-global"
             onClick={() => {
@@ -65,9 +67,8 @@ const Login = () => {
           >
             Iniciar sesión
           </button>
-        </BasicCard>
+        </div>
       </div>
-      <Footer />
     </div>
   );
 };
