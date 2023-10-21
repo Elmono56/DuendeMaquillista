@@ -1,43 +1,41 @@
 "use client";
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
+import Link from "next/link";
 
 const RecoverPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    setMessage("Solicitud de recuperación enviada con éxito.");
+  const handleRecoverPassword = async () => {
+    // se manda el correo con el password de recuperacion
   };
 
   return (
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Recuperar contraseña
+        <div
+          className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[24.6875rem]`}
+        >
+          <div className="text-2xl text-black lg:pb-[20px] my-8">
+            Recuperación de contraseña
           </div>
           <input
             type="text"
             className="input-global"
             placeholder="Correo electrónico"
             value={email}
-            onChange={handleEmailChange}
           />
-          <button className="boton-global" onClick={handleSubmit}>
-            Recuperar
-          </button>
+          <Link href="/" className="my-8">
+            <button className="boton-global" onClick={handleRecoverPassword}>
+              Recuperar contraseña
+            </button>
+          </Link>
           {message && <p>{message}</p>}
-        </BasicCard>
+        </div>
       </div>
-      <Footer />
     </div>
   );
 };

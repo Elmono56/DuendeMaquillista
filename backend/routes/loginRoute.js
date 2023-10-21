@@ -18,11 +18,11 @@ router.post("/login", async (req, res) => {
     else{
       if (!user.isAdmin){
         console.log({Mensaje:"Inició como Usuario"})
-        res.status(200).json(user);
+        res.status(200).json({type: "user", user});
       }
       else{
         console.log({Mensaje:"Inició como Administrador"})
-        res.status(200).json(user);
+        res.status(200).json({type: "admin", user});
       }
     }
   }

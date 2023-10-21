@@ -14,7 +14,7 @@ const Card = ({ productName, productPrice, productImage, quantity, editable = tr
     <div className="bg-white rounded-lg p-4 w-904px h-94px p-4 bg-white">
       <div className="flex flex-wrap space-x-4 justify-center items-center">
       {editable && ( // Renderizamos el botón "X" si es editable
-          <button type="button" className="btn btn-danger rounded-full bg-red-200 w-[40px] h-[50px] p-4 text-black text-center">
+          <button type="button" className="btn btn-danger rounded-full bg-red-200 w-[30px] h-[30px] text-black text-center">
             X
           </button>
         )}

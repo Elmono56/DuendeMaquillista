@@ -1,26 +1,66 @@
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className="bg-white text-black p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">Enchanted Cosmetics</div>
-        <div className="space-x-4">
-          <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-            Galería
-          </button>
-          <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-            Productos
-          </button>
-          <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-            Carrito
-          </button>
-          <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-            Registrarse
-          </button>
-          <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-            Iniciar sesión
-          </button>
+    <nav className="bg-pink-lighter">
+      <div className="container mx-auto flex justify-between items-center py-4 px-8">
+        <div className="flex items-center">
+          <Image
+            src="/img/makeup-woman-svgrepo-com.svg"
+            width={60}
+            height={60}
+            alt="Makeup Woman"
+          />
+          <span className="ml-4 font-semibold text-2xl">
+            Enchanted Cosmetics
+          </span>
+        </div>
+        <div className="flex items-center space-x-4">
+          <Image
+            src="/img/user-svgrepo-com.svg"
+            width={24}
+            height={24}
+            alt="User"
+          />
+          <button className="mr-4 hover:underline">Sign Up</button>
+          <button className="mr-4 hover:underline">Sign In</button>
+          <button className="mr-4 hover:underline">CARRITO</button>
+          <Image
+            src="/img/cart-shopping-svgrepo-com.svg"
+            width={24}
+            height={24}
+            alt="Cart"
+          />
+        </div>
+      </div>
+      <div className="border-t border-pink-400 bg-red-200">
+        <div className="container mx-auto flex justify-between items-center py-2">
+          <Link
+            href="/pages/admin/Catalog"
+            className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
+          >
+            <button>Galería</button>
+          </Link>
+          <Link
+            href="/pages/admin/Shop"
+            className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
+          >
+            <button>Tienda</button>
+          </Link>
+          <Link
+            href="/"
+            className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
+          >
+            <button>Agenda</button>
+          </Link>
+          <Link
+            href="/"
+            className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
+          >
+            <button>Sign Out</button>
+          </Link>
         </div>
       </div>
     </nav>
