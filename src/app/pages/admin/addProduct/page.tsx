@@ -30,7 +30,7 @@ const AddProduct = () => {
           </div>
           <div className="flex items-center space-between">
             <div>
-              <div className="w-72 h-64 rounded-xl border border-black m-4"></div>
+              <div className="w-72 h-64 rounded-md border border-black m-4"></div>
               <div className="flex justify-center items-center m-4">
                 <button className="boton-global">Seleccionar imagen</button>
               </div>
