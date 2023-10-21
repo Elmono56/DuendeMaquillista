@@ -16,9 +16,11 @@ const RecoverPassword = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Recuperar contraseña
+        <div
+          className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[24.6875rem]`}
+        >
+          <div className="text-2xl text-black lg:pb-[20px] my-8">
+            Recuperación de contraseña
           </div>
           <input
             type="text"
@@ -26,11 +28,13 @@ const RecoverPassword = () => {
             placeholder="Correo electrónico"
             value={email}
           />
-          <Link href="/">
-            <button className="boton-global" onClick={handleRecoverPassword}>Recuperar</button>
+          <Link href="/" className="my-8">
+            <button className="boton-global" onClick={handleRecoverPassword}>
+              Recuperar contraseña
+            </button>
           </Link>
           {message && <p>{message}</p>}
-        </BasicCard>
+        </div>
       </div>
     </div>
   );
