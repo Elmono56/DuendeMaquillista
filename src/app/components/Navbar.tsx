@@ -5,16 +5,16 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <nav>
-      <div className="flex flex-row justify-between bg-pink-lighter py-1">
+      <div className="flex flex-row justify-between bg-pink-lighter py-4 ml-4">
         <div>
           <Image
             src="/img/makeup-woman-svgrepo-com.svg"
-            width={48}
-            height={48}
+            width={60}
+            height={60}
             alt="Makeup Woman"
           />
         </div>
-        <div className="font-semibold text-2xl text-center">
+        <div className="font-semibold text-2xl flex items-center">
           Enchanted Cosmetics
         </div>
         <div>
@@ -25,17 +25,17 @@ const Navbar = () => {
               height={24}
               alt="User"
             />
-            <button className="mr-4 font-semibold">Sing Up</button>
-            <button className="mr-4 font-semibold">Sing In</button>
+            <button className="mr-4 ">Sing Up</button>
+            <button className="mr-4 ">Sing In</button>
           </div>
-          <div className="flex flex-row">
+          <div className="flex py-2">
+            <button className="mr-2">CARRITO</button>
             <Image
               src="/img/cart-shopping-svgrepo-com.svg"
               width={24}
               height={24}
               alt="Cart"
             />
-            <button className="font-semibold flex-grow">Carrito</button>
           </div>
         </div>
       </div>
