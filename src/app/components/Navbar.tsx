@@ -24,9 +24,21 @@ const Navbar = () => {
             height={24}
             alt="User"
           />
-          <button className="mr-4 hover:underline">Sign Up</button>
-          <button className="mr-4 hover:underline">Sign In</button>
-          <button className="mr-4 hover:underline">CARRITO</button>
+          <Link href="/pages/users/register" className="mr-4 hover:underline">
+            <button>Sign Up</button>
+          </Link>
+
+          <Link href="/" className="mr-4 hover:underline">
+            <button>Sign In</button>
+          </Link>
+
+          <Link
+            href="/pages/users/shoppingCart"
+            className="mr-4 hover:underline"
+          >
+            <button>CARRITO</button>
+          </Link>
+
           <Image
             src="/img/cart-shopping-svgrepo-com.svg"
             width={24}
@@ -38,7 +50,7 @@ const Navbar = () => {
       <div className="border-t border-pink-400 bg-red-200">
         <div className="container mx-auto flex justify-between items-center py-2">
           <Link
-            href="/pages/admin/Catalog"
+            href="/pages/users/gallery"
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
           >
             <button>Galería</button>
