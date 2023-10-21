@@ -1,6 +1,6 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import Image from "next/image"; // Import the Image component
 
 const Navbar = () => {
   return (
@@ -9,8 +9,8 @@ const Navbar = () => {
         <div>
           <Image
             src="/img/makeup-woman-svgrepo-com.svg"
-            width={48} // width based on w-12
-            height={48} // height based on h-12
+            width={48}
+            height={48}
             alt="Makeup Woman"
           />
         </div>
@@ -21,8 +21,8 @@ const Navbar = () => {
           <div className="flex flex-row">
             <Image
               src="/img/user-svgrepo-com.svg"
-              width={24} // width based on w-6
-              height={24} // height based on h-6
+              width={24}
+              height={24}
               alt="User"
             />
             <button className="mr-4 font-semibold">Sing Up</button>
@@ -31,8 +31,8 @@ const Navbar = () => {
           <div className="flex flex-row">
             <Image
               src="/img/cart-shopping-svgrepo-com.svg"
-              width={24} // width based on w-6
-              height={24} // height based on h-6
+              width={24}
+              height={24}
               alt="Cart"
             />
             <button className="font-semibold flex-grow">Carrito</button>
@@ -40,18 +40,33 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex w-full justify-between bg-red-200">
-        <button className="flex-grow border border-black text-center py-1">
-          Galería
-        </button>
-        <button className="flex-grow border border-black text-center py-1">
-          Tienda
-        </button>
-        <button className="flex-grow border border-black text-center py-1">
-          Agenda
-        </button>
-        <button className="flex-grow border border-black text-center py-1">
-          Sing out
-        </button>
+        <Link
+          href="/pages/admin/Catalog"
+          className="flex-grow border border-black text-center py-1"
+        >
+          <button>Galería</button>
+        </Link>
+
+        <Link
+          href="/pages/admin/Shop"
+          className="flex-grow border border-black text-center py-1"
+        >
+          <button>Tienda</button>
+        </Link>
+
+        <Link
+          href="/"
+          className="flex-grow border border-black text-center py-1"
+        >
+          <button>Agenda</button>
+        </Link>
+
+        <Link
+          href="/"
+          className="flex-grow border border-black text-center py-1"
+        >
+          <button>Sing out</button>
+        </Link>
       </div>
     </nav>
   );
