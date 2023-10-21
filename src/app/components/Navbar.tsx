@@ -1,38 +1,57 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image"; // Import the Image component
 
 const Navbar = () => {
   return (
-    <nav className="bg-white text-black p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">Enchanted Cosmetics</div>
-        <div className="space-x-4">
-          <Link href="/pages/admin/Catalog">
-            <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-              Galería
-            </button>
-          </Link>
-          <Link href="/pages/admin/Shop">
-            <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-              Productos
-            </button>
-          </Link>
-          <Link href="/pages/users/shoppingCart">
-            <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-              Carrito
-            </button>
-          </Link>
-          <Link href="/pages/users/register">
-            <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-              Registrarse
-            </button>
-          </Link>
-          <Link href="/">
-            <button className="bg-pink-200 hover:bg-red-300 text-black py-2 px-4 rounded-lg">
-              Iniciar sesión
-            </button>
-          </Link>
+    <nav>
+      <div className="flex flex-row justify-between bg-pink-lighter py-1">
+        <div>
+          <Image
+            src="/img/makeup-woman-svgrepo-com.svg"
+            width={48} // width based on w-12
+            height={48} // height based on h-12
+            alt="Makeup Woman"
+          />
         </div>
+        <div className="font-semibold text-2xl text-center">
+          Enchanted Cosmetics
+        </div>
+        <div>
+          <div className="flex flex-row">
+            <Image
+              src="/img/user-svgrepo-com.svg"
+              width={24} // width based on w-6
+              height={24} // height based on h-6
+              alt="User"
+            />
+            <button className="mr-4 font-semibold">Sing Up</button>
+            <button className="mr-4 font-semibold">Sing In</button>
+          </div>
+          <div className="flex flex-row">
+            <Image
+              src="/img/cart-shopping-svgrepo-com.svg"
+              width={24} // width based on w-6
+              height={24} // height based on h-6
+              alt="Cart"
+            />
+            <button className="font-semibold flex-grow">Carrito</button>
+          </div>
+        </div>
+      </div>
+      <div className="flex w-full justify-between bg-red-200">
+        <button className="flex-grow border border-black text-center py-1">
+          Galería
+        </button>
+        <button className="flex-grow border border-black text-center py-1">
+          Tienda
+        </button>
+        <button className="flex-grow border border-black text-center py-1">
+          Agenda
+        </button>
+        <button className="flex-grow border border-black text-center py-1">
+          Sing out
+        </button>
       </div>
     </nav>
   );
