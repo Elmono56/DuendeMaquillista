@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Navbar from "@/app/components/Navbar";
 import axios from "axios";
+import { useRouter } from 'next/navigation'
 
 async function makeRequest() {
   const config = {
@@ -19,18 +20,24 @@ async function makeRequest() {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleLogin = async () => {
     try {
       const res = await axios.post("http://localhost:4000/api/login", {
         email,
         password,
       });
-      if (res.data.type == "admin") console.log("se logueó un admin");
-      else if (res.data.type == "user") console.log(" se logueó un user");
+      if (res.data.type == "admin") {
+        console.log("se logueó un admin");
+        router.push("/pages/admin/Catalog");
+      }
+      else if (res.data.type == "user") {
+        console.log(" se logueó un user");
+        router.push("/pages/users/gallery");
+      }
     } catch (error: any) {
       console.log(error);
-      console.log("Este usuario no existe o la contraseña es incorrecta");
+      alert("Este usuario no existe o la contraseña es incorrecta. ");
     }
   };
 
