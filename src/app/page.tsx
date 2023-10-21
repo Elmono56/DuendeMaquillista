@@ -40,7 +40,7 @@ const Login = () => {
       <Navbar />
       <div className="flex justify-center items-center h-screen">
         <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
+          <div className="text-2xl text-black font-semibold lg:pb-[20px]">
             Inicio de sesión
           </div>
           <input

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const ProductDetails = () => {
@@ -40,7 +39,6 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

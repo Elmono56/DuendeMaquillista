@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const AddSubcategory = () => {
@@ -42,7 +41,6 @@ const AddSubcategory = () => {
           </button>
         </BasicCard>
       </div>
-      <Footer />
     </div>
   );
 };

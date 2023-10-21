@@ -2,7 +2,6 @@
 
 import React from "react";
 import Order from "@/app/components/Order";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 import BasicCard from "@/app/components/BasicCard";
 
@@ -25,7 +24,6 @@ const Orders = () => {
           </div>
         </BasicCard>
       </div>
-      <Footer />
     </>
   );
 };

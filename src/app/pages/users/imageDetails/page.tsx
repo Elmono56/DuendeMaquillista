@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const ImageDetails = () => {
@@ -29,8 +28,6 @@ const ImageDetails = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

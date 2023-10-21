@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 const axios = require("axios");
 
@@ -39,7 +38,6 @@ const AddCategory = () => {
           </button>
         </BasicCard>
       </div>
-      <Footer />
     </div>
   );
 };

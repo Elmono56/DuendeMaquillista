@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "@/app/components/Navbar";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Cart from "@/app/components/Cart";
 import Link from "next/link";
 
@@ -48,7 +47,6 @@ const ShoppingCart = () => {
           </div>
         </BasicCard>
       </div>
-      <Footer />
     </>
   );
 };

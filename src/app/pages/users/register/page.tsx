@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Navbar from "@/app/components/Navbar";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Link from "next/link";
 
 const Register = () => {
@@ -62,7 +61,6 @@ const Register = () => {
           </Link>
         </BasicCard>
       </div>
-      <Footer />
     </div>
   );
 };

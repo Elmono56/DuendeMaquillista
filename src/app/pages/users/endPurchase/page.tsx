@@ -2,7 +2,6 @@
 
 import React from "react";
 import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
 import Cart from "@/app/components/Cart";
 
 const EndPurchase = () => {
@@ -20,8 +19,7 @@ const EndPurchase = () => {
               editable={false}
             />
             <div className="pt-5">
-              <div className="w-72 h-64 rounded-xl border border-black m-4">
-              </div>
+              <div className="w-72 h-64 rounded-xl border border-black m-4"></div>
               <button className="boton-global">
                 Añadir comprobante de sinpe
               </button>
@@ -62,7 +60,6 @@ const EndPurchase = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

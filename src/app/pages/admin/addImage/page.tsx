@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const AddImage = () => {
@@ -94,8 +93,6 @@ const AddImage = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

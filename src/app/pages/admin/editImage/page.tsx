@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const EditImage = () => {
@@ -94,8 +93,6 @@ const EditImage = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
