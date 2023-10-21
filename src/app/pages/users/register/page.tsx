@@ -4,18 +4,47 @@ import React, { useState } from "react";
 import Navbar from "@/app/components/Navbar";
 import BasicCard from "@/app/components/BasicCard";
 import Link from "next/link";
+import axios from "axios";
+
+// async function makeRequest() {
+//   const config = {
+//     method: "get",
+//     url: "http://localhost:4000/",
+//   };
+
+//   let res = await axios(config);
+
+//   console.log(res.data);
+// }
 
 const Register = () => {
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
-    console.log("Nombre:", nombre);
-    console.log("Apellido:", apellido);
-    console.log("Correo:", correo);
-    console.log("Contraseña:", contraseña);
+    console.log("Nombre:", name);
+    console.log("Apellido:", lastName);
+    console.log("Correo:", email);
+    console.log("Contraseña:", password);
+
+    let data = {
+      name,
+      lastName,
+      email,
+      password,
+      status: true, 
+      isAdmin: false,
+    };
+
+    try {
+      const res = axios.post("http://localhost:4000/api/createUser", data);
+      console.log(res);
+      
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -30,29 +59,29 @@ const Register = () => {
             type="text"
             className="input-global"
             placeholder="Nombre"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <input
             type="text"
             className="input-global"
             placeholder="Apellido"
-            value={apellido}
-            onChange={(e) => setApellido(e.target.value)}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <input
             type="text"
             className="input-global"
             placeholder="Correo electrónico"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             className="input-global"
             placeholder="Contraseña"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Link href="/">
             <button className="boton-global" onClick={handleSubmit}>
