@@ -8,6 +8,10 @@ const RecoverPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  const handleRecoverPassword = async () => {
+    // se manda el correo con el password de recuperacion
+  };
+
   return (
     <div>
       <Navbar />
@@ -23,7 +27,7 @@ const RecoverPassword = () => {
             value={email}
           />
           <Link href="/">
-            <button className="boton-global">Recuperar</button>
+            <button className="boton-global" onClick={handleRecoverPassword}>Recuperar</button>
           </Link>
           {message && <p>{message}</p>}
         </BasicCard>
