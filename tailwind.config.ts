@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         'pink-lighter': '#ffef6',
+        'gray-input': '#d1d5db',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
