@@ -26,11 +26,11 @@ const AddImage = () => {
       <div className="flex justify-center items-center h-screen">
         <div className="w-2/4 bg-white rounded-lg h-549 w-384">
           <div className="text-2xl text-black font-bold text-center m-4">
-            Agregar a la galería
+            Agregar
           </div>
           <div className="flex items-center space-between">
             <div>
-              <div className="w-72 h-64 rounded-xl border border-black m-4"></div>
+              <div className="w-72 h-64 rounded-md border border-black m-4"></div>
               <div className="flex justify-center items-center m-4">
                 <button className="boton-global">Seleccionar imagen</button>
               </div>
