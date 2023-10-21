@@ -1,6 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
-import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 
 const AddSubcategory = () => {
@@ -16,21 +17,21 @@ const AddSubcategory = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Categoría principal
-          </div>
+        <div
+          className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[20.6875rem] justify-between`}
+        >
+          <div className="text-2xl text-black lg:pb-[20px]">Subcategoría</div>
           <input
             type="text"
             className="input-global"
-            placeholder="Categoría principal"
+            placeholder="Categoría base"
             value={mainCategory}
             onChange={(e) => setMainCategory(e.target.value)}
           />
           <input
             type="text"
             className="input-global"
-            placeholder="Categoría"
+            placeholder="Subcategoría"
             value={subcategory}
             onChange={(e) => setSubcategory(e.target.value)}
           />
@@ -38,9 +39,8 @@ const AddSubcategory = () => {
           <button className="boton-global" onClick={handleAddSubcategory}>
             Agregar
           </button>
-        </BasicCard>
+        </div>
       </div>
-      <Footer />
     </div>
   );
 };

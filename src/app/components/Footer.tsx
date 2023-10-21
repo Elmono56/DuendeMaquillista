@@ -3,19 +3,14 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-      <footer className="relative bg-white pt-20 pb-2 lg:pt-[30px]">
+      <footer className="relative bg-pink-lighter pt-20 pb-2 lg:pt-[30px]">
         <div className="container">
           <div className="text-black flex flex-wrap -mx-4">
             <div className="w-full px-4 lg:w-[55%] lg:pl-[55px]">
               <div className="w-full mb-10">
-                {/* <a href="/#" className="mb-6 inline-block max-w-[160px]">
-                  <img
-                    src=""
-                    alt="logo"
-                    className="max-w-full"
-                  />
-                </a> */}
-                <div className="text-2xl font-bold lg:pb-[40px]">Enchanted Cosmetics</div>
+                <div className="text-2xl font-bold lg:pb-[40px]">
+                  Enchanted Cosmetics
+                </div>
                 <p className="text-black mb-7 text-body">
                   Sed ut perspiciatis undmnis is iste natus error sit amet
                   voluptatem totam rem aperiam.
@@ -28,7 +23,10 @@ const Footer = () => {
                       viewBox="0 0 19 21"
                       className="fill-current"
                     >
-                    <path d="M2.5 0C1.11929 0 0 1.11929 0 2.5V4.5C0 10.299 4.70101 15 10.5 15H12.5C13.8807 15 15 13.8807 15 12.5V11.118C15 10.5499 14.679 10.0305 14.1708 9.77639L11.7549 8.56843C10.9384 8.1602 9.94971 8.56975 9.66105 9.43573L9.36328 10.329C9.25014 10.6684 8.90197 10.8705 8.55114 10.8003C6.35528 10.3612 4.63885 8.64472 4.19967 6.44886C4.12951 6.09803 4.33156 5.74986 4.67097 5.63672L5.7796 5.26718C6.52319 5.01932 6.95058 4.24075 6.76048 3.48035L6.17444 1.1362C6.0075 0.468446 5.40752 0 4.71922 0H2.5Z" fill="#000000"/>
+                      <path
+                        d="M2.5 0C1.11929 0 0 1.11929 0 2.5V4.5C0 10.299 4.70101 15 10.5 15H12.5C13.8807 15 15 13.8807 15 12.5V11.118C15 10.5499 14.679 10.0305 14.1708 9.77639L11.7549 8.56843C10.9384 8.1602 9.94971 8.56975 9.66105 9.43573L9.36328 10.329C9.25014 10.6684 8.90197 10.8705 8.55114 10.8003C6.35528 10.3612 4.63885 8.64472 4.19967 6.44886C4.12951 6.09803 4.33156 5.74986 4.67097 5.63672L5.7796 5.26718C6.52319 5.01932 6.95058 4.24075 6.76048 3.48035L6.17444 1.1362C6.0075 0.468446 5.40752 0 4.71922 0H2.5Z"
+                        fill="#000000"
+                      />
                     </svg>
                   </span>
                   <span>+012 (345) 678 99</span>
@@ -37,9 +35,8 @@ const Footer = () => {
             </div>
 
             <LinkGroup header="Contenido">
-              <NavLink link="/#" label="Tienda" />
-              <NavLink link="/#" label="Galeria" />
-              <NavLink link="/#" label="Nosotros" />
+              <NavLink link="/pages/admin/Shop" label="Tienda" />
+              <NavLink link="/pages/admin/Catalog" label="Galeria" />
             </LinkGroup>
 
             <div className="w-full px-4 sm:w-2/3 lg:w-3/12 lg:pl-[90px]">
@@ -97,8 +94,16 @@ const Footer = () => {
                       viewBox="0 0 15 15"
                       className="fill-current"
                     >
-                      <path d="M7.5 5C6.11929 5 5 6.11929 5 7.5C5 8.88071 6.11929 10 7.5 10C8.88071 10 10 8.88071 10 7.5C10 6.11929 8.88071 5 7.5 5Z" fill="#000000" />
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 0C2.01472 0 0 2.01472 0 4.5V10.5C0 12.9853 2.01472 15 4.5 15H10.5C12.9853 15 15 12.9853 15 10.5V4.5C15 2.01472 12.9853 0 10.5 0H4.5ZM4 7.5C4 5.567 5.567 4 7.5 4C9.433 4 11 5.567 11 7.5C11 9.433 9.433 11 7.5 11C5.567 11 4 9.433 4 7.5ZM11 4H12V3H11V4Z" fill="#000000" />
+                      <path
+                        d="M7.5 5C6.11929 5 5 6.11929 5 7.5C5 8.88071 6.11929 10 7.5 10C8.88071 10 10 8.88071 10 7.5C10 6.11929 8.88071 5 7.5 5Z"
+                        fill="#000000"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.5 0C2.01472 0 0 2.01472 0 4.5V10.5C0 12.9853 2.01472 15 4.5 15H10.5C12.9853 15 15 12.9853 15 10.5V4.5C15 2.01472 12.9853 0 10.5 0H4.5ZM4 7.5C4 5.567 5.567 4 7.5 4C9.433 4 11 5.567 11 7.5C11 9.433 9.433 11 7.5 11C5.567 11 4 9.433 4 7.5ZM11 4H12V3H11V4Z"
+                        fill="#000000"
+                      />
                     </svg>
                   </a>
                 </div>
@@ -123,19 +128,6 @@ const Footer = () => {
                 d="M-64 140.5C-64 62.904 -1.096 1.90666e-05 76.5 1.22829e-05C154.096 5.49924e-06 217 62.904 217 140.5C217 218.096 154.096 281 76.5 281C-1.09598 281 -64 218.096 -64 140.5Z"
                 fill="url(#paint0_linear_1179_5)"
               />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_1179_5"
-                  x1="76.5"
-                  y1={281}
-                  x2="76.5"
-                  y2="1.22829e-05"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#3056D3" stopOpacity="0.08" />
-                  <stop offset={1} stopColor="#C4C4C4" stopOpacity={0} />
-                </linearGradient>
-              </defs>
             </svg>
           </span>
           <span className="absolute top-10 right-10 z-[-1]">
@@ -150,19 +142,6 @@ const Footer = () => {
                 d="M37.5 -1.63918e-06C58.2107 -2.54447e-06 75 16.7893 75 37.5C75 58.2107 58.2107 75 37.5 75C16.7893 75 -7.33885e-07 58.2107 -1.63918e-06 37.5C-2.54447e-06 16.7893 16.7893 -7.33885e-07 37.5 -1.63918e-06Z"
                 fill="url(#paint0_linear_1179_4)"
               />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_1179_4"
-                  x1="-1.63917e-06"
-                  y1="37.5"
-                  x2={75}
-                  y2="37.5"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#13C296" stopOpacity="0.31" />
-                  <stop offset={1} stopColor="#C4C4C4" stopOpacity={0} />
-                </linearGradient>
-              </defs>
             </svg>
           </span>
         </div>
