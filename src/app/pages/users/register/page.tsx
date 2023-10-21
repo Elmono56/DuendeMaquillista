@@ -23,14 +23,13 @@ const Register = () => {
       lastName,
       email,
       password,
-      status: true, 
+      status: true,
       isAdmin: false,
     };
 
     try {
       const res = axios.post("http://localhost:4000/api/createUser", data);
       console.log(res);
-      
     } catch (error: any) {
       console.log(error);
     }
@@ -40,10 +39,10 @@ const Register = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Crear Cuenta
-          </div>
+        <div
+          className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[24.6875rem] justify-between`}
+        >
+          <div className="text-2xl text-black lg:pb-[20px]">Crear Cuenta</div>
           <input
             type="text"
             className="input-global"
@@ -74,10 +73,10 @@ const Register = () => {
           />
           <Link href="/">
             <button className="boton-global" onClick={handleSubmit}>
-              Iniciar
+              Crear
             </button>
           </Link>
-        </BasicCard>
+        </div>
       </div>
     </div>
   );
