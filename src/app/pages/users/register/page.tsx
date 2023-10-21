@@ -6,17 +6,6 @@ import BasicCard from "@/app/components/BasicCard";
 import Link from "next/link";
 import axios from "axios";
 
-// async function makeRequest() {
-//   const config = {
-//     method: "get",
-//     url: "http://localhost:4000/",
-//   };
-
-//   let res = await axios(config);
-
-//   console.log(res.data);
-// }
-
 const Register = () => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
