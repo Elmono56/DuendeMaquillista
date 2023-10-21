@@ -23,4 +23,17 @@ router.put("/updatePassword", async (req, res)=>{
 
 });
 
+//"delete" user
+router.put("/deleteProfile", async (req,res)=>{
+  const {email} = req.body;
+  const user = await userSchema.findOne({email});
+  if (user){
+    await userSchema.updateOne({ _id: user._id }, { $set: { status: "Eliminado"  } });
+    res.status(200).json({Mensaje: "Perfil Eliminado"});
+  }
+  else{
+    res.status(404).json({Mensaje:"Usuario no encontrado"})
+  }
+})
+
 module.exports = router;
