@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 body {
-  background-color: #ffeef6; /* Establecer el color de fondo */
+  background-color: #ffeef6;
   color: rgb(var(--foreground-rgb));
-  font-family: "Prata", serif; /* Establecer la fuente como 'Prata' */
 }
 
 :root {
@@ -27,7 +26,7 @@ body {
 .boton-global {
   background-color: #fbb6b6;
   padding: 0.5rem 1rem;
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
 }
 
 .boton-global:hover {
@@ -39,7 +38,8 @@ body {
 .input-global {
   background-color: rgba(0, 0, 0, 0.5);
   background-color: #d1d5db;
-  border-radius: 1rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
 }
