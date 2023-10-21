@@ -23,10 +23,10 @@ const EditProfile = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Editar Perfil
-          </div>
+        <div
+          className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[29.6875rem] justify-between`}
+        >
+          <div className="text-2xl text-black lg:pb-[20px]">Editar Perfil</div>
           <input
             type="text"
             className="input-global"
@@ -65,7 +65,7 @@ const EditProfile = () => {
           <button className="boton-global" onClick={handleSaveChanges}>
             Guardar cambios
           </button>
-        </BasicCard>
+        </div>
       </div>
     </div>
   );
