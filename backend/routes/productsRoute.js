@@ -61,5 +61,29 @@ router.put("/setProductVisible", async (req, res)=>{
   }
 });
 
+//update quantity
+router.put("/updateQuantity", async (req, res)=>{
+  const {name, flag} = req.body;
+  const product = await productSchema.findOne({name});
+  if (product){
+    var quantity = product.cantStock;
+    if (flag){
+      quantity = quantity + 1;
+    }
+    else{
+      quantity = quantity - 1;
+      if (quantity==(-1)){
+        return res.status(400).json({Mensaje: "No hay más unidades disponibles"});
+      };
+    };
+    await productSchema.updateOne({ _id: product._id }, { $set: {cantStock: quantity}});
+    res.status(200).json({Mensaje: "Visibilidad del Producto Actualizada", "Cantidad actual" : quantity});
+  }
+  else{
+    res.status(404).json({Mensaje: "No se encontró el producto"});
+  }
+});
+
+
 
 module.exports = router;
