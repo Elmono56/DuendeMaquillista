@@ -73,7 +73,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://linktr.ee/duenderfs"
+                    href="https://www.tiktok.com/@duende.rfs"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-dark hover:bg-blue-200 sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
