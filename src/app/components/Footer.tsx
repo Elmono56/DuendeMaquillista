@@ -12,8 +12,9 @@ const Footer = () => {
                   Enchanted Cosmetics
                 </div>
                 <p className="text-black mb-7 text-body">
-                  Sed ut perspiciatis undmnis is iste natus error sit amet
-                  voluptatem totam rem aperiam.
+                  Productos exclusivos, skincare, ropa, accesorios, etc.. 
+                  100% ORIGINALES
+
                 </p>
                 <p className="flex items-center text-sm font-medium text-dark">
                   <span className="mr-3 text-primary">
@@ -85,7 +86,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://www.instagram.com/duenderfs/"
+                    href="https://www.instagram.com/latiendadeduende/"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-dark hover:bg-blue-200 sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
