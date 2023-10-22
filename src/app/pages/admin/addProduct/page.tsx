@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Navbar from "@/app/components/Navbar";
+import axios from "axios";
 
 const AddProduct = () => {
   const [category, setCategory] = useState("");
@@ -11,6 +12,7 @@ const AddProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File>();
+
   const handleProductUpload = () => {
     console.log("Categoría:", category);
     console.log("Subcategoría:", subCategory);
@@ -18,6 +20,21 @@ const AddProduct = () => {
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
+    
+    try {
+      const res = axios.post("http://localhost:5000/api/addProduct", {
+        category,
+        subCategory,
+        title,
+        price,
+        quantity,
+        isAvailable,
+        selectedImage,
+      });
+      console.log(res);
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (

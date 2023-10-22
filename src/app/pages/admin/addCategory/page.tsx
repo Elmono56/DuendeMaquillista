@@ -5,10 +5,10 @@ import Navbar from "@/app/components/Navbar";
 import axios from "axios";
 
 // async function doGetRequest() {
-//   let res = await axios.get("http://localhost:5000/");
+//   let res = await axios.get("http://localhost:4000/");
 
 //   let data = res.data;
-//   console.log(data);
+//   console.log("Prueba> ", data);
 // }
 // doGetRequest();
 
@@ -20,6 +20,16 @@ const AddCategory = () => {
   const handleAddCategory = () => {
     console.log("Categoría:", category);
     console.log("Descripción:", description);
+    try {
+      const res = axios.post("http://localhost:4000/api/createCategory", {
+        category,
+        description,
+      });
+      console.log(res);
+      console.log("Categoría agregada");
+    } catch (error: any) {
+      console.log(error);
+    }
   }
 
   return (
