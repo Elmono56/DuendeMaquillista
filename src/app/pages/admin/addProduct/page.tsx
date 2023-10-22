@@ -19,15 +19,6 @@ const AddProduct = () => {
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
   };
-  const addImg = () => {
-    if (!selectedImage) return;
-    const box = document.getElementById("prevImg");
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(selectedImage);
-    console.log("entré");
-
-    box?.appendChild(img);
-  }
 
   return (
     <div className="bg-pink-lighter min-h-screen">
