@@ -11,7 +11,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<File>();
+  const [selectedImage, setSelectedImage] = useState<File>();
 
   const handleProductUpload = () => {
     console.log("Categoría:", category);
@@ -20,7 +20,7 @@ const AddProduct = () => {
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
-    
+
     try {
       const res = axios.post("http://localhost:5000/api/addProduct", {
         category,
@@ -47,26 +47,28 @@ const AddProduct = () => {
           </div>
           <div className="flex items-start space-x-8">
             <div>
-              <div id="prevImg" className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center">
-                {
-                  selectedImage && (
-                    <img
-                    src={URL.createObjectURL(selectedImage)}
-                    />
-                  )
-                }
-
+              <div
+                id="prevImg"
+                className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center"
+              >
+                {selectedImage && (
+                  <img src={URL.createObjectURL(selectedImage)} />
+                )}
 
                 <span className="text-gray-400">Previsualización</span>
               </div>
               <div className="flex justify-center items-center">
-                <input type="file" className="boton-global" accept="image/*" onChange={(e) => {
-                  if (e.target.files && e.target.files.length > 0) {
-                    setSelectedImage(e.target.files[0]);
-                  }
-                  //addImg();
-
-                }} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="text-xs py-1 px-2" // Estilos con Tailwind
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      setSelectedImage(e.target.files[0]);
+                    }
+                    //addImg();
+                  }}
+                />
               </div>
             </div>
 
