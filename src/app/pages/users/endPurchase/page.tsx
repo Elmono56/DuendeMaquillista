@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import React from "react";
 import Navbar from "@/app/components/Navbar";
@@ -9,7 +9,7 @@ const EndPurchase = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <div className="h-3/5 bg-white rounded-lg overflow-y-scroll">
+        <div className="h-5/6 bg-white rounded-lg">
           <div className="flex flex-row">
             <div className="overflow-y-scroll">
               <Cart
@@ -25,12 +25,7 @@ const EndPurchase = () => {
               <button className="boton-global">
                 Añadir comprobante de sinpe
               </button>
-              <p className="flex justify-center mt-4 p-4 text-black self-center">
-                Envio:
-              </p>
-              <p className="flex justify-center mt-4 p-4 text-black self-center">
-                Subtotal:
-              </p>
+
             </div>
           </div>
           <div className="flex flex-wrap items-center">
@@ -46,7 +41,7 @@ const EndPurchase = () => {
                   Apellidos:
                 </p>
               </div>
-              <div className="flex flex-col p-4">
+              <div className="flex flex-col ml-10">
                 <input
                   type="text"
                   placeholder="Dirección de envío"
@@ -58,10 +53,19 @@ const EndPurchase = () => {
                   className="input-global"
                 />
               </div>
+
             </div>
-          </div>
-          <div className="flex justify-center items-center m-4">
-            <button className="boton-global">Finalizar compra</button>
+            <div className="flex flex-col self-start">
+              <p className="flex justify-left mt-4 p-4 ml-52 text-black">
+                Envio:
+              </p>
+              <p className="flex justify-left mt-4 p-4 ml-52 text-black">
+                Subtotal:
+              </p>
+              <div className="flex justify-center items-center m-4 ml-44">
+                <button className="boton-global">Finalizar compra</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
