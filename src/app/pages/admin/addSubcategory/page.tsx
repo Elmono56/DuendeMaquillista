@@ -7,6 +7,7 @@ import Navbar from "@/app/components/Navbar";
 const AddSubcategory = () => {
   const [mainCategory, setMainCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleAddSubcategory = () => {
     console.log("Categoría principal:", mainCategory);
@@ -34,6 +35,13 @@ const AddSubcategory = () => {
             placeholder="Subcategoría"
             value={subcategory}
             onChange={(e) => setSubcategory(e.target.value)}
+          />
+          <input
+            type="text"
+            className="input-global"
+            placeholder="Descripción"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
 
           <button className="boton-global" onClick={handleAddSubcategory}>
