@@ -7,8 +7,8 @@ name:{
     unique: true,
 },
 
-imageURL:{
-    type: String,
+image:{
+    type: Image,
     required: true
 },
 description: {
