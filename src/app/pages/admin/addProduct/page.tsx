@@ -10,7 +10,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
-
+  const [selectedImage, setSelectedImage] = useState<File>();
   const handleProductUpload = () => {
     console.log("Categoría:", category);
     console.log("Subcategoría:", subCategory);
@@ -19,6 +19,15 @@ const AddProduct = () => {
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
   };
+  const addImg = () => {
+    if (!selectedImage) return;
+    const box = document.getElementById("prevImg");
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(selectedImage);
+    console.log("entré");
+
+    box?.appendChild(img);
+  }
 
   return (
     <div className="bg-pink-lighter min-h-screen">
@@ -30,11 +39,26 @@ const AddProduct = () => {
           </div>
           <div className="flex items-start space-x-8">
             <div>
-              <div className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center">
+              <div id="prevImg" className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center">
+                {
+                  selectedImage && (
+                    <img
+                    src={URL.createObjectURL(selectedImage)}
+                    />
+                  )
+                }
+
+
                 <span className="text-gray-400">Previsualización</span>
               </div>
               <div className="flex justify-center items-center">
-                <button className="boton-global">Seleccionar imagen</button>
+                <input type="file" className="boton-global" accept="image/*" onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setSelectedImage(e.target.files[0]);
+                  }
+                  //addImg();
+
+                }} />
               </div>
             </div>
 
