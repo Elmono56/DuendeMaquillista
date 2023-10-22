@@ -48,7 +48,7 @@ router.get("/getProduct", async (req,res)=>{
   }
 });
 
-//change visibility to visible
+//change visibility
 router.put("/setProductVisible", async (req, res)=>{
   const {name, status} = req.body;
   const product = await productSchema.findOne({name});

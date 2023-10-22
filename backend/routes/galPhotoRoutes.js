@@ -36,6 +36,19 @@ router.get("/getGalPhoto", async (req,res)=>{
   else{
     res.status(404).json({Mensaje:"Imagen no encontrado"});
   }
-})
+});
+
+//change visibility to visible
+router.put("/setImageVisibility", async (req, res)=>{
+  const {name, status} = req.body;
+  const photo = await galPhoto.findOne({name});
+  if (photo){
+    await galPhoto.updateOne({ _id: photo._id }, { $set: {status} });
+    res.status(200).json({Mensaje: "Visibilidad de la Imagen fue Actualizada"});
+  }
+  else{
+    res.status(404).json({Mensaje: "No se encontró la imagen"});
+  }
+});
 
 module.exports = router;
