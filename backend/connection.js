@@ -15,6 +15,7 @@ const loginRoute = require("./routes/loginRoute");
 const galPhoto = require("./routes/galPhotoRoutes");
 const galCategory = require("./routes/categoryRoutes");
 const galsubCategory = require("./routes/subCategoryRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 app.get("/", (req, res) => {
   res.send("API for Duende Maquillista");
 });
@@ -29,6 +30,7 @@ app.use("/api", loginRoute);
 app.use("/api", galPhoto);
 app.use("/api",galCategory);
 app.use("/api",galsubCategory);
+app.use("/api",orderRoutes);
 
 //mongodb connection
 mongoose.connect("mongodb+srv://axelchavesr:tGfpOZBhreznmEQU@cluster0.jqlfuzl.mongodb.net/?retryWrites=true&w=majority")
