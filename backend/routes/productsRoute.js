@@ -46,6 +46,20 @@ router.get("/getProduct", async (req,res)=>{
   else{
     res.status(404).json({Mensaje:"Producto no encontrado"});
   }
-})
+});
+
+//change visibility to visible
+router.put("/setProductVisible", async (req, res)=>{
+  const {name, status} = req.body;
+  const product = await productSchema.findOne({name});
+  if (product){
+    await productSchema.updateOne({ _id: product._id }, { $set: {status} });
+    res.status(200).json({Mensaje: "Visibilidad del Producto Actualizada"});
+  }
+  else{
+    res.status(404).json({Mensaje: "No se encontró el producto"});
+  }
+});
+
 
 module.exports = router;
