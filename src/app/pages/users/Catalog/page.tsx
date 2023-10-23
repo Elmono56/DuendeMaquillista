@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import Link from "next/link";
 
-const Gallery = () => {
+const Catalog = () => {
   // Categorías y subcategorías dinámicas
   const [categories, setCategories] = useState([
     { name: "Maquillaje básico", subcategories: [] },
@@ -23,7 +24,6 @@ const Gallery = () => {
     new Array(20).fill({
       imgSrc: "/path/to/image.jpg",
       title: "Título de la imagen",
-      price: "$100.00",
     })
   );
 
@@ -72,8 +72,6 @@ const Gallery = () => {
               ))}
             </ul>
           </div>
-
-          {/* Sección principal (galería) */}
           <div
             className="flex-1 bg-white border rounded-md p-4 overflow-y-auto ml-6"
             style={{ maxHeight: "80vh" }}
@@ -84,13 +82,17 @@ const Gallery = () => {
                   <div className="mb-4">
                     <img
                       src={image.imgSrc}
-                      alt={image.title}
                       className="w-full h-32 object-cover rounded-md"
                     />
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="text-gray-700">{image.title}</div>
-                    <button className="text-blue-500">Ver más</button>
+                    <Link
+                      href="/pages/users/imageDetails"
+                      className="text-blue-500"
+                    >
+                      <button>Ver más</button>
+                    </Link>
                   </div>
                   <div className="mt-2 text-center text-gray-800">
                     {image.price}
@@ -106,4 +108,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default Catalog;
