@@ -1,76 +1,142 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Navbar from "@/app/components/Navbar";
-import BasicCard from "@/app/components/BasicCard";
-import Cart from "@/app/components/Cart";
 import Link from "next/link";
+import Navbar from "@/app/components/Navbar";
 
 const ShoppingCart = () => {
-  const [cartItems, setCartItems] = useState([] as Array<{
-    productName: string;
-    productPrice: string;
-    productImage: string;
-    quantity: number;
-  }>);
+  const [cartItems, setCartItems] = useState(
+    [] as Array<{
+      productName: string;
+      productPrice: number;
+      productImage: string;
+      quantity: number;
+    }>
+  );
 
   useEffect(() => {
-    // Aquí se obtienen los productos del carrito del usuario
-    // y luego establecerlos en el estado cartItems.
     const userCart = [
       {
-        productName: "Niacinamida",
-        productPrice: "$550",
-        productImage: "https://www.larocheposay-centroamerica.com/-/media/project/loreal/brand-sites/lrp/america/latam/products/niacinamide/pure-niacinamide-10-serum/3337875791885_1-1.jpg?cx=0&cy=0&cw=600&ch=600&hash=3C8F65B5BF784E6BA1165BFB424D6539D4628FC2",
-        quantity: 2,
+        productName: "Nombre producto",
+        productPrice: 4,
+        productImage: "", // Aquí la imagen del producto
+        quantity: 1,
+      },
+      {
+        productName: "Nombre producto",
+        productPrice: 4,
+        productImage: "",
+        quantity: 1,
+      },
+      {
+        productName: "Nombre producto",
+        productPrice: 4,
+        productImage: "",
+        quantity: 1,
+      },
+      {
+        productName: "Nombre producto",
+        productPrice: 4,
+        productImage: "",
+        quantity: 1,
+      },
+      {
+        productName: "Nombre producto",
+        productPrice: 4,
+        productImage: "",
+        quantity: 1,
+      },
+      {
+        productName: "Nombre producto",
+        productPrice: 4,
+        productImage: "",
+        quantity: 1,
       },
     ];
 
     setCartItems(userCart);
   }, []);
 
+  const handleQuantityChange = (
+    index: number,
+    direction: "increase" | "decrease"
+  ) => {
+    const newItems = [...cartItems];
+    if (direction === "increase") {
+      newItems[index].quantity += 1;
+    } else if (newItems[index].quantity > 1) {
+      newItems[index].quantity -= 1;
+    }
+    setCartItems(newItems);
+  };
+
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.productPrice * item.quantity,
+    0
+  );
+
   return (
-    <>
+    <div>
       <Navbar />
-      <div className="flex justify-center items-center h-screen">
-        <BasicCard>
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">
-            Carrito de compras
-          </div>
-          <div className="overflow-y-scroll">
-          {cartItems.map((item, index) => (
-              <Cart
-                key={index}
-                productName={item.productName}
-                productPrice={item.productPrice}
-                productImage={item.productImage}
-                quantity={item.quantity}
-              />
-            ))}
-          </div>
-          <div className="flex flex-wrap space-x-52 mt-5">
-            <div className="flex flex-grow-1 flex-col">
-              <button className="bg-white text-black pb-5">
-                + Agregar producto
-              </button>
-              <button className="bg-red-200 rounded-3xl text-black w-52">
-                Ver mis pedidos
-              </button>
+
+      <div className="flex justify-center items-center min-h-screen bg-pink-100">
+        <div className="p-6 rounded-lg bg-white shadow-lg w-96">
+          <header className="text-center">
+            <h2 className="text-3xl font-bold mb-5">Carrito de compras</h2>
+          </header>
+
+          <main>
+            <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+              {" "}
+              {/* Add this div */}
+              {cartItems.map((item, index) => (
+                <div key={index} className="flex items-center mb-4">
+                  <img
+                    src={item.productImage}
+                    alt={item.productName}
+                    className="w-8 h-8 mr-4"
+                  />
+                  <span className="flex-grow">{item.productName}</span>
+                  <div className="flex items-center space-x-1">
+                    <button
+                      className="text-gray-500"
+                      onClick={() => handleQuantityChange(index, "decrease")}
+                    >
+                      -
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button
+                      className="text-gray-500"
+                      onClick={() => handleQuantityChange(index, "increase")}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <span className="ml-4">${item.productPrice}</span>
+                </div>
+              ))}
+            </div>{" "}
+            {/* End the div */}
+          </main>
+
+          <footer className="mt-4">
+            <button className="w-full mb-3 py-2 border border-black text-black hover:bg-gray-100 transition duration-300">
+              + Agregar producto
+            </button>
+            <div className="flex justify-between items-center mb-3">
+              <span>Subtotal:</span>
+              <span className="font-bold">{subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex flex-grow-1 flex-col">
-              <p className="bg-white text-black text-center pb-5">
-                Subtotal: 128
-              </p>
-              <Link href="/pages/users/endPurchase">
-                <button className="bg-red-200 rounded-3xl text-black w-52">
-                  Finalizar compra
-                </button>
-              </Link>
-            </div>
-          </div>
-        </BasicCard>
+            <Link
+              href="/pages/users/endPurchase"
+              className="block w-full flex justify-center items-center"
+            >
+              <button className="boton-global">Finalizar compra</button>
+            </Link>
+          </footer>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
