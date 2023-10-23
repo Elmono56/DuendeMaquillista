@@ -1,107 +1,138 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import Navbar from "@/app/components/Navbar";
-import Cart from "@/app/components/Cart";
 
 const EndPurchase = () => {
-  const [cartItems, setCartItems] = useState([] as Array<{
-    productName: string;
-    productPrice: string;
-    productImage: string;
-    quantity: number;
-  }>);
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [total, setTotal] = useState(0);
-  const [subtotal, setSubtotal] = useState(0);
-  const [shipping, setShipping] = useState(0);
+  const [cartItems, setCartItems] = useState(
+    [] as Array<{
+      productName: string;
+      productPrice: number;
+      productImage: string;
+      quantity: number;
+    }>
+  );
+
   const [address, setAddress] = useState("");
-  const [details, setDetails] = useState("");
+  const [shipping, setShipping] = useState(3);
 
   useEffect(() => {
-    // Aquí se obtienen los productos del carrito del usuario
-    // y luego establecerlos en el estado cartItems.
     const userCart = [
       {
-        productName: "Niacinamida",
-        productPrice: "$550",
-        productImage: "https://www.larocheposay-centroamerica.com/-/media/project/loreal/brand-sites/lrp/america/latam/products/niacinamide/pure-niacinamide-10-serum/3337875791885_1-1.jpg?cx=0&cy=0&cw=600&ch=600&hash=3C8F65B5BF784E6BA1165BFB424D6539D4628FC2",
+        productName: "Producto 1",
+        productPrice: 4,
+        productImage: "",
+        quantity: 100,
+      },
+      {
+        productName: "Producto 2",
+        productPrice: 5,
+        productImage: "",
         quantity: 2,
+      },
+      {
+        productName: "Producto 3",
+        productPrice: 7,
+        productImage: "",
+        quantity: 1,
+      },
+      {
+        productName: "Producto 4",
+        productPrice: 9,
+        productImage: "",
+        quantity: 3,
+      },
+      {
+        productName: "Producto 5",
+        productPrice: 2,
+        productImage: "",
+        quantity: 1,
+      },
+      {
+        productName: "Producto 6",
+        productPrice: 6,
+        productImage: "",
+        quantity: 2,
+      },
+      {
+        productName: "Producto 7",
+        productPrice: 4,
+        productImage: "",
+        quantity: 1,
       },
     ];
 
     setCartItems(userCart);
   }, []);
+
+  const calculateTotal = () => {
+    let total = cartItems.reduce(
+      (acc, item) => acc + item.productPrice * item.quantity,
+      0
+    );
+    return total + shipping;
+  };
+
   return (
     <div>
       <Navbar />
-      <div className="flex justify-center items-center h-screen">
-        <div className="h-5/6 bg-white rounded-lg">
-          <div className="flex flex-row">
-            <div className="overflow-y-scroll">
-            {cartItems.map((item, index) => (
-              <Cart
-                key={index}
-                productName={item.productName}
-                productPrice={item.productPrice}
-                productImage={item.productImage}
-                quantity={item.quantity}
-                editable={false}
-              />
-            ))}
+      <div className="flex justify-center items-center min-h-screen bg-pink-100">
+        <div className="p-6 rounded-lg bg-white shadow-lg w-3/4 flex justify-between">
+          <div className="w-1/2 pr-5">
+            <h3 className="text-lg font-semibold mb-4">Resumen del Carrito</h3>
+            <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+              {cartItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center mb-4 border-b pb-2"
+                >
+                  <img
+                    src={item.productImage}
+                    alt={item.productName}
+                    className="w-8 h-8 mr-4"
+                  />
+                  <span className="flex-grow">{item.productName}</span>
+                  <span className="mx-4">{item.quantity}x</span>
+                  <span className="font-medium w-9">
+                    ${item.productPrice * item.quantity}
+                  </span>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col pt-5">
-              <div className="w-72 h-64 rounded-xl border border-black m-4"></div>
-              <button className="boton-global">
-                Añadir comprobante de sinpe
-              </button>
-
+            <div className="mt-6">
+              <label className="block text-sm font-bold mb-2">Dirección:</label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text"
+                placeholder="Provincia-Cantón-Distrito"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
             </div>
           </div>
-          <div className="flex flex-wrap items-center">
-            <div className="flex flex-col">
-              <p className="flex justify-left items-center m-4 p-4 text-black">
-                Total: {total}
-              </p>
-              <div className="flex flex-row space-x-14">
-                <p className="flex justify-left items-center m-4 p-4 text-black">
-                  Nombre: {name}
-                </p>
-                <p className="flex justify-left items-center m-4 p-4 text-black">
-                  Apellidos: {lastName}
-                </p>
-              </div>
-              <div className="flex flex-col ml-10">
-                <input
-                  type="text"
-                  placeholder="Dirección de envío"
-                  className="input-global"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Detalles"
-                  className="input-global"
-                  value={details}
-                  onChange={(e) => setDetails(e.target.value)}
-                  required
-                />
-              </div>
 
+          <div className="w-1/2 pl-5">
+            <div className="border p-4 mb-4">
+              <h3 className="mb-2 font-bold">Añadir comprobante sinpe</h3>
+              <input
+                className="w-full p-2 border"
+                type="file"
+                placeholder="Subir archivo"
+              />
             </div>
-            <div className="flex flex-col self-start">
-              <p className="flex justify-left mt-4 p-4 ml-52 text-black">
-                Envio: {shipping}
-              </p>
-              <p className="flex justify-left mt-4 p-4 ml-52 text-black">
-                Subtotal: {subtotal}
-              </p>
-              <div className="flex justify-center items-center m-4 ml-44">
+            <div className="flex justify-between items-center mb-3">
+              <span>Envío:</span>
+              <span className="font-bold">${shipping}</span>
+            </div>
+            <div className="mt-6 flex justify-between items-center">
+              <span>Total:</span>
+              <span className="font-bold">${calculateTotal()}</span>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <Link href="/pages/users/endPurchase py-4">
                 <button className="boton-global">Finalizar compra</button>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
