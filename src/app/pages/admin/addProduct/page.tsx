@@ -7,6 +7,7 @@ import axios from "axios";
 const AddProduct = () => {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -31,7 +32,6 @@ const AddProduct = () => {
       // ESTO NO ESTA EN EL MODEL DE PRODUCT
       // subCategory,
       // ESTO NO ESTA EN EL FRONT
-      // description,
       // brand,
       });
       console.log(res);
@@ -96,6 +96,13 @@ const AddProduct = () => {
                 placeholder="Título"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                type="text"
+                className="bg-gray-input border border-black rounded-lg p-2 w-full focus:outline-none mb-4"
+                placeholder="Descripción"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
               <input
                 type="text"

@@ -6,6 +6,7 @@ import Navbar from "@/app/components/Navbar";
 const EditProduct = () => {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -15,6 +16,7 @@ const EditProduct = () => {
     console.log("Categoría:", category);
     console.log("Subcategoría:", subCategory);
     console.log("Título:", title);
+    console.log("Descripción:", description);
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
@@ -63,6 +65,13 @@ const EditProduct = () => {
                 placeholder="Título"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                type="text"
+                className="bg-gray-input border border-black rounded-lg p-2 w-full focus:outline-none mb-4"
+                placeholder="Descripción"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
               <input
                 type="text"
