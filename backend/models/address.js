@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const addressSchema = mongoose.Schema({
-    id:
+    userID:
 {
-    type: Number,
-    required: true
+    type: String,
+    required: true,
+    unique: true,
 },
 city:{
     type: String,
