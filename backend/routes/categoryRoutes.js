@@ -6,7 +6,7 @@ const router = express.Router();
 //create category
 router.post("/createCategory", async (req, res) => {
     const newCat  = categorySchema(req.body);
-    const {name } = req.body;
+    const {name} = req.body;
     const cat = await categorySchema.findOne({name});
     if (!cat){
       newCat
