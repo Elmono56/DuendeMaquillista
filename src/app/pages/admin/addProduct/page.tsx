@@ -13,7 +13,7 @@ const AddProduct = () => {
   const [isAvailable, setIsAvailable] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File>();
 
-  const handleProductUpload = () => {
+  const handleProductUpload = async () => {
     console.log("Categoría:", category);
     console.log("Subcategoría:", subCategory);
     console.log("Título:", title);
@@ -22,14 +22,17 @@ const AddProduct = () => {
     console.log("¿Disponible?", isAvailable);
 
     try {
-      const res = axios.post("http://localhost:5000/api/addProduct", {
-        category,
-        subCategory,
-        title,
-        price,
-        quantity,
-        isAvailable,
-        selectedImage,
+      const res = await axios.post("http://localhost:5000/api/addProduct", {
+      name: title,
+      price,
+      cantStock: quantity,
+      status: isAvailable,
+      imageURL: selectedImage, //arreglar esto porque en la bd dice String
+      // ESTO NO ESTA EN EL MODEL DE PRODUCT
+      // subCategory,
+      // ESTO NO ESTA EN EL FRONT
+      // description,
+      // brand,
       });
       console.log(res);
     } catch (error: any) {
