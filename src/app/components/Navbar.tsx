@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,7 +52,7 @@ const Navbar = () => {
       <div className="border-t border-pink-400 bg-red-200">
         <div className="container mx-auto flex justify-between items-center py-2">
           <Link
-            href="/pages/users/gallery"
+            href="/pages/admin/Catalog"
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
           >
             <button>Galería</button>
