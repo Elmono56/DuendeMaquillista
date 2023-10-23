@@ -13,7 +13,7 @@ const Footer = () => {
                 </div>
                 <p className="text-black mb-7 text-body">
                   Descubre productos de cosmética exclusivos, skincare, ropa y
-                  accesorios.Realza tu belleza natural con autenticidad.
+                  accesorios. Realza tu belleza natural con autenticidad.
                 </p>
                 <p className="flex items-center text-sm font-medium text-dark">
                   <span className="mr-3 text-primary">
