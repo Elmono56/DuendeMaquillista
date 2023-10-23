@@ -32,6 +32,7 @@ const Register = () => {
       console.log(res);
     } catch (error: any) {
       console.log(error);
+      alert("La categoría ya existe. ");
     }
   };
 

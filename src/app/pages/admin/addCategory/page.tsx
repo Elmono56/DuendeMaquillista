@@ -17,18 +17,19 @@ const AddCategory = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
     console.log("Categoría:", category);
     console.log("Descripción:", description);
     try {
-      const res = axios.post("http://localhost:4000/api/createCategory", {
-        category,
-        description,
+      const res = await axios.post("http://localhost:4000/api/createCategory", {
+        name: category,
+        description
       });
-      console.log(res);
-      console.log("Categoría agregada");
+      console.log(res.data);
+      alert("Categoría agregada");
     } catch (error: any) {
       console.log(error);
+      alert("La categoría ya existe.");
     }
   }
 
