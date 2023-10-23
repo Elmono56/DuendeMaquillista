@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Navbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ const Shop = () => {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar />
       <div className="bg-pink-lighter min-h-screen p-6">
         <h1>
           <title>Tienda</title>
@@ -78,6 +78,14 @@ const Shop = () => {
             className="flex-1 bg-white border rounded-md p-4 overflow-y-auto ml-6"
             style={{ maxHeight: "80vh" }}
           >
+            <div className="my-4">
+              <Link
+                href="/pages/users/orders"
+                className="boton-global mb-4 ml-4"
+              >
+                <button>Pedidos</button>
+              </Link>
+            </div>
             <div className="grid grid-cols-3 gap-4">
               {gallery.map((image, idx) => (
                 <div key={idx} className="border rounded-md p-4">

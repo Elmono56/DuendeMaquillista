@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import BasicCard from "@/app/components/BasicCard";
-import Navbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/Navbar";
 import Link from "next/link";
 
 const RecoverPassword = () => {
@@ -14,7 +13,7 @@ const RecoverPassword = () => {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar />
       <div className="flex justify-center items-center h-screen">
         <div
           className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[24.6875rem]`}

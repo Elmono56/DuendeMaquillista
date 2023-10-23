@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import BasicCard from "@/app/components/BasicCard";
-import Navbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/Navbar";
 import axios from "axios";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 async function makeRequest() {
   const config = {
@@ -30,8 +29,7 @@ const Login = () => {
       if (res.data.type == "admin") {
         console.log("se logueó un admin");
         router.push("/pages/admin/Catalog");
-      }
-      else if (res.data.type == "user") {
+      } else if (res.data.type == "user") {
         console.log(" se logueó un user");
         router.push("/pages/users/gallery");
       }
@@ -43,7 +41,7 @@ const Login = () => {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar />
       <div className="flex justify-center items-center h-screen">
         <div
           className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[24.6875rem] justify-between`}

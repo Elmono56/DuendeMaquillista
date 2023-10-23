@@ -2,12 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
-import Navbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/Navbar";
 
 const ImageDetails = () => {
   return (
     <div className="bg-pink-lighter min-h-screen">
-      <Navbar />
+      <UserNavbar />
       <div className="flex justify-center items-center h-screen p-6">
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-xl transition-all transform hover:scale-105">
           <div className="text-center text-3xl py-3 mb-4 border-b-2">

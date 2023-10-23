@@ -20,7 +20,7 @@ const Orders = () => {
         });
         console.log(extractedIds);
         setOrders(extractedIds);
-        console.log(orders); 
+        console.log(orders);
       } catch (error: any) {
         console.log("PASO ALGO ", error);
       }
@@ -30,22 +30,22 @@ const Orders = () => {
 
   const handleAction = (actionType: string, idOrder: string) => {
     switch (actionType) {
-      case 'details':
+      case "details":
         // Aquí se redirige a la página de detalles de la orden
-        console.log('Detalles de la orden', idOrder);
+        console.log("Detalles de la orden", idOrder);
         break;
-      case 'confirm':
+      case "confirm":
         // Aquí se confirma la orden
-        console.log('Confirmar orden', idOrder);
+        console.log("Confirmar orden", idOrder);
         break;
-      case 'decline':
+      case "decline":
         // Aquí se rechaza la orden
-        console.log('Rechazar orden', idOrder);
+        console.log("Rechazar orden", idOrder);
         break;
       default:
         break;
     }
-  }
+  };
 
   return (
     <>
@@ -57,7 +57,11 @@ const Orders = () => {
           </div>
           <div className="scrolling-auto">
             {orders.map((order: { _id: string }) => (
-              <Order key={order._id} idOrder={order._id} onAction={handleAction}/>
+              <Order
+                key={order._id}
+                idOrder={order._id}
+                onAction={handleAction}
+              />
             ))}
           </div>
         </BasicCard>

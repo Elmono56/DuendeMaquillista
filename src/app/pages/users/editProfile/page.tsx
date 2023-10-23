@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/app/components/Navbar";
-import BasicCard from "@/app/components/BasicCard";
+import UserNavbar from "@/app/components/Navbar";
 
 const EditProfile = () => {
   const [nombre, setNombre] = useState("");
@@ -21,7 +20,7 @@ const EditProfile = () => {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar />
       <div className="flex justify-center items-center h-screen">
         <div
           className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[29.6875rem] justify-between`}

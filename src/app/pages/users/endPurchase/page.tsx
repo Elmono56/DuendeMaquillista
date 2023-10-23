@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Navbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/Navbar";
 
 const EndPurchase = () => {
   const [cartItems, setCartItems] = useState(
@@ -76,7 +76,7 @@ const EndPurchase = () => {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar />
       <div className="flex justify-center items-center min-h-screen bg-pink-100">
         <div className="p-6 rounded-lg bg-white shadow-lg w-3/4 flex justify-between">
           <div className="w-1/2 pr-5">
@@ -105,7 +105,7 @@ const EndPurchase = () => {
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
-                placeholder="Provincia-Cantón-Distrito"
+                placeholder="Provincia, Canton, Distrito, Ubicación exacta"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />

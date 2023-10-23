@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Navbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/Navbar";
 
 const ProductDetails = () => {
   // Suponiendo un precio fijo para el producto. Esto deberías obtenerlo de tus datos.
@@ -19,7 +19,7 @@ const ProductDetails = () => {
 
   return (
     <div className="bg-pink-lighter min-h-screen">
-      <Navbar />
+      <UserNavbar />
       <main className="flex justify-center items-center h-screen p-5">
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl transition-all transform hover:scale-105">
           <h1 className="text-center text-2xl py-2 mb-3 border-b-2">
