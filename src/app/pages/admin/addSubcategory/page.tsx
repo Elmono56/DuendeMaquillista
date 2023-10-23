@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import BasicCard from "@/app/components/BasicCard";
 import Navbar from "@/app/components/Navbar";
 import axios from "axios";
 
@@ -10,19 +9,34 @@ const AddSubcategory = () => {
   const [subcategory, setSubcategory] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleAddSubcategory = () => {
+  const handleClean = () => {
+    setMainCategory("");
+    setSubcategory("");
+    setDescription("");
+  };
+
+  const handleAddSubcategory = async () => {
     console.log("Categoría principal:", mainCategory);
     console.log("Subcategoría:", subcategory);
     console.log("Descripción:", description);
     try {
-      const res = axios.post("http://localhost:4000/api/createSubCategory", {
-        mainCategory,
-        subcategory,
+      const res = await axios.post("http://localhost:4000/api/createSubCategory", {
+        name: subcategory,
         description,
+        upperC: mainCategory,
       });
-      console.log(res);
+      alert("Subcategoría agregada");
+      handleClean();
     } catch (error: any) {
-      console.log(error);
+      console.log(error.response.status);
+      if (error.response.status === 400) {
+        console.log(error.response.data.ErrorN);
+        if (error.response.data.ErrorN === 1) {
+          alert("La subcategoría ya existe");
+        } else if (error.response.data.ErrorN === 2) {
+          alert("La categoría base no existe");
+        }
+      }
     }
   };
 
