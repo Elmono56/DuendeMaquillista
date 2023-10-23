@@ -34,7 +34,11 @@ const EditProduct = () => {
                 <span className="text-gray-400">Previsualización</span>
               </div>
               <div className="flex justify-center items-center">
-                <button className="boton-global">Seleccionar imagen</button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="text-xs py-1 px-2" // Estilos con Tailwind
+                />
               </div>
             </div>
 

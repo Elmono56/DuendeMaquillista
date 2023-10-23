@@ -3,14 +3,27 @@
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Navbar from "@/app/components/Navbar";
+import axios from "axios";
 
 const AddSubcategory = () => {
   const [mainCategory, setMainCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleAddSubcategory = () => {
     console.log("Categoría principal:", mainCategory);
     console.log("Subcategoría:", subcategory);
+    console.log("Descripción:", description);
+    try {
+      const res = axios.post("http://localhost:4000/api/createSubCategory", {
+        mainCategory,
+        subcategory,
+        description,
+      });
+      console.log(res);
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -20,7 +33,7 @@ const AddSubcategory = () => {
         <div
           className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[20.6875rem] justify-between`}
         >
-          <div className="text-2xl text-black lg:pb-[20px]">Subcategoría</div>
+          <div className="text-2xl text-black font-bold lg:pb-[20px]">Subcategoría</div>
           <input
             type="text"
             className="input-global"
@@ -34,6 +47,13 @@ const AddSubcategory = () => {
             placeholder="Subcategoría"
             value={subcategory}
             onChange={(e) => setSubcategory(e.target.value)}
+          />
+          <input
+            type="text"
+            className="input-global"
+            placeholder="Descripción"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
 
           <button className="boton-global" onClick={handleAddSubcategory}>

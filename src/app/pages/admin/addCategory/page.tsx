@@ -2,17 +2,35 @@
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import Navbar from "@/app/components/Navbar";
-const axios = require("axios");
+import axios from "axios";
 
-async function doGetRequest() {
-  let res = await axios.get("http://localhost:5000/");
+// async function doGetRequest() {
+//   let res = await axios.get("http://localhost:4000/");
 
-  let data = res.data;
-  console.log(data);
-}
-doGetRequest();
+//   let data = res.data;
+//   console.log("Prueba> ", data);
+// }
+// doGetRequest();
+
+
 const AddCategory = () => {
   const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleAddCategory = () => {
+    console.log("Categoría:", category);
+    console.log("Descripción:", description);
+    try {
+      const res = axios.post("http://localhost:4000/api/createCategory", {
+        category,
+        description,
+      });
+      console.log(res);
+      console.log("Categoría agregada");
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
 
   return (
     <div>
@@ -29,10 +47,17 @@ const AddCategory = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
+          <input
+            type="text"
+            className="input-global"
+            placeholder="Descripción"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
           <button
             className="boton-global"
-            onClick={() => console.log(category)}
+            onClick={handleAddCategory}
           >
             Agregar
           </button>

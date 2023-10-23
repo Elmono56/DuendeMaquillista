@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-      <footer className="relative bg-pink-lighter pt-20 pb-2 lg:pt-[30px]">
+      <footer className="border border-black relative bg-pink-lighter pt-20 pb-2 lg:pt-[30px]">
         <div className="container">
           <div className="text-black flex flex-wrap -mx-4">
             <div className="w-full px-4 lg:w-[55%] lg:pl-[55px]">
@@ -12,8 +12,8 @@ const Footer = () => {
                   Enchanted Cosmetics
                 </div>
                 <p className="text-black mb-7 text-body">
-                  Sed ut perspiciatis undmnis is iste natus error sit amet
-                  voluptatem totam rem aperiam.
+                  Descubre productos de cosmética exclusivos, skincare, ropa y
+                  accesorios.Realza tu belleza natural con autenticidad.
                 </p>
                 <p className="flex items-center text-sm font-medium text-dark">
                   <span className="mr-3 text-primary">
@@ -46,7 +46,7 @@ const Footer = () => {
                 </h4>
                 <div className="flex items-center mb-6">
                   <a
-                    href="/#"
+                    href="https://www.facebook.com/duenderfsmaquillista"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-dark hover:bg-blue-200 sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
@@ -59,7 +59,8 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="/#"
+                    href="
+                    https://twitter.com/Duenderfs"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-dark hover:bg-blue-200 sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
@@ -72,7 +73,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="/#"
+                    href="https://www.tiktok.com/@duende.rfs"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-dark hover:bg-blue-200 sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
@@ -85,7 +86,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://www.instagram.com/duenderfs/"
+                    href="https://www.instagram.com/duenderfs?igshid=MzRlODBiNWFlZA%3D%3D"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-dark hover:bg-blue-200 sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg

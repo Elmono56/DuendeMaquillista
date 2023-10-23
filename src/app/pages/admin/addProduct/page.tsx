@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Navbar from "@/app/components/Navbar";
+import axios from "axios";
 
 const AddProduct = () => {
   const [category, setCategory] = useState("");
@@ -10,6 +11,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File>();
 
   const handleProductUpload = () => {
     console.log("Categoría:", category);
@@ -18,6 +20,21 @@ const AddProduct = () => {
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
+
+    try {
+      const res = axios.post("http://localhost:5000/api/addProduct", {
+        category,
+        subCategory,
+        title,
+        price,
+        quantity,
+        isAvailable,
+        selectedImage,
+      });
+      console.log(res);
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -30,11 +47,28 @@ const AddProduct = () => {
           </div>
           <div className="flex items-start space-x-8">
             <div>
-              <div className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center">
+              <div
+                id="prevImg"
+                className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center"
+              >
+                {selectedImage && (
+                  <img src={URL.createObjectURL(selectedImage)} />
+                )}
+
                 <span className="text-gray-400">Previsualización</span>
               </div>
               <div className="flex justify-center items-center">
-                <button className="boton-global">Seleccionar imagen</button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="text-xs py-1 px-2" // Estilos con Tailwind
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      setSelectedImage(e.target.files[0]);
+                    }
+                    //addImg();
+                  }}
+                />
               </div>
             </div>
 

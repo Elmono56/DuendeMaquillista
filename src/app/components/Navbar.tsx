@@ -61,12 +61,12 @@ const Navbar = () => {
           >
             <button>Tienda</button>
           </Link>
-          <Link
-            href="/"
+          <button
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
+            onClick={() => alert("Función en desarrollo")}
           >
-            <button>Agenda</button>
-          </Link>
+            Agenda
+          </button>
           <Link
             href="/"
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
