@@ -18,7 +18,7 @@ const OrderDetails = () => {
       // ... (puedes agregar más productos para probar el scroll) ...
     ],
     shipping: {
-      address: "Calle 123, Ciudad X, País Y",
+      address: "Provincia, Canton, Distrito, Ubicación exacta",
       method: "Envío estándar",
       cost: 5,
     },
