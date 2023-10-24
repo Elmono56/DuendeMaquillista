@@ -26,4 +26,25 @@ router.post("/createSubCategory", async (req, res) => {
   }
 });
 
+//get all subcategories
+router.get("/getSubCategories", async (req, res) => {
+  const subcategories = await subcategorySchema.find();
+  if (subcategories) {
+    res.status(200).json(subcategories);
+  } else {
+    res.status(404).json({ Mensaje: "No hay subcategorías registradas" });
+  }
+});
+
+//get all subcategories from a category
+router.get("/getSubCategoriesFromCategory", async (req, res) => {
+  const { category } = req.query;
+  const subcategories = await subcategorySchema.find({ upperC: category });
+  if (subcategories) {
+    res.status(200).json(subcategories);
+  } else {
+    res.status(404).json([], { Mensaje: "No hay subcategorías registradas" });
+  }
+});
+
 module.exports = router;
