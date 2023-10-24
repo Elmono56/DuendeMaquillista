@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
+import axios from "axios";
 
 const Shop = () => {
   // Categorías y subcategorías dinámicas
@@ -19,6 +20,41 @@ const Shop = () => {
     },
     // ... puedes añadir más categorías y subcategorías
   ]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const res = await axios.get("http://localhost:4000/api/getCategories");
+        const categoriesData = res.data;
+  
+        // Mapear las categorías y obtener las subcategorías para cada categoría
+        const formattedCategories = await Promise.all(
+          categoriesData.map(async (category: { name: string }) => {
+            const subRes = await axios.get("http://localhost:4000/api/getSubCategoriesFromCategory", {
+              params: { category: category.name }
+            });
+            console.log("Subcategoria: ", subRes);
+  
+            const subcategories = subRes.data.map((subcategory: { name: string }) => subcategory.name);
+            return {
+              name: category.name,
+              subcategories,
+            };
+          })
+        );
+  
+        // Imprimir el resultado
+        console.log(formattedCategories);
+  
+        // Guardar el resultado en el estado
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getData();
+  }, []);
+
 
   // Galería de fotos dinámica
   const [gallery, setGallery] = useState(
