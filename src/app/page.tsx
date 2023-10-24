@@ -31,7 +31,7 @@ const Login = () => {
         router.push("/pages/admin/Catalog");
       } else if (res.data.type == "user") {
         console.log(" se logueó un user");
-        router.push("/pages/users/gallery");
+        router.push("/pages/users/Catalog");
       }
     } catch (error: any) {
       console.log(error);
