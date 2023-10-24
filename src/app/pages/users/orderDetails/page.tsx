@@ -1,5 +1,5 @@
 import React from "react";
-import UserNavbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/UserNavbar";
 
 const OrderDetails = () => {
   // Ejemplo de datos para la orden

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/app/components/Navbar";
+import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 
@@ -41,7 +41,7 @@ const Catalog = () => {
 
   return (
     <div>
-      <Navbar />
+      <AdminNavbar />
       <div className="bg-pink-lighter min-h-screen p-6">
         <h1>
           <title>Tienda</title>

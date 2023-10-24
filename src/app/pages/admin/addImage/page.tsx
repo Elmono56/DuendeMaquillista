@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/app/components/Navbar";
+import AdminNavbar from "@/app/components/AdminNavbar";
 
 const AddImage = () => {
   const [category, setCategory] = useState("");
@@ -22,7 +22,7 @@ const AddImage = () => {
 
   return (
     <div className="bg-pink-lighter min-h-screen">
-      <Navbar />
+      <AdminNavbar />
       <div className="flex justify-center items-center h-screen">
         <div className="w-2/4 bg-white rounded-lg p-8 shadow-lg">
           <div className="text-2xl text-gray-800 font-bold mb-8 text-center">

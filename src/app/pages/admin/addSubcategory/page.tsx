@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/app/components/Navbar";
+import AdminNavbar from "@/app/components/AdminNavbar";
 import axios from "axios";
 
 const AddSubcategory = () => {
@@ -20,11 +20,14 @@ const AddSubcategory = () => {
     console.log("Subcategoría:", subcategory);
     console.log("Descripción:", description);
     try {
-      const res = await axios.post("http://localhost:4000/api/createSubCategory", {
-        name: subcategory,
-        description,
-        upperC: mainCategory,
-      });
+      const res = await axios.post(
+        "http://localhost:4000/api/createSubCategory",
+        {
+          name: subcategory,
+          description,
+          upperC: mainCategory,
+        }
+      );
       alert("Subcategoría agregada");
       handleClean();
     } catch (error: any) {
@@ -42,12 +45,14 @@ const AddSubcategory = () => {
 
   return (
     <div>
-      <Navbar />
+      <AdminNavbar />
       <div className="flex justify-center items-center h-screen">
         <div
           className={`bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[20.6875rem] justify-between`}
         >
-          <div className="text-2xl text-black font-bold lg:pb-[20px]">Subcategoría</div>
+          <div className="text-2xl text-black font-bold lg:pb-[20px]">
+            Subcategoría
+          </div>
           <input
             type="text"
             className="input-global"

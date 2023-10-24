@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Order from "@/app/components/Order";
-import Navbar from "@/app/components/Navbar";
+import AdminNavbar from "@/app/components/AdminNavbar";
 import BasicCard from "@/app/components/BasicCard";
 import axios from "axios";
 
@@ -49,7 +49,7 @@ const Orders = () => {
 
   return (
     <>
-      <Navbar />
+      <AdminNavbar />
       <div className="flex justify-center items-center h-screen">
         <BasicCard>
           <div className="text-2xl text-black font-bold lg:pb-[20px]">

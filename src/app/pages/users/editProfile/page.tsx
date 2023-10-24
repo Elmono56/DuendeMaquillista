@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import UserNavbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/UserNavbar";
 
 const EditProfile = () => {
   const [nombre, setNombre] = useState("");

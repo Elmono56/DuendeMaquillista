@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/app/components/Navbar";
+import AdminNavbar from "@/app/components/AdminNavbar";
 import axios from "axios";
 
 const AddProduct = () => {
@@ -24,15 +24,15 @@ const AddProduct = () => {
 
     try {
       const res = await axios.post("http://localhost:5000/api/addProduct", {
-      name: title,
-      price,
-      cantStock: quantity,
-      status: isAvailable,
-      imageURL: selectedImage, //arreglar esto porque en la bd dice String
-      // ESTO NO ESTA EN EL MODEL DE PRODUCT
-      // subCategory,
-      // ESTO NO ESTA EN EL FRONT
-      // brand,
+        name: title,
+        price,
+        cantStock: quantity,
+        status: isAvailable,
+        imageURL: selectedImage, //arreglar esto porque en la bd dice String
+        // ESTO NO ESTA EN EL MODEL DE PRODUCT
+        // subCategory,
+        // ESTO NO ESTA EN EL FRONT
+        // brand,
       });
       console.log(res);
     } catch (error: any) {
@@ -42,7 +42,7 @@ const AddProduct = () => {
 
   return (
     <div className="bg-pink-lighter min-h-screen">
-      <Navbar />
+      <AdminNavbar />
       <div className="flex justify-center items-center h-screen">
         <div className="w-2/4 bg-white rounded-lg p-8 shadow-lg">
           <div className="text-2xl text-gray-800 font-bold mb-8 text-center">

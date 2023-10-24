@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/app/components/AdminNavbar";
 
 const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState(

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import UserNavbar from "@/app/components/Navbar";
+import UserNavbar from "@/app/components/UserNavbar";
 
 const ImageDetails = () => {
   return (

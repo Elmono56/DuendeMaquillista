@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const Navbar = () => {
+const AdminNavbar = () => {
   return (
     <nav className="bg-pink-lighter">
       <div className="container mx-auto flex justify-between items-center py-4 px-8">
@@ -81,4 +81,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default AdminNavbar;
