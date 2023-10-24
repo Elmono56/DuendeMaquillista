@@ -20,12 +20,17 @@ const UserNavbar = () => {
           </span>
         </div>
         <div className="flex items-center space-x-4">
-          <Image
-            src="/img/user-svgrepo-com.svg"
-            width={24}
-            height={24}
-            alt="User"
-          />
+          <Link href="/pages/users/editProfile">
+            <div>
+              <Image
+                src="/img/user-svgrepo-com.svg"
+                width={24}
+                height={24}
+                alt="User"
+              />
+            </div>
+          </Link>
+
           <Link href="/pages/users/register" className="mr-4 hover:underline">
             <button>Sign Up</button>
           </Link>

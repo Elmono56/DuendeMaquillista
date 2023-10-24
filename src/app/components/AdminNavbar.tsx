@@ -26,6 +26,7 @@ const AdminNavbar = () => {
             height={24}
             alt="User"
           />
+
           <Link href="/pages/users/register" className="mr-4 hover:underline">
             <button>Sign Up</button>
           </Link>

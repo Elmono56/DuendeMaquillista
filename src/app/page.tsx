@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import UserNavbar from "@/app/components/UserNavbar";
+import UserNavbar from "./components/UserNavBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
