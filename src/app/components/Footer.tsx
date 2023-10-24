@@ -34,11 +34,6 @@ const Footer = () => {
               </div>
             </div>
 
-            <LinkGroup header="Contenido">
-              <NavLink link="/pages/admin/Shop" label="Tienda" />
-              <NavLink link="/pages/admin/Catalog" label="Galeria" />
-            </LinkGroup>
-
             <div className="w-full px-4 sm:w-2/3 lg:w-3/12 lg:pl-[90px]">
               <div className="w-full mb-10">
                 <h4 className="text-lg font-semibold mb-9 text-dark">
