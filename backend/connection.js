@@ -18,6 +18,7 @@ const galsubCategory = require("./routes/subCategoryRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 const shopCartRoutes = require("./routes/shopCartRoutes");
+const multer = require("multer");
 app.get("/", (req, res) => {
   res.send("API for Duende Maquillista");
 });
