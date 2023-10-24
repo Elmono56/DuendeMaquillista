@@ -8,8 +8,7 @@ name:{
 },
 
 imageURL:{
-    data: Buffer,
-    contentType: String,
+    type: String,
     required: true,
 },
 description: {

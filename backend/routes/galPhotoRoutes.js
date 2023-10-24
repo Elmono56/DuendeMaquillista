@@ -1,6 +1,5 @@
 const express = require("express");
 const galPhoto = require("../models/galleryPhoto");
-
 const router = express.Router();
 
 //add image
