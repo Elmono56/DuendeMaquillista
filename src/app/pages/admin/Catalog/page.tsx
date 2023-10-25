@@ -26,26 +26,31 @@ const Catalog = () => {
       try {
         const res = await axios.get("http://localhost:4000/api/getCategories");
         const categoriesData = res.data;
-  
+
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
-            const subRes = await axios.get("http://localhost:4000/api/getSubCategoriesFromCategory", {
-              params: { category: category.name }
-            });
+            const subRes = await axios.get(
+              "http://localhost:4000/api/getSubCategoriesFromCategory",
+              {
+                params: { category: category.name },
+              }
+            );
             console.log("Subcategoria: ", subRes);
-  
-            const subcategories = subRes.data.map((subcategory: { name: string }) => subcategory.name);
+
+            const subcategories = subRes.data.map(
+              (subcategory: { name: string }) => subcategory.name
+            );
             return {
               name: category.name,
               subcategories,
             };
           })
         );
-  
+
         // Imprimir el resultado
         console.log(formattedCategories);
-  
+
         // Guardar el resultado en el estado
         setCategories(formattedCategories);
       } catch (error) {
@@ -95,6 +100,35 @@ const Catalog = () => {
                   className="border rounded-md p-1.5 text-sm w-2/3"
                 />
                 <button className="boton-global ml-2">Buscar</button>
+
+                {/* Botones replicados */}
+                <div className="ml-2 relative">
+                  <button
+                    onClick={() => toggleDropdown(-1)} // Aquí usamos -1 para identificar este menú desplegable específico
+                    style={{ fontSize: "10px", lineHeight: "10px" }}
+                  >
+                    •<br />•<br />•
+                  </button>
+                  {dropdownVisible === -1 && ( // Aquí mostramos el menú si dropdownVisible es -1
+                    <div className="absolute mt-2 right-0 w-24 bg-white border rounded-md overflow-hidden">
+                      <Link href={"/pages/admin/addCategory"}>
+                        <button className="block w-full text-left px-2 py-1 text-sm">
+                          Agregar categoría
+                        </button>
+                      </Link>
+                      <Link href={"/pages/admin/addSubcategory"}>
+                        <button className="block w-full text-left px-2 py-1 text-sm">
+                          Agregar subcategoría
+                        </button>
+                      </Link>
+
+                      <button className="block w-full text-left px-2 py-1 text-sm">
+                        Eliminar
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {/* Fin de botones replicados */}
               </div>
             </div>
             <h2 className="text-xl font-bold mb-4">Categorías</h2>
