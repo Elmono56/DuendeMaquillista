@@ -1,4 +1,4 @@
-import UserNavbar from "@/app/components/UserNavbar";
+import UserNavbar from "../../../components/UserNavBar";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
