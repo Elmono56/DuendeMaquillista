@@ -64,7 +64,7 @@ const Catalog = () => {
   const [gallery, setGallery] = useState(
     new Array(20).fill({
       imgSrc: "/path/to/image.jpg",
-      title: "Título de la imagen",
+      title: "Título de pinga",
     })
   );
 

@@ -30,7 +30,7 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  brand: {
+  subCategory: {
     type: String,
     required: true,
   },

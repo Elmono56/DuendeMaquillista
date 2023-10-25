@@ -25,7 +25,7 @@ router.post("/addProduct", (req, res) => {
         status: req.body.status,
         description: req.body.description,
         category: req.body.category,
-        brand: req.body.brand,
+        subCategory: req.body.subCategory,
         imageURL:{
           data: req.file.filename,
           contentType: "image/png"
@@ -58,14 +58,14 @@ router.put("/modifyProduct", async (req, res) => {
     image,
     description,
     category,
-    brand,
+    subCategory,
   } = req.body;
   const product = await productSchema.findOne({ name });
   if (product) {
     await productSchema.updateOne(
       { _id: product._id },
       {
-        $set: { price, cantStock, status, image, description, category, brand },
+        $set: { price, cantStock, status, image, description, category, subCategory },
       }
     );
     res.status(200).json({ Mensaje: "Producto Actualizado" });

@@ -28,11 +28,10 @@ const AddProduct = () => {
         price,
         cantStock: quantity,
         status: isAvailable,
-        imageURL: selectedImage, //arreglar esto porque en la bd dice String
-        // ESTO NO ESTA EN EL MODEL DE PRODUCT
-        // subCategory,
-        // ESTO NO ESTA EN EL FRONT
-        // brand,
+        imageURL: selectedImage,
+        description,
+        category,
+        subCategory,
       });
       console.log(res);
     } catch (error: any) {
