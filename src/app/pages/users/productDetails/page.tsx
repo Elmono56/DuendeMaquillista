@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import UserNavbar from "@/app/components/UserNavbar";
+import UserNavbar from "../../../components/UserNavBar";
 
 const ProductDetails = () => {
   // Suponiendo un precio fijo para el producto. Esto deberías obtenerlo de tus datos.

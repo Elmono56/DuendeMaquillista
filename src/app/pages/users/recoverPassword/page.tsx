@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import UserNavbar from "@/app/components/UserNavbar";
+import UserNavbar from "../../../components/UserNavBar";
 import Link from "next/link";
 
 const RecoverPassword = () => {

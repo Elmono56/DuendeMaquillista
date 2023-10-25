@@ -63,7 +63,7 @@ const AddProduct = () => {
                 <input
                   type="file"
                   accept="image/*"
-                  className="text-xs py-1 px-2" // Estilos con Tailwind
+                  className="text-xs py-1 px-2"
                   onChange={(e) => {
                     if (e.target.files && e.target.files.length > 0) {
                       setSelectedImage(e.target.files[0]);

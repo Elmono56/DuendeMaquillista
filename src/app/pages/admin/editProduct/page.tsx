@@ -39,7 +39,7 @@ const EditProduct = () => {
                 <input
                   type="file"
                   accept="image/*"
-                  className="text-xs py-1 px-2" // Estilos con Tailwind
+                  className="text-xs py-1 px-2"
                 />
               </div>
             </div>

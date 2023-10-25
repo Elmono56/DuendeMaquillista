@@ -26,11 +26,17 @@ const Login = () => {
         email,
         password,
       });
-      if (res.data.type == "admin") {
+
+      const { type, user } = res.data;
+      console.log("Usuario: ", user._id);
+
+      if (type == "admin") {
         console.log("se logueó un admin");
+        localStorage.setItem("token", user._id);
         router.push("/pages/admin/Catalog");
-      } else if (res.data.type == "user") {
+      } else if (type == "user") {
         console.log(" se logueó un user");
+        localStorage.setItem("token", user._id);
         router.push("/pages/users/Catalog");
       }
     } catch (error: any) {
