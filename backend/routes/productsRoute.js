@@ -40,13 +40,14 @@ router.post("/addProduct", (req, res) => {
 
 // get all products
 router.get("/getProducts", async (req, res) => {
-  const productos = await productSchema.find();
-  if (productos) {
-    res.status(200).json(productos);
-  } else {
-    res.status(404).json({ Mensaje: "No hay productos registrados" });
+  try {
+    const products = await productSchema.find();
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 //modify a product
 router.put("/modifyProduct", async (req, res) => {
