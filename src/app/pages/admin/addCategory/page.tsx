@@ -47,14 +47,6 @@ const AddCategory = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
-          <input
-            type="text"
-            className="input-global"
-            placeholder="Descripción"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-
           <button className="boton-global" onClick={handleAddCategory}>
             Agregar
           </button>
