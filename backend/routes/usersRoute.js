@@ -69,4 +69,15 @@ router.put("/deleteProfile", async (req,res)=>{
   }
 })
 
+// get user by email
+router.get("/getUserByEmail", async (req, res) => {
+  const { email } = req.query;
+  const user = await userSchema.findOne({ email });
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ Mensaje: "Usuario no encontrado" });
+  }
+});
+
 module.exports = router;
