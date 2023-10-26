@@ -5,6 +5,7 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Shop = () => {
   // Categorías y subcategorías dinámicas
@@ -20,6 +21,7 @@ const Shop = () => {
     },
     // ... puedes añadir más categorías y subcategorías
   ]);
+  const router = useRouter();
 
   useEffect(() => {
     async function getData() {
@@ -63,6 +65,7 @@ const Shop = () => {
   // Galería de fotos dinámica
   const [gallery, setGallery] = useState(
     new Array(20).fill({
+      id: "1111111",
       imgSrc: "/path/to/image.jpg",
       title: "Título de la imagen",
       price: "$100.00",
@@ -85,16 +88,23 @@ const Shop = () => {
     // y se actualiza el estado de la tienda
     async function getProducts() {
       const res = await axios.get("http://localhost:4000/api/getProducts");
-      console.log("Data: ", res.data.name);
+      console.log("Data: ", res.data);
       // Actualiza el estado gallery con la matriz de productos
-      setGallery(res.data.map((product: { imageURL: string, name: string, price: string }) => ({
+      setGallery(res.data.map((product: { _id: string, imageURL: string, name: string, price: string }) => ({
+        id: product._id,
         imgSrc: product.imageURL,
         title: product.name,
-        price: "$"+ product.price,
+        price: "$" + product.price,
       })));
     } getProducts();
   }
     , []);
+
+  const handleViewDetails = (id: string) => {
+    // Navegar a la página de EditProduct y pasar el ID del producto como un parámetro en la URL
+    router.push('/pages/admin/editProduct');
+    localStorage.setItem('productID', id);
+  };
 
   return (
     <div>
@@ -216,21 +226,21 @@ const Shop = () => {
                   </div>
 
                   <div className="mb-4">
-                    <img
-                      src={image.imgSrc}
-                      className="w-full h-32 object-cover rounded-md"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="text-gray-700">{image.title}</div>
-                    <Link
-                      href="/pages/users/imageDetails"
-                      className="text-blue-500"
-                    >
-                      <button>Ver más</button>
-                    </Link>
-                  </div>
-                  <div className="mt-2 text-center text-gray-800">
+                      <img
+                        src={image.imgSrc}
+                        className="w-full h-32 object-cover rounded-md"
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-gray-700">{image.title}</div>
+                      {/* <Link
+                        href="/pages/users/imageDetails"
+                        className="text-blue-500"
+                      > */}
+                        <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
+                      {/* </Link> */}
+                    </div>
+                    <div className="mt-2 text-center text-gray-800">
                     {image.price}
                   </div>
                 </div>

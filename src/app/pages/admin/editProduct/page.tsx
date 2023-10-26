@@ -20,6 +20,8 @@ const EditProduct = () => {
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
+    const idProduct = localStorage.getItem('productID');
+    console.log("ID del producto: ", idProduct);
   };
 
   return (
