@@ -80,6 +80,22 @@ const Shop = () => {
     }
   };
 
+  useEffect(() => {
+    // Aqui se hace la peticion para obtener los productos
+    // y se actualiza el estado de la tienda
+    async function getProducts() {
+      const res = await axios.get("http://localhost:4000/api/getProducts");
+      console.log("Data: ", res.data.name);
+      // Actualiza el estado gallery con la matriz de productos
+      setGallery(res.data.map((product: { imageURL: string, name: string, price: string }) => ({
+        imgSrc: product.imageURL,
+        title: product.name,
+        price: "$"+ product.price,
+      })));
+    } getProducts();
+  }
+    , []);
+
   return (
     <div>
       <AdminNavbar />
