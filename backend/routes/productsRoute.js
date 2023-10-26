@@ -2,7 +2,7 @@ const express = require("express");
 const productSchema = require("../models/product");
 const multer = require("multer");
 const router = express.Router();
-const storage = multer.diskStorage({
+const storage = multer.memoryStorage({
   destination: function(req, file, cb) {
     cb(null, "uploads");
   },
@@ -44,7 +44,7 @@ router.post("/addProduct", (req, res) => {
 router.get("/getProducts", async (req, res) => {
   try {
     const products = await productSchema.find();
-    res.status(200).json(products);
+    res.status(200).json(products.name);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
