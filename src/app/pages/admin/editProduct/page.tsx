@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import axios from "axios";
 
 const EditProduct = () => {
   const [category, setCategory] = useState("");
@@ -12,16 +13,25 @@ const EditProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
 
+  useEffect(() => {
+    async function getProduct () {
+      let idProduct = localStorage.getItem('productID');
+      const res = await axios.get('http://localhost:4000/api/getProductById', { params: { id: idProduct }});
+      const product = res.data;
+      setCategory(product.category);
+      setSubCategory(product.subCategory);
+      setDescription(product.description);
+      setTitle(product.name);
+      setPrice(product.price);
+      setQuantity(product.cantStock);
+      setIsAvailable(product.status);
+      //falta el set de la imagen
+    }
+    getProduct();
+  }, []);
+
   const handleSaveProduct = () => {
-    console.log("Categoría:", category);
-    console.log("Subcategoría:", subCategory);
-    console.log("Título:", title);
-    console.log("Descripción:", description);
-    console.log("Precio:", price);
-    console.log("Cantidad:", quantity);
-    console.log("¿Disponible?", isAvailable);
-    const idProduct = localStorage.getItem('productID');
-    console.log("ID del producto: ", idProduct);
+    
   };
 
   return (

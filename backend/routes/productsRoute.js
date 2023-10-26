@@ -69,6 +69,17 @@ router.get("/getProduct", async (req, res) => {
   }
 });
 
+// get product by id
+router.get("/getProductById", async (req, res) => {
+  const { id } = req.query;
+  const product = await productSchema.findById(id);
+  if (product) {
+    res.status(200).json(product);
+  } else {
+    res.status(404).json({ Mensaje: "Producto no encontrado" });
+  }
+});
+
 //change visibility
 router.put("/setProductVisible", async (req, res) => {
   const { name, status } = req.body;
