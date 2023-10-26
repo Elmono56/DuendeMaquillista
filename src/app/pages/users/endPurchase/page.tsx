@@ -130,7 +130,10 @@ const EndPurchase = () => {
               <span className="font-bold">${calculateTotal()}</span>
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href="/pages/users/endPurchase py-4">
+              <Link
+                href="/pages/users/Catalog
+              "
+              >
                 <button className="boton-global">Finalizar compra</button>
               </Link>
             </div>
