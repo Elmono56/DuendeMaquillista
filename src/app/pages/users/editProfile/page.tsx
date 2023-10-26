@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const EditProfile = () => {
   const [nombre, setNombre] = useState("");
@@ -10,6 +11,7 @@ const EditProfile = () => {
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     // necesito hacer un getUser con el id que se encuentra en localStorage.get('token')
@@ -51,6 +53,7 @@ const EditProfile = () => {
       });
       if (res2.status == 200) {
         alert("Usuario actualizado correctamente");
+        router.push("/");
       } else {
         alert("No se pudo actualizar el usuario");
       }

@@ -26,7 +26,7 @@ router.post("/addProduct", (req, res) => {
 router.get("/getProducts", async (req, res) => {
   try {
     const products = await productSchema.find();
-    res.status(200).json(products.name);
+    res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
