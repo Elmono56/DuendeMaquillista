@@ -76,6 +76,22 @@ const Catalog = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    //get all images for a catalog
+    async function getData() {
+      try {
+        const res = await axios.get("http://localhost:4000/api/getImages");
+        const imagesData = res.data;
+        console.log("Images: ", imagesData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getData();
+  }
+  );
+  
+
   // Galería de fotos dinámica
   const [gallery, setGallery] = useState(
     new Array(20).fill({

@@ -25,6 +25,17 @@ router.put("/modifyGalPhoto", async (req, res)=>{
   }
 });
 
+//get all gallery photos
+router.get("/getGalPhotos", async (req,res)=>{
+  const photos = await galPhoto.find();
+  if (photos){
+    res.status(200).json(photos);
+  }
+  else{
+    res.status(404).json({Mensaje: "No se encontraron imagenes"});
+  }
+});
+
 //get a single gallery photo
 router.get("/getGalPhoto", async (req,res)=>{
   const {name} = req.body;
