@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import UserNavbar from "./components/UserNavBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 async function makeRequest() {
   const config = {
@@ -69,7 +70,9 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <Link href="/pages/users/recoverPassword"> 
           <div>¿Olvidó la contraseña?</div>
+          </Link>
           <button
             className="boton-global"
             onClick={() => {

@@ -32,7 +32,7 @@ const Catalog = () => {
       setToken(storedToken);
     } else {
       // Si no hay token en el almacenamiento local, redirige a la página de inicio de sesión
-      router.push("../");
+      router.push("/");
     }
   }, []);
 

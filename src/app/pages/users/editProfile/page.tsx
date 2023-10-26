@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserNavbar from "../../../components/UserNavBar";
+import axios from "axios";
 
 const EditProfile = () => {
   const [nombre, setNombre] = useState("");
@@ -10,12 +11,53 @@ const EditProfile = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  const handleSaveChanges = () => {
-    console.log("Nombre:", nombre);
-    console.log("Apellido:", apellido);
-    console.log("Email:", email);
-    console.log("Contraseña actual:", currentPassword);
-    console.log("Contraseña nueva:", newPassword);
+  useEffect(() => {
+    // necesito hacer un getUser con el id que se encuentra en localStorage.get('token')
+    // y con esa data llenar los campos
+    async function getData() {
+      try {
+        const userId = localStorage.getItem("token");
+        const res = await axios.get("http://localhost:4000/api/getUser", { params: {id: userId}});
+        setNombre(res.data.name);
+        setApellido(res.data.lastName);
+        setEmail(res.data.email);
+      } catch (error: any) {
+        console.log(error);
+      }
+    }
+    getData();
+  }, []);
+
+
+  const handleSaveChanges = async () => {
+    // se necesita validar primero que la contraseña actual sea correcta
+    try {
+      const res = await axios.post("http://localhost:4000/api/login", {
+        email,
+        password: currentPassword,
+      });
+      if (res.status == 401) {
+        alert("La contraseña actual es incorrecta");
+        return;
+      }
+      // si la contraseña es correcta, se procede a actualizar el usuario
+      const userId = localStorage.getItem("token");
+      const res2 = await axios.put("http://localhost:4000/api/updateUser", {
+        id: userId,
+        name: nombre,
+        lastName: apellido,
+        email,
+        password: newPassword,
+      });
+      if (res2.status == 200) {
+        alert("Usuario actualizado correctamente");
+      } else {
+        alert("No se pudo actualizar el usuario");
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+
   };
 
   return (
@@ -32,6 +74,7 @@ const EditProfile = () => {
             placeholder="Nombre"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
+            required
           />
           <input
             type="text"
@@ -39,6 +82,7 @@ const EditProfile = () => {
             placeholder="Apellido"
             value={apellido}
             onChange={(e) => setApellido(e.target.value)}
+            required
           />
           <input
             type="text"
@@ -46,6 +90,7 @@ const EditProfile = () => {
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
