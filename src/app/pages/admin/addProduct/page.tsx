@@ -13,17 +13,17 @@ const AddProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File>();
-  function convertTo64(file: any){
-    return new Promise((resolve, reject) =>{
+  function convertTo64(file: any) {
+    return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = () => {
         resolve(fileReader.result);
       };
-      fileReader. onerror = (error) =>{
+      fileReader.onerror = (error) => {
         reject(error);
-        }
-    })
+      };
+    });
   }
   const handleProductUpload = async (e: any) => {
     e.preventDefault();
@@ -38,7 +38,6 @@ const AddProduct = () => {
     const base64 = await convertTo64(selectedImage);
     console.log("Base 64: ", base64);
 
-  
     if (selectedImage !== undefined) {
       try {
         const res = await axios.post("http://localhost:4000/api/addProduct", {
@@ -51,7 +50,7 @@ const AddProduct = () => {
           category,
           subCategory,
         });
-  
+
         console.log(res);
         alert("Se ha subido el producto a la tienda.");
       } catch (error: any) {
@@ -78,10 +77,11 @@ const AddProduct = () => {
                 className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center"
               >
                 {selectedImage && (
-                  <img src={URL.createObjectURL(selectedImage)} />
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    className="rounded-sm w-72 h-64 object-cover"
+                  />
                 )}
-
-                <span className="text-gray-400">Previsualización</span>
               </div>
               <div className="flex justify-center items-center">
                 <input
@@ -92,7 +92,6 @@ const AddProduct = () => {
                     if (e.target.files && e.target.files.length > 0) {
                       setSelectedImage(e.target.files[0]);
                     }
-                    //addImg();
                   }}
                 />
               </div>
