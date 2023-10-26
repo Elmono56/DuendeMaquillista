@@ -5,23 +5,19 @@ const agendaEventSchema = mongoose.Schema({
     type: Number,
     required: true
 },
-date: {
-    type: Date,
+userID: {
+    type: String,
     required: true
 },
-user: {
-    type: Number,
-    required: true
-},
-location: {
-    type: Number,
-    required: true
-},
-duration: {
-    type: Number,
+addresID: {
+    type: String,
     required: true
 },
 startTime: {
+    type: Date,
+    required: true
+},
+finishTime:{
     type: Date,
     required: true
 },

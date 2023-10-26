@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const orderSchema = mongoose.Schema({
   shopCartID: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
