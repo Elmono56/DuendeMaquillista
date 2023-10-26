@@ -7,7 +7,7 @@ const shoppingCartSchema = mongoose.Schema({
 },
 user_id:
 {
-    type: Number,
+    type: String,
     required: true
 },
 products:
