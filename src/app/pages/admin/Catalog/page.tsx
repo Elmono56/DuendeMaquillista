@@ -5,6 +5,7 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Catalog = () => {
   // Categorías y subcategorías dinámicas
@@ -20,6 +21,21 @@ const Catalog = () => {
     },
     // ... puedes añadir más categorías y subcategorías
   ]);
+  const [token, setToken] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    // Intenta obtener el token desde el almacenamiento local
+    const storedToken = localStorage.getItem("token");
+    console.log("Token: ", storedToken);
+    if (storedToken) {
+      // Si se encuentra un token en el almacenamiento local, configúralo en el estado
+      setToken(storedToken);
+    } else {
+      // Si no hay token en el almacenamiento local, redirige a la página de inicio de sesión
+      router.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     async function getData() {
