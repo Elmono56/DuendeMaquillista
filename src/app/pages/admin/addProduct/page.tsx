@@ -13,29 +13,53 @@ const AddProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File>();
-
-  const handleProductUpload = async () => {
+  function convertTo64(file: any){
+    return new Promise((resolve, reject) =>{
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader. onerror = (error) =>{
+        reject(error);
+        }
+    })
+  }
+  const handleProductUpload = async (e: any) => {
+    e.preventDefault();
     console.log("Categoría:", category);
     console.log("Subcategoría:", subCategory);
     console.log("Título:", title);
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
+    console.log("Selected image:", selectedImage);
+    const file = e.target.files[0];
+    const base64 = await convertTo64(selectedImage);
+    console.log("Base 64: ", base64);
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/addProduct", {
-        name: title,
-        price,
-        cantStock: quantity,
-        status: isAvailable,
-        imageURL: selectedImage,
-        description,
-        category,
-        subCategory,
-      });
-      console.log(res);
-    } catch (error: any) {
-      console.log(error);
+  
+    if (selectedImage !== undefined) {
+      try {
+        const res = await axios.post("http://localhost:4000/api/addProduct", {
+          name: title,
+          price,
+          cantStock: quantity,
+          status: isAvailable,
+          testImage: selectedImage,
+          description,
+          category,
+          subCategory,
+        });
+  
+        console.log(res);
+        alert("Se ha subido el producto a la tienda.");
+      } catch (error: any) {
+        alert("No se agregó el producto.");
+        console.log(error);
+      }
+    } else {
+      alert("No se ha seleccionado ningún archivo.");
     }
   };
 
