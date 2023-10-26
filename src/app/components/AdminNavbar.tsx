@@ -5,6 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 const AdminNavbar = () => {
+  
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+  };
+
   return (
     <nav className="bg-pink-lighter">
       <div className="container mx-auto flex justify-between items-center py-4 px-8">
@@ -74,7 +79,7 @@ const AdminNavbar = () => {
             href="/"
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
           >
-            <button>Sign Out</button>
+            <button onClick={handleLogout}>Sign Out</button>
           </Link>
         </div>
       </div>
