@@ -23,6 +23,39 @@ router.put("/updatePassword", async (req, res)=>{
 
 });
 
+// update user
+router.put("/updateUser", async (req, res) => {
+  const updateFields = {};
+  const { id, name, lastName, email, password } = req.body;
+
+  // Verificar si los campos no son vacíos y actualizar el objeto updateFields
+  if (name) updateFields.name = name;
+  if (lastName) updateFields.lastName = lastName;
+  if (email) updateFields.email = email;
+  if (password) updateFields.password = password;
+
+  const user = await userSchema.findById(id);
+
+  if (user) {
+    await userSchema.updateOne({ _id: user._id }, { $set: updateFields });
+    res.status(200).json({ Mensaje: "Usuario actualizado" });
+  } else {
+    res.status(404).json({ Mensaje: "Usuario no encontrado" });
+  }
+});
+
+
+// get user
+router.get("/getUser", async (req, res) => {
+  const { id } = req.query;
+  const user = await userSchema.findById(id);
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ Mensaje: "Usuario no encontrado" });
+  }
+});
+
 //"delete" user
 router.put("/deleteProfile", async (req,res)=>{
   const {email} = req.body;
