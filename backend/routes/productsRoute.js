@@ -2,13 +2,15 @@ const express = require("express");
 const productSchema = require("../models/product");
 const multer = require("multer");
 const router = express.Router();
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function(req, file, cb) {
     cb(null, file.originalname);
-  }
+  },
 });
-const upload = multer({ storage: Storage }).single("testImage");
+const upload = multer({ storage }).single("image");
 
 
 //add product
@@ -27,7 +29,7 @@ router.post("/addProduct", (req, res) => {
         category: req.body.category,
         subCategory: req.body.subCategory,
         imageURL:{
-          data: req.file.filename,
+          data: req.file.buffer,
           contentType: "image/png"
         }
       });
@@ -47,7 +49,6 @@ router.get("/getProducts", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 //modify a product
 router.put("/modifyProduct", async (req, res) => {
