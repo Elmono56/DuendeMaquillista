@@ -2,7 +2,7 @@ const express = require("express");
 const productSchema = require("../models/product");
 const multer = require("multer");
 const router = express.Router();
-const storage = multer.memoryStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "uploads");
   },
@@ -15,29 +15,11 @@ const upload = multer({ storage }).single("image");
 
 //add product
 router.post("/addProduct", (req, res) => {
-  upload(req,res,(err) => {
-    if(err){
-      console.log(err);
-    }
-    else{
-      const newProduct = new productSchema({
-        name: req.body.name,
-        price: req.body.price,
-        cantStock: req.body.cantStock,
-        status: req.body.status,
-        description: req.body.description,
-        category: req.body.category,
-        subCategory: req.body.subCategory,
-        imageURL:{
-          data: req.file.buffer,
-          contentType: "image/png"
-        }
-      });
-      newProduct.save()
-      .then(() =>res.status(200).json({message: "Producto agregado"}))
-      .catch((err) => res.status(400).json({message: err}));
-    }
-  })
+  const product = productSchema(req.body);
+  product
+    .save()
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
 });
 
 // get all products

@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import axios from "axios";
+import { useEffect } from "react";
+import { storage } from "../../../../../backend/firebase/connection"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const AddProduct = () => {
   const [category, setCategory] = useState("");
@@ -12,40 +15,65 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<File>();
-  function convertTo64(file: any) {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  }
-  const handleProductUpload = async (e: any) => {
-    e.preventDefault();
+  const [file, setFile] = useState<File>();
+  const [data, setData] = useState({});
+  const [previewURL, setPreviewURL] = useState("");
+  const [per, setPerc] = useState(null);
+  useEffect(() => {
+    const uploadFile = () => {
+      const storageRef = ref(storage, file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setPerc(progress);
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setData((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
+    };
+    file && uploadFile();
+  }, [file]);
+
+
+  const handleFileChange = (e: any) => {
+    const selectedFile = e.target.files[0];
+    console.log(selectedFile)
+    setFile(selectedFile);
+
+    if (selectedFile) {
+      const previewURL = URL.createObjectURL(selectedFile);
+      setPreviewURL(previewURL);
+    } else {
+      setPreviewURL("");
+    }
+  };
+  const handleProductUpload = async () => {
     console.log("Categoría:", category);
     console.log("Subcategoría:", subCategory);
     console.log("Título:", title);
     console.log("Precio:", price);
     console.log("Cantidad:", quantity);
     console.log("¿Disponible?", isAvailable);
-    console.log("Selected image:", selectedImage);
-    const file = e.target.files[0];
-    const base64 = await convertTo64(selectedImage);
-    console.log("Base 64: ", base64);
+    console.log("Selected image:", file);
 
-    if (selectedImage !== undefined) {
+    if (file !== undefined) {
       try {
         const res = await axios.post("http://localhost:4000/api/addProduct", {
           name: title,
           price,
           cantStock: quantity,
           status: isAvailable,
-          testImage: selectedImage,
+          imageURL: data.img,
           description,
           category,
           subCategory,
@@ -76,9 +104,9 @@ const AddProduct = () => {
                 id="prevImg"
                 className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center"
               >
-                {selectedImage && (
+                {file && (
                   <img
-                    src={URL.createObjectURL(selectedImage)}
+                    src={URL.createObjectURL(file)}
                     className="rounded-sm w-72 h-64 object-cover"
                   />
                 )}
@@ -90,7 +118,7 @@ const AddProduct = () => {
                   className="text-xs py-1 px-2"
                   onChange={(e) => {
                     if (e.target.files && e.target.files.length > 0) {
-                      setSelectedImage(e.target.files[0]);
+                      setFile(e.target.files[0]);
                     }
                   }}
                 />
