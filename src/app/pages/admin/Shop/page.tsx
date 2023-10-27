@@ -88,7 +88,6 @@ const Shop = () => {
     // y se actualiza el estado de la tienda
     async function getProducts() {
       const res = await axios.get("http://localhost:4000/api/getProducts");
-      console.log("Data: ", res.data);
       // Actualiza el estado gallery con la matriz de productos
       setGallery(res.data.map((product: { _id: string, imageURL: string, name: string, price: string }) => ({
         id: product._id,
@@ -99,6 +98,15 @@ const Shop = () => {
     } getProducts();
   }
     , []);
+
+  const handleDeleteProduct = async (id: string) => {
+    console.log("ID: ", id);
+    const confirm = window.confirm("¿Estás seguro?");
+    if (confirm) {
+      // Aqui se hace la peticion para eliminar el producto
+      // const res = await axios.put("http://localhost:4000/api/setProductVisible", { id, visible: false });
+    }
+  };
 
   const handleEditProduct = (id: string) => {
     // Navegar a la página de editProduct y pasar el ID del producto como un parámetro en la URL
@@ -222,9 +230,9 @@ const Shop = () => {
                           className="block w-full text-left px-2 py-1 text-sm"
                           href="/pages/admin/editProduct"
                         > */}
-                          <button onClick={() => handleEditProduct(image.id)}>Editar</button>
+                        <button onClick={() => handleEditProduct(image.id)}>Editar</button>
                         {/* </Link> */}
-                        <button className="block w-full text-left px-2 py-1 text-sm">
+                        <button className="block w-full text-left px-2 py-1 text-sm" onClick={() => handleDeleteProduct(image.id)}>
                           Eliminar
                         </button>
                       </div>
@@ -232,21 +240,21 @@ const Shop = () => {
                   </div>
 
                   <div className="mb-4">
-                      <img
-                        src={image.imgSrc}
-                        className="w-full h-32 object-cover rounded-md"
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-gray-700">{image.title}</div>
-                      {/* <Link
+                    <img
+                      src={image.imgSrc}
+                      className="w-full h-32 object-cover rounded-md"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-gray-700">{image.title}</div>
+                    {/* <Link
                         href="/pages/users/imageDetails"
                         className="text-blue-500"
                       > */}
-                        <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
-                      {/* </Link> */}
-                    </div>
-                    <div className="mt-2 text-center text-gray-800">
+                    <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
+                    {/* </Link> */}
+                  </div>
+                  <div className="mt-2 text-center text-gray-800">
                     {image.price}
                   </div>
                 </div>
