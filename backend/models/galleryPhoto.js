@@ -28,11 +28,11 @@ tags: {
     type: Array,
     required: true
 },
-categories: {
+category: {
     type: String,
     required: true
 },
-subCategories: {
+subCategory: {
     type: String,
     required: true
 }
