@@ -1,5 +1,7 @@
 const express = require("express");
 const productSchema = require("../models/product");
+const categorySchema = require("../models/category");
+const subCategorySchema = require("../models/subcategory");
 const multer = require("multer");
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -14,7 +16,17 @@ const upload = multer({ storage }).single("image");
 
 
 //add product
-router.post("/addProduct", (req, res) => {
+router.post("/addProduct", async (req, res) => {
+  const { name, price, cantStock, status, imageURL, description, category, subCategory } = req.body;
+  const categoryExists = await categorySchema.findOne({ name: category });
+  if (!categoryExists) return res.status(400).json({ message: "La categoría no existe" });
+
+  const subCategoryExists = await subCategorySchema.findOne({ name: subCategory, upperC: category });
+  if (!subCategoryExists) return res.status(400).json({ message: "La subcategoría especificada no existe o no es una subcategoría de la categoría proporcionada." });
+
+  const productNameExists = await productSchema.findOne({ name });
+  if (productNameExists) return res.status(400).json({ message: "El producto ya existe" });
+
   const product = productSchema(req.body);
   product
     .save()
@@ -25,7 +37,7 @@ router.post("/addProduct", (req, res) => {
 // get all products
 router.get("/getProducts", async (req, res) => {
   try {
-    const products = await productSchema.find();
+    const products = await productSchema.find({status: true});
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -82,8 +94,9 @@ router.get("/getProductById", async (req, res) => {
 
 //change visibility
 router.put("/setProductVisible", async (req, res) => {
-  const { name, status } = req.body;
-  const product = await productSchema.findOne({ name });
+  const { id, status } = req.body;
+  console.log(id, status)
+  const product = await productSchema.findById({ id });
   if (product) {
     await productSchema.updateOne({ _id: product._id }, { $set: { status } });
     res.status(200).json({ Mensaje: "Visibilidad del Producto Actualizada" });
