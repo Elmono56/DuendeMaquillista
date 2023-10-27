@@ -35,6 +35,8 @@ app.use("/api", loginRoute);
 app.use("/api", galPhoto);
 app.use("/api",galCategory);
 app.use("/api",galSubCategory);
+app.use("/api",shopCategory);
+app.use("/api",shopSubCategory);
 app.use("/api",orderRoutes);
 app.use("/api",addressRoutes);
 app.use("/api", shopCartRoutes);
