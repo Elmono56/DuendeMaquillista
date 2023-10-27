@@ -1,5 +1,5 @@
 const express = require("express");
-const categorySchema = require("../models/category");
+const categorySchema = require("../models/categoryGal");
 
 const router = express.Router();
 
@@ -19,16 +19,6 @@ router.post("/createCategory", async (req, res) => {
     }
     
   });
-
-//get all categories
-router.get("/getCategories", async (req, res) => {
-  const categories = await categorySchema.find();
-  if (categories) {
-    res.status(200).json(categories);
-  } else {
-    res.status(404).json({ Mensaje: "No hay categorías registradas" });
-  }
-});
 
 //get all categories
 router.get("/getCategories", async (req, res) => {
