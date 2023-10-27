@@ -1,21 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
+import axios from "axios";
 
 const ProductDetails = () => {
   // Suponiendo un precio fijo para el producto. Esto deberías obtenerlo de tus datos.
-  const precioProducto = 100;
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [isAvailable, setIsAvailable] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [quantityToBuy, setQuantityToBuy] = useState(1);
+  const [image, setImage] = useState("");
 
-  const [cantidad, setCantidad] = useState(2);
-  const [total, setTotal] = useState(precioProducto * cantidad);
 
-  const handleCantidadChange = (e) => {
-    const newCantidad = Number(e.target.value); // Convertir el valor a número
-    setCantidad(newCantidad);
-    setTotal(precioProducto * newCantidad);
-  };
+  useEffect(() => {
+    setTotal(Number(price) * quantityToBuy);
+  }, [price, quantityToBuy]);
+
+  useEffect(() => {
+    async function getProduct () {
+      let idProduct = localStorage.getItem('productID');
+      const res = await axios.get('http://localhost:4000/api/getProductById', { params: { id: idProduct }});
+      const product = res.data;
+      setCategory(product.category);
+      setSubCategory(product.subCategory);
+      setDescription(product.description);
+      setTitle(product.name);
+      setPrice(product.price);
+      setQuantity(product.cantStock);
+      setIsAvailable(product.status);
+      //falta el set de la imagen
+    }
+    getProduct();
+  }, []);
 
   return (
     <div className="bg-pink-lighter min-h-screen">
@@ -32,23 +55,23 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex-1 flex flex-col items-start space-y-3">
-              <label className="text-gray-700">Categoría:</label>
-              <label className="text-gray-700">Subcategoría:</label>
-              <label className="text-gray-700">Descripción:</label>
-              <label className="text-gray-700">Disponibles:</label>
+              <label className="text-gray-700">Categoría: {category}</label>
+              <label className="text-gray-700">Subcategoría: {subCategory}</label>
+              <label className="text-gray-700">Descripción: {description}</label>
+              <label className="text-gray-700">Disponibles: {quantity}</label>
               <label className="text-gray-700 font-medium">
-                Precio: ${precioProducto}
+                Precio: ${price}
               </label>
               <div className="flex items-center space-x-2 mt-3">
                 <label className="text-sm font-medium text-gray-700">
-                  Cantidad:
+                  Cantidad: {quantity}
                 </label>
                 <input
                   type="number"
                   id="cantidad"
                   className="w-20 h-8 p-1 text-sm border rounded bg-gray-50 focus:border-blue-500"
-                  value={cantidad}
-                  onChange={handleCantidadChange}
+                  value={quantityToBuy}
+                  onChange={(e) => setQuantityToBuy(parseInt(e.target.value))}
                 />
               </div>
             </div>

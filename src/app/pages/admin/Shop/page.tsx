@@ -100,10 +100,16 @@ const Shop = () => {
   }
     , []);
 
-  const handleViewDetails = (id: string) => {
-    // Navegar a la página de EditProduct y pasar el ID del producto como un parámetro en la URL
-    router.push('/pages/admin/editProduct');
+  const handleEditProduct = (id: string) => {
+    // Navegar a la página de editProduct y pasar el ID del producto como un parámetro en la URL
     localStorage.setItem('productID', id);
+    router.push("/pages/admin/editProduct");
+  }
+
+  const handleViewDetails = (id: string) => {
+    // Navegar a la página de productDetails y pasar el ID del producto como un parámetro en la URL
+    localStorage.setItem('productID', id);
+    router.push("/pages/users/productDetails");
   };
 
   return (
@@ -212,12 +218,12 @@ const Shop = () => {
                     </button>
                     {dropdownVisible === idx && (
                       <div className="absolute mt-2 right-0 w-24 bg-white border rounded-md overflow-hidden">
-                        <Link
+                        {/* <Link
                           className="block w-full text-left px-2 py-1 text-sm"
                           href="/pages/admin/editProduct"
-                        >
-                          <button>Editar</button>
-                        </Link>
+                        > */}
+                          <button onClick={() => handleEditProduct(image.id)}>Editar</button>
+                        {/* </Link> */}
                         <button className="block w-full text-left px-2 py-1 text-sm">
                           Eliminar
                         </button>
