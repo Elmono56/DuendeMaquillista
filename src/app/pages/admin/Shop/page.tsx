@@ -26,14 +26,14 @@ const Shop = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("http://localhost:4000/api/getCategories");
+        const res = await axios.get("http://localhost:4000/api/getShopCategories");
         const categoriesData = res.data;
 
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
             const subRes = await axios.get(
-              "http://localhost:4000/api/getSubCategoriesFromCategory",
+              "http://localhost:4000/api/getShopSubCategoriesFromCategory",
               {
                 params: { category: category.name },
               }
@@ -180,12 +180,12 @@ const Shop = () => {
                     </button>
                     {dropdownVisible === -1 && ( // Aquí mostramos el menú si dropdownVisible es -1
                       <div className="absolute mt-2 right-0 w-24 bg-white border rounded-md overflow-hidden">
-                        <Link href={"/pages/admin/addCategory"}>
+                        <Link href={"/pages/admin/addShopCategory"}>
                           <button className="block w-full text-left px-2 py-1 text-sm">
                             Agregar categoría
                           </button>
                         </Link>
-                        <Link href={"/pages/admin/addSubcategory"}>
+                        <Link href={"/pages/admin/addShopSubcategory"}>
                           <button className="block w-full text-left px-2 py-1 text-sm">
                             Agregar subcategoría
                           </button>

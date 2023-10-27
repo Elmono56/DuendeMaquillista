@@ -5,7 +5,7 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Catalog = () => {
   // Categorías y subcategorías dinámicas
@@ -24,18 +24,18 @@ const Catalog = () => {
   const [token, setToken] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    // Intenta obtener el token desde el almacenamiento local
-    const storedToken = localStorage.getItem("token");
-    console.log("Token: ", storedToken);
-    if (storedToken) {
-      // Si se encuentra un token en el almacenamiento local, configúralo en el estado
-      setToken(storedToken);
-    } else {
-      // Si no hay token en el almacenamiento local, redirige a la página de inicio de sesión
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Intenta obtener el token desde el almacenamiento local
+  //   const storedToken = localStorage.getItem("token");
+  //   console.log("Token: ", storedToken);
+  //   if (storedToken) {
+  //     // Si se encuentra un token en el almacenamiento local, configúralo en el estado
+  //     setToken(storedToken);
+  //   } else {
+  //     // Si no hay token en el almacenamiento local, redirige a la página de inicio de sesión
+  //     router.push("/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     async function getData() {
@@ -143,12 +143,12 @@ const Catalog = () => {
                   </button>
                   {dropdownVisible === -1 && ( // Aquí mostramos el menú si dropdownVisible es -1
                     <div className="absolute mt-2 right-0 w-24 bg-white border rounded-md overflow-hidden">
-                      <Link href={"/pages/admin/addCategory"}>
+                      <Link href={"/pages/admin/addGalCategory"}>
                         <button className="block w-full text-left px-2 py-1 text-sm">
                           Agregar categoría
                         </button>
                       </Link>
-                      <Link href={"/pages/admin/addSubcategory"}>
+                      <Link href={"/pages/admin/addGalSubcategory"}>
                         <button className="block w-full text-left px-2 py-1 text-sm">
                           Agregar subcategoría
                         </button>
