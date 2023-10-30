@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import axios from "axios";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../../../backend/firebase/connection"
 
 const EditProduct = () => {
   const [category, setCategory] = useState("");
@@ -12,11 +14,36 @@ const EditProduct = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
+  const [file, setFile] = useState<File>();
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const uploadFile = () => {
+      const storageRef = ref(storage, file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setData((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
+    };
+    file && uploadFile();
+  }, [file]);
 
   useEffect(() => {
-    async function getProduct () {
+    async function getProduct() {
       let idProduct = localStorage.getItem('productID');
-      const res = await axios.get('http://localhost:4000/api/getProductById', { params: { id: idProduct }});
+      const res = await axios.get('http://localhost:4000/api/getProductById', { params: { id: idProduct } });
       const product = res.data;
       setCategory(product.category);
       setSubCategory(product.subCategory);
@@ -25,13 +52,34 @@ const EditProduct = () => {
       setPrice(product.price);
       setQuantity(product.cantStock);
       setIsAvailable(product.status);
-      //falta el set de la imagen
     }
     getProduct();
   }, []);
 
-  const handleSaveProduct = () => {
-    
+  const handleSaveProduct = async () => {
+    console.log(data);
+    if (file !== undefined) {
+      try {
+        const res = await axios.put("http://localhost:4000/api/modifyProduct", {
+          name: title,
+          price,
+          cantStock: quantity,
+          status: isAvailable,
+          imageURL: data.img,
+          description,
+          category,
+          subCategory,
+        });
+
+        console.log(res);
+        alert("Se ha subido el producto a la tienda.");
+      } catch (error: any) {
+        alert("No se agregó el producto.");
+        console.log(error);
+      }
+    } else {
+      alert("No se ha seleccionado ningún archivo.");
+    }
   };
 
   return (
@@ -44,14 +92,29 @@ const EditProduct = () => {
           </div>
           <div className="flex items-start space-x-8">
             <div>
-              <div className="w-72 h-64 rounded-xl border border-gray-300 mb-4 flex items-center justify-center">
-                <span className="text-gray-400">Previsualización</span>
-              </div>
+            
+                <div
+                  id="prevImg"
+                  className="w-72 h-64 rounded-md border border-gray-300 mb-4 flex items-center justify-center"
+                >
+                  {file && (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      className="rounded-sm w-72 h-64 object-cover"
+                    />
+                  )}
+                </div>
+              
               <div className="flex justify-center items-center">
                 <input
                   type="file"
                   accept="image/*"
                   className="text-xs py-1 px-2"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
                 />
               </div>
             </div>

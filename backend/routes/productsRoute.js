@@ -51,7 +51,7 @@ router.put("/modifyProduct", async (req, res) => {
     price,
     cantStock,
     status,
-    image,
+    imageURL,
     description,
     category,
     subCategory,
@@ -61,7 +61,7 @@ router.put("/modifyProduct", async (req, res) => {
     await productSchema.updateOne(
       { _id: product._id },
       {
-        $set: { price, cantStock, status, image, description, category, subCategory },
+        $set: { price, cantStock, status, imageURL, description, category, subCategory },
       }
     );
     res.status(200).json({ Mensaje: "Producto Actualizado" });

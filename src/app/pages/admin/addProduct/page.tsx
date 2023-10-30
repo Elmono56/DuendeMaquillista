@@ -17,8 +17,6 @@ const AddProduct = () => {
   const [isAvailable, setIsAvailable] = useState(false);
   const [file, setFile] = useState<File>();
   const [data, setData] = useState({});
-  const [previewURL, setPreviewURL] = useState("");
-  const [per, setPerc] = useState(null);
   useEffect(() => {
     const uploadFile = () => {
       const storageRef = ref(storage, file.name);
@@ -44,27 +42,7 @@ const AddProduct = () => {
     file && uploadFile();
   }, [file]);
 
-
-  const handleFileChange = (e: any) => {
-    const selectedFile = e.target.files[0];
-    console.log(selectedFile)
-    setFile(selectedFile);
-
-    if (selectedFile) {
-      const previewURL = URL.createObjectURL(selectedFile);
-      setPreviewURL(previewURL);
-    } else {
-      setPreviewURL("");
-    }
-  };
   const handleProductUpload = async () => {
-    console.log("Categoría:", category);
-    console.log("Subcategoría:", subCategory);
-    console.log("Título:", title);
-    console.log("Precio:", price);
-    console.log("Cantidad:", quantity);
-    console.log("¿Disponible?", isAvailable);
-    console.log("Selected image:", file);
 
     if (file !== undefined) {
       try {
