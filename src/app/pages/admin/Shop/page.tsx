@@ -69,14 +69,52 @@ const Shop = () => {
       imgSrc: "/path/to/image.jpg",
       title: "Título de la imagen",
       price: "$100.00",
+      category: "Maquillaje básico",
+      subCategory: "Bodas",
     })
   );
 
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  const handleCategoryChange = (categoryName: string) => {
+    console.log("Categoría: ", categoryName);
+    if (selectedCategories.includes(categoryName)) {
+      setSelectedCategories(selectedCategories.filter((name) => name !== categoryName));
+    } else {
+      setSelectedCategories([...selectedCategories, categoryName]);
+    }
+    console.log("Primer handle")
+    console.log("Categorías: ", selectedCategories);
+    console.log("Subcategorías: ", selectedSubcategories);
+    setFilteredProducts(filterProducts());
+  };
+
+  const handleSubCategoryChange = (subCategoryName: string) => {
+    // console.log("Subcategoría: ", subCategoryName);
+    if (selectedSubcategories.includes(subCategoryName)) {
+      setSelectedSubcategories(selectedSubcategories.filter((name) => name !== subCategoryName));
+    } else {
+      setSelectedSubcategories([...selectedSubcategories, subCategoryName]);
+    }
+    setFilteredProducts(filterProducts());
+  };
+  
+  function filterProducts() {
+    return gallery.filter((product) => {
+      const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+      const subcategoryMatch = selectedSubcategories.length === 0 || selectedSubcategories.includes(product.subCategory);
+      return categoryMatch && subcategoryMatch;
+    });
+  }
+  
+
   // Estado para el menú desplegable
-  const [dropdownVisible, setDropdownVisible] = useState(null);
+  const [dropdownVisible, setDropdownVisible] = useState<number | null>(null);
 
   // Estado para el buscador
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleSearch = () => {
     // Realiza la búsqueda utilizando la consulta de búsqueda (searchQuery)
@@ -88,18 +126,9 @@ const Shop = () => {
     setSearchResults(results);
   };
 
-  // useEffect(() => {
-  //     const results = gallery.filter((item) =>
-  //       item.title.toLowerCase().includes(searchQuery.toLowerCase())
-  //     );
-  //     setSearchResults(results);
-  //   }
-  //     , [searchQuery]);
-
-
     // Renderiza los items 
-    const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string, price: string }>>([]);
-    const renderItems = searchResults.length > 0 ? searchResults : gallery;
+    const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string, price: string, category: string, subCategory: string }>>([]);
+    const renderItems = searchResults.length > 0 ? searchResults : (filteredProducts.length > 0 ? filteredProducts : gallery);
 
     const toggleDropdown = (idx) => {
       if (dropdownVisible === idx) {
@@ -115,11 +144,13 @@ const Shop = () => {
       async function getProducts() {
         const res = await axios.get("http://localhost:4000/api/getProducts");
         // Actualiza el estado gallery con la matriz de productos
-        setGallery(res.data.map((product: { _id: string, imageURL: string, name: string, price: string }) => ({
+        setGallery(res.data.map((product: { _id: string, imageURL: string, name: string, price: string, category: string, subCategory: string }) => ({
           id: product._id,
           imgSrc: product.imageURL,
           title: product.name,
           price: "$" + product.price,
+          category: product.category,
+          subCategory: product.subCategory
         })));
       } getProducts();
     }
@@ -130,7 +161,7 @@ const Shop = () => {
       const confirm = window.confirm("¿Estás seguro?");
       if (confirm) {
         // Aqui se hace la peticion para eliminar el producto
-        // const res = await axios.put("http://localhost:4000/api/setProductVisible", { id, visible: false });
+        const res = await axios.put("http://localhost:4000/api/setProductVisible", { params: {id, visible: false} });
       }
     };
 
@@ -205,21 +236,24 @@ const Shop = () => {
                 {categories.map((category) => (
                   <li key={category.name}>
                     <div className="flex items-center">
-                      <input type="checkbox" />
-                      <span className="ml-2">{category.name}</span>
-                    </div>
-                    {category.subcategories.length > 0 && (
-                      <ul className="ml-6 space-y-2 mt-2">
-                        {category.subcategories.map((subcategory) => (
-                          <li className="flex items-center" key={subcategory}>
-                            <input type="checkbox" />
-                            <span className="ml-2">{subcategory}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
+                      <input type="checkbox"
+                        onChange={() => handleCategoryChange(category.name)}
+                      />
+                            <span className="ml-2">{category.name}</span>
+                          </div>
+                          {category.subcategories.length > 0 && (
+                            <ul className="ml-6 space-y-2 mt-2">
+                              {category.subcategories.map((subcategory) => (
+                                <li className="flex items-center" key={subcategory}>
+                                  <input type="checkbox" 
+                                  onChange={() => handleSubCategoryChange(subcategory)}/>
+                                  <span className="ml-2">{subcategory}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
               </ul>
             </div>
             <div
