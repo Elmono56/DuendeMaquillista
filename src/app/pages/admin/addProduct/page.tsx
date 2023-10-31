@@ -27,7 +27,6 @@ const AddProduct = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setPerc(progress);
         },
         (error) => {
           console.log(error)

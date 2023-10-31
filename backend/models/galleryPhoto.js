@@ -15,17 +15,13 @@ description: {
     type: String,
     required: true
 },
-dateUpload:{
-    type: Date, //'yy-mm-dd'
-    required: true
-},
 status:
 {
     type: String,
     required: true
 },
 tags: {
-    type: Array,
+    type: String,
     required: true
 },
 category: {
