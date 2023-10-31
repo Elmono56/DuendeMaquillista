@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
@@ -21,7 +21,6 @@ const Catalog = () => {
     },
     // ... puedes añadir más categorías y subcategorías
   ]);
-  const [token, setToken] = useState("");
   const router = useRouter();
 
   // useEffect(() => {
@@ -62,11 +61,7 @@ const Catalog = () => {
               subcategories,
             };
           })
-        );
-
-        // Imprimir el resultado
-        console.log(formattedCategories);
-
+        )
         // Guardar el resultado en el estado
         setCategories(formattedCategories);
       } catch (error) {
@@ -76,32 +71,28 @@ const Catalog = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    //get all images for a catalog
-    async function getData() {
-      try {
-        const res = await axios.get("http://localhost:4000/api/getImages");
-        const imagesData = res.data;
-        console.log("Images: ", imagesData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getData();
-  }
-  );
-  
-
   // Galería de fotos dinámica
   const [gallery, setGallery] = useState(
     new Array(20).fill({
+      id: "11111",
       imgSrc: "/path/to/image.jpg",
-      title: "Título de pinga",
+      title: "Título de imagen",
     })
   );
 
   // Estado para el menú desplegable
   const [dropdownVisible, setDropdownVisible] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    const results = gallery.filter((image) =>
+      image.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchResults(results);
+  };
+
+  const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string }>>([]);
+  const renderItems = searchResults.length > 0 ? searchResults : gallery;
 
   const toggleDropdown = (idx) => {
     if (dropdownVisible === idx) {
@@ -110,6 +101,28 @@ const Catalog = () => {
       setDropdownVisible(idx);
     }
   };
+
+  //useEffect para conseguir las imagenes de la base de datos
+  useEffect(() => {
+    async function getImages() {
+      const res = await axios.get("http://localhost:4000/api/getGalPhotos");
+      setGallery(res.data.map((image: { _id: string, imageURL: string, name: string}) => ({
+        id: image._id,
+        imgSrc: image.imageURL,
+        title: image.name,
+      })));
+    } getImages();
+  }, []);
+
+  const handleEditImage = (id: string) => {
+    localStorage.setItem("imageId", id);
+    router.push("/pages/admin/editImage");
+  }
+
+  const handleViewDetails = (id: string) => {
+    localStorage.setItem("imageId", id);
+    router.push("/pages/users/imageDetails");
+  }
 
   return (
     <div>
@@ -130,8 +143,10 @@ const Catalog = () => {
                   type="text"
                   placeholder="Buscar en la tienda..."
                   className="border rounded-md p-1.5 text-sm w-2/3"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="boton-global ml-2">Buscar</button>
+                <button className="boton-global ml-2" onClick={handleSearch}>Buscar</button>
 
                 {/* Botones replicados */}
                 <div className="ml-2 relative">
@@ -196,7 +211,7 @@ const Catalog = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              {gallery.map((image, idx) => (
+              {renderItems.map((image, idx) => (
                 <div key={idx} className="border rounded-md p-4 relative">
                   {/* Menú desplegable */}
                   <div className="absolute top-0 right-0 mt-2 mr-2">
@@ -208,12 +223,12 @@ const Catalog = () => {
                     </button>
                     {dropdownVisible === idx && (
                       <div className="absolute mt-2 right-0 w-24 bg-white border rounded-md overflow-hidden">
-                        <Link
+                        {/* <Link
                           className="block w-full text-left px-2 py-1 text-sm"
                           href="/pages/admin/editImage"
-                        >
-                          <button>Editar</button>
-                        </Link>
+                        > */}
+                          <button onClick={() => handleEditImage(image.id)}>Editar</button>
+                        {/* </Link> */}
                         <button className="block w-full text-left px-2 py-1 text-sm">
                           Eliminar
                         </button>
@@ -229,15 +244,12 @@ const Catalog = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="text-gray-700">{image.title}</div>
-                    <Link
+                    {/* <Link
                       href="/pages/users/imageDetails"
                       className="text-blue-500"
-                    >
-                      <button>Ver más</button>
-                    </Link>
-                  </div>
-                  <div className="mt-2 text-center text-gray-800">
-                    {image.price}
+                    > */}
+                      <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
+                    {/* </Link> */}
                   </div>
                 </div>
               ))}
