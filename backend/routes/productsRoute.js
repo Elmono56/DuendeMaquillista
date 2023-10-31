@@ -96,7 +96,7 @@ router.get("/getProductById", async (req, res) => {
 router.put("/setProductVisible", async (req, res) => {
   const { id, status } = req.body;
   console.log(id, status)
-  const product = await productSchema.findById({ id });
+  const product = await productSchema.findById(id);
   if (product) {
     await productSchema.updateOne({ _id: product._id }, { $set: { status } });
     res.status(200).json({ Mensaje: "Visibilidad del Producto Actualizada" });

@@ -161,7 +161,7 @@ const Shop = () => {
       const confirm = window.confirm("¿Estás seguro?");
       if (confirm) {
         // Aqui se hace la peticion para eliminar el producto
-        const res = await axios.put("http://localhost:4000/api/setProductVisible", { params: {id, visible: false} });
+        const res = await axios.put("http://localhost:4000/api/setProductVisible", { id, status: false });
       }
     };
 
