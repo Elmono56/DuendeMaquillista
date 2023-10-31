@@ -38,8 +38,8 @@ router.get("/getGalPhotos", async (req,res)=>{
 
 //get a single gallery photo
 router.get("/getGalPhoto", async (req,res)=>{
-  const {name} = req.body;
-  const photo = await galPhoto.findOne({name});
+  const {id} = req.query;
+  const photo = await galPhoto.findById(id);
   if (photo){
     res.status(200).json(photo);
   }
