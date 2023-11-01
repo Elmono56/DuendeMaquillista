@@ -8,7 +8,7 @@ const router = express.Router();
 //add product
 router.post("/createOrder", async (req, res) => {
   await database.connect();
-  const { user_id, products, address, pay, voucher } = req.body;
+  const { user_id, products, address, pay, voucher, status } = req.body;
   console.log(req.body);
   const order = orderSchema(req.body);
   order
