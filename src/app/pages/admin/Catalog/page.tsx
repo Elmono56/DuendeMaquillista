@@ -77,8 +77,45 @@ const Catalog = () => {
       id: "11111",
       imgSrc: "/path/to/image.jpg",
       title: "Título de imagen",
+      category: "Maquillaje básico",
+      subCategory: "Bodas",
     })
   );
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  // Función para manejar el cambio en la selección de categoría
+  const handleCategoryChange = (category: string) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  // Función para manejar el cambio en la selección de subcategoría
+  const handleSubCategoryChange = (subcategory: string) => {
+    if (selectedSubcategories.includes(subcategory)) {
+      setSelectedSubcategories(selectedSubcategories.filter((subcat) => subcat !== subcategory));
+    } else {
+      setSelectedSubcategories([...selectedSubcategories, subcategory]);
+    }
+  };
+
+  // Filtrar productos según las selecciones de categoría y subcategoría
+  useEffect(() => {
+    const filteredByCategory = selectedCategories.length > 0
+      ? gallery.filter((image) => selectedCategories.includes(image.category))
+      : gallery;
+
+    const filteredBySubcategory = selectedSubcategories.length > 0
+      ? filteredByCategory.filter((image) => selectedSubcategories.includes(image.subCategory))
+      : filteredByCategory;
+
+    setFilteredProducts(filteredBySubcategory);
+  }, [selectedCategories, selectedSubcategories, gallery]);
 
   // Estado para el menú desplegable
   const [dropdownVisible, setDropdownVisible] = useState(null);
@@ -91,8 +128,8 @@ const Catalog = () => {
     setSearchResults(results);
   };
 
-  const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string }>>([]);
-  const renderItems = searchResults.length > 0 ? searchResults : gallery;
+  const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string, category: string, subCategory: string }>>([]);
+  const renderItems = searchResults.length > 0 ? searchResults : (filteredProducts.length > 0 ? filteredProducts : gallery);
 
   const toggleDropdown = (idx) => {
     if (dropdownVisible === idx) {
@@ -106,10 +143,13 @@ const Catalog = () => {
   useEffect(() => {
     async function getImages() {
       const res = await axios.get("http://localhost:4000/api/getGalPhotos");
-      setGallery(res.data.map((image: { _id: string, imageURL: string, name: string}) => ({
+      setGallery(res.data.map((image: { _id: string, imageURL: string, name: string, category: string, subCategory: string }) => ({
         id: image._id,
         imgSrc: image.imageURL,
         title: image.name,
+        category: image.category,
+        subCategory: image.subCategory
+
       })));
     } getImages();
   }, []);
@@ -123,6 +163,12 @@ const Catalog = () => {
     localStorage.setItem("imageId", id);
     router.push("/pages/users/imageDetails");
   }
+
+  const handleDeleteImage = (id: string) => {
+    const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
+    if (confirm) {
+      await axios.put('http://localhost:4000/api/');
+    }
 
   return (
     <div>
@@ -183,14 +229,16 @@ const Catalog = () => {
               {categories.map((category) => (
                 <li key={category.name}>
                   <div className="flex items-center">
-                    <input type="checkbox" />
+                    <input type="checkbox"
+                    onChange={() => handleCategoryChange(category.name)}/>
                     <span className="ml-2">{category.name}</span>
                   </div>
                   {category.subcategories.length > 0 && (
                     <ul className="ml-6 space-y-2 mt-2">
                       {category.subcategories.map((subcategory) => (
                         <li className="flex items-center" key={subcategory}>
-                          <input type="checkbox" />
+                          <input type="checkbox" 
+                          onChange={() => handleSubCategoryChange(subcategory)}/>
                           <span className="ml-2">{subcategory}</span>
                         </li>
                       ))}
@@ -227,9 +275,10 @@ const Catalog = () => {
                           className="block w-full text-left px-2 py-1 text-sm"
                           href="/pages/admin/editImage"
                         > */}
-                          <button onClick={() => handleEditImage(image.id)}>Editar</button>
+                        <button onClick={() => handleEditImage(image.id)}>Editar</button>
                         {/* </Link> */}
-                        <button className="block w-full text-left px-2 py-1 text-sm">
+                        <button className="block w-full text-left px-2 py-1 text-sm"
+                        onClick={() => handleDeleteImage(image.id)}>
                           Eliminar
                         </button>
                       </div>
@@ -248,7 +297,7 @@ const Catalog = () => {
                       href="/pages/users/imageDetails"
                       className="text-blue-500"
                     > */}
-                      <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
+                    <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
                     {/* </Link> */}
                   </div>
                 </div>
