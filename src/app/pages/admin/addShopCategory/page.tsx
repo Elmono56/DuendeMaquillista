@@ -9,7 +9,7 @@ const AddShopCategory = () => {
 
   const handleAddCategory = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/api/createShopCategory", {
+      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createShopCategory", {
         name: category,
       });
       alert("Categoría agregada");

@@ -20,7 +20,7 @@ const EditImage = () => {
     // Cargar datos de la imagen
     async function getData() {
       const id = localStorage.getItem('imageId');
-      const res = await axios.get('http://localhost:4000/api/getGalPhoto', { params: { id } });
+      const res = await axios.get('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhoto', { params: { id } });
       setCategory(res.data.category);
       setSubCategory(res.data.subCategory);
       setTitle(res.data.name);
@@ -64,7 +64,7 @@ const EditImage = () => {
     console.log(data);
     if (file !== undefined) {
       try {
-        const res = await axios.put("http://localhost:4000/api/modifyGalPhoto", {
+        const res = await axios.put("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/modifyGalPhoto", {
           name: title,
           imageURL: data.img,
           description,

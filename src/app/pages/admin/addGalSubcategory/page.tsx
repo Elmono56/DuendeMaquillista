@@ -21,7 +21,7 @@ const AddSubcategory = () => {
     console.log("Descripción:", description);
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/createSubCategory",
+        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createSubCategory",
         {
           name: subcategory,
           description,

@@ -19,7 +19,7 @@ const EditProfile = () => {
     async function getData() {
       try {
         const userId = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:4000/api/getUser", { params: {id: userId}});
+        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getUser", { params: {id: userId}});
         setNombre(res.data.name);
         setApellido(res.data.lastName);
         setEmail(res.data.email);
@@ -34,7 +34,7 @@ const EditProfile = () => {
   const handleSaveChanges = async () => {
     // se necesita validar primero que la contraseña actual sea correcta
     try {
-      const res = await axios.post("http://localhost:4000/api/login", {
+      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/login", {
         email,
         password: currentPassword,
       });
@@ -44,7 +44,7 @@ const EditProfile = () => {
       }
       // si la contraseña es correcta, se procede a actualizar el usuario
       const userId = localStorage.getItem("token");
-      const res2 = await axios.put("http://localhost:4000/api/updateUser", {
+      const res2 = await axios.put("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/updateUser", {
         id: userId,
         name: nombre,
         lastName: apellido,

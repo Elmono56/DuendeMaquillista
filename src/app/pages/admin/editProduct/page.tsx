@@ -43,7 +43,7 @@ const EditProduct = () => {
   useEffect(() => {
     async function getProduct() {
       let idProduct = localStorage.getItem('productID');
-      const res = await axios.get('http://localhost:4000/api/getProductById', { params: { id: idProduct } });
+      const res = await axios.get('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProductById', { params: { id: idProduct } });
       const product = res.data;
       setCategory(product.category);
       setSubCategory(product.subCategory);

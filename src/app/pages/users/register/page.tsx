@@ -27,7 +27,7 @@ const Register = () => {
     };
 
     try {
-      const res = axios.post("http://localhost:4000/api/createUser", data);
+      const res = axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createUser", data);
       console.log(res);
     } catch (error: any) {
       console.log(error);

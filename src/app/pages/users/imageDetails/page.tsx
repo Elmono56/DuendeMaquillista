@@ -15,7 +15,7 @@ const ImageDetails = () => {
   useEffect(() => {
     async function getData() {
       const id = localStorage.getItem("imageId");
-      const res = await axios.get('http://localhost:4000/api/getGalPhoto', { params: { id } });
+      const res = await axios.get('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhoto', { params: { id } });
       setName(res.data.name);
       setImage(res.data.imageURL);
       setCategory(res.data.category);
