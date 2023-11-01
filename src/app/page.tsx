@@ -5,7 +5,7 @@ import UserNavbar from "./components/UserNavBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+import Database from "../../backend/routes/singleton"
 async function makeRequest() {
   const config = {
     method: "get",
@@ -21,6 +21,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
   const handleLogin = async () => {
     try {
       const res = await axios.post("http://localhost:4000/api/login", {

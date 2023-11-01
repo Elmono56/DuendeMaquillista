@@ -41,7 +41,5 @@ app.use("/api",orderRoutes);
 app.use("/api",addressRoutes);
 app.use("/api", shopCartRoutes);
 //mongodb connection
-mongoose.connect("mongodb+srv://axelchavesr:tGfpOZBhreznmEQU@cluster0.jqlfuzl.mongodb.net/?retryWrites=true&w=majority")
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.log(err));
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
