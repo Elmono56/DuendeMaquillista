@@ -5,22 +5,19 @@ import Order from "@/app/components/Order";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import BasicCard from "@/app/components/BasicCard";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Orders = () => {
-  const [orderNum, setOrderNum] = useState("");
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     async function getData() {
       try {
         const res = await axios.get("http://localhost:4000/api/getOrders");
-        console.log(res.data);
         const extractedIds = res.data.map((order: { _id: string }) => {
           const truncatedId = order._id.slice(0, 24); // Recorta a 24 dígitos (todos)
           return { _id: truncatedId };
         });
-        console.log(extractedIds);
         setOrders(extractedIds);
-        console.log(orders);
       } catch (error: any) {
         console.log("PASO ALGO ", error);
       }
@@ -28,19 +25,22 @@ const Orders = () => {
     getData();
   }, []);
 
-  const handleAction = (actionType: string, idOrder: string) => {
+  const handleAction = async (actionType: string, idOrder: string) => {
+    const router = useRouter();
     switch (actionType) {
       case "details":
         // Aquí se redirige a la página de detalles de la orden
-        console.log("Detalles de la orden", idOrder);
+        localStorage.setItem("idOrder", idOrder);
+        router.push("/pages/users/orderDetails");
         break;
       case "confirm":
         // Aquí se confirma la orden
-        console.log("Confirmar orden", idOrder);
+        await axios.put('http://localhost:4000/api/updateOrderStatus', {id: idOrder, status: "Confirmado"})
         break;
       case "decline":
         // Aquí se rechaza la orden
-        console.log("Rechazar orden", idOrder);
+        console.log("ID: ", idOrder);
+        await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado"})
         break;
       default:
         break;

@@ -21,14 +21,14 @@ const Order = ({ idOrder, onAction }: OrderProps) => {
         </button>
         <h2 className="text-base text-black p-4">ID: {idOrder}</h2>
         <div className="flex w-1/3 space-x-2">
-          <Link href="/pages/users/orderDetails">
+          {/* <Link href="/pages/users/orderDetails"> */}
             <button
               className="boton-global"
               onClick={() => onAction("details", idOrder)}
             >
               Detalles
             </button>
-          </Link>
+          {/* </Link> */}
           <button
             className="boton-global"
             onClick={() => onAction("confirm", idOrder)}
