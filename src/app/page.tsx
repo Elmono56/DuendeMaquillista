@@ -24,7 +24,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/api/login", {
+      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/login", {
         email,
         password,
       });

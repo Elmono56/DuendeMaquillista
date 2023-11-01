@@ -20,7 +20,7 @@ const AddCategory = () => {
     console.log("Categoría:", category);
     console.log("Descripción:", description);
     try {
-      const res = await axios.post("http://localhost:4000/api/createCategory", {
+      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createCategory", {
         name: category,
         description,
       });

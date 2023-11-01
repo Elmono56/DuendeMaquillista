@@ -12,7 +12,7 @@ const Orders = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("http://localhost:4000/api/getOrders");
+        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getOrders");
         const extractedIds = res.data.map((order: { _id: string }) => {
           const truncatedId = order._id.slice(0, 24); // Recorta a 24 dígitos (todos)
           return { _id: truncatedId };

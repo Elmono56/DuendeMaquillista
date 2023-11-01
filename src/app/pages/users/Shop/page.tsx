@@ -25,14 +25,14 @@ const Shop = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("http://localhost:4000/api/getShopCategories");
+        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopCategories");
         const categoriesData = res.data;
 
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
             const subRes = await axios.get(
-              "http://localhost:4000/api/getShopSubCategoriesFromCategory",
+              "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopSubCategoriesFromCategory",
               {
                 params: { category: category.name },
               }
@@ -124,7 +124,7 @@ const Shop = () => {
     // Aqui se hace la peticion para obtener los productos
     // y se actualiza el estado de la tienda
     async function getProducts() {
-      const res = await axios.get("http://localhost:4000/api/getProducts");
+      const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProducts");
       // Actualiza el estado gallery con la matriz de productos
       setGallery(res.data.map((product: { _id: string, imageURL: string, name: string, price: string, category: string, subCategory: string }) => ({
         id: product._id,

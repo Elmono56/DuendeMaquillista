@@ -39,14 +39,14 @@ const Catalog = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("http://localhost:4000/api/getCategories");
+        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories");
         const categoriesData = res.data;
 
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
             const subRes = await axios.get(
-              "http://localhost:4000/api/getSubCategoriesFromCategory",
+              "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getSubCategoriesFromCategory",
               {
                 params: { category: category.name },
               }
@@ -142,7 +142,7 @@ const Catalog = () => {
   //useEffect para conseguir las imagenes de la base de datos
   useEffect(() => {
     async function getImages() {
-      const res = await axios.get("http://localhost:4000/api/getGalPhotos");
+      const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos");
       setGallery(res.data.map((image: { _id: string, imageURL: string, name: string, category: string, subCategory: string }) => ({
         id: image._id,
         imgSrc: image.imageURL,
@@ -167,7 +167,7 @@ const Catalog = () => {
   const handleDeleteImage = async (id: string) => {
     const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
     if (confirm) {
-      await axios.put('http://localhost:4000/api/setImageVisibility', {id, status: false});
+      await axios.put('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/setImageVisibility', {id, status: false});
     }
   }
 

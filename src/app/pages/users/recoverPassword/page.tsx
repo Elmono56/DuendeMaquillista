@@ -16,7 +16,7 @@ const RecoverPassword = () => {
       newPassword: password,
       pageName: "Enchanted Cosmetics",
     }
-    await axios.put("http://localhost:4000/api/updatePassword", {
+    await axios.put("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/updatePassword", {
       email,
       newPassword: password,
       });
@@ -35,7 +35,7 @@ const RecoverPassword = () => {
 
   const handleRecoverPassword = async () => {
     // se manda el correo con el password de recuperacion
-    const res = await axios.get("http://localhost:4000/api/getUserByEmail", {
+    const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getUserByEmail", {
       params: {
         email,
       },
