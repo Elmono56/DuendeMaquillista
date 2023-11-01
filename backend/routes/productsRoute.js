@@ -51,6 +51,7 @@ router.get("/getProducts", async (req, res) => {
 //modify a product
 router.put("/modifyProduct", async (req, res) => {
   await database.connect();
+  const updateFields = {};
   const {
     name,
     price,
@@ -61,12 +62,22 @@ router.put("/modifyProduct", async (req, res) => {
     category,
     subCategory,
   } = req.body;
+
+  if (name) updateFields.name = name;
+  if (price) updateFields.price = price;
+  if (cantStock) updateFields.cantStock = cantStock;
+  if (status) updateFields.status = status;
+  if (imageURL) updateFields.imageURL = imageURL;
+  if (description) updateFields.description = description;
+  if (category) updateFields.category = category;
+  if (subCategory) updateFields.subCategory = subCategory;
+
   const product = await productSchema.findOne({ name });
   if (product) {
     await productSchema.updateOne(
       { _id: product._id },
       {
-        $set: { price, cantStock, status, imageURL, description, category, subCategory },
+        $set: updateFields,
       }
     );
     res.status(200).json({ Mensaje: "Producto Actualizado" });
