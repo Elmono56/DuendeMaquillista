@@ -20,21 +20,7 @@ const Catalog = () => {
     },
     // ... puedes añadir más categorías y subcategorías
   ]);
-  const [token, setToken] = useState("");
   const router = useRouter();
-
-  useEffect(() => {
-    // Intenta obtener el token desde el almacenamiento local
-    const storedToken = localStorage.getItem("token");
-    console.log("Token: ", storedToken);
-    if (storedToken) {
-      // Si se encuentra un token en el almacenamiento local, configúralo en el estado
-      setToken(storedToken);
-    } else {
-      // Si no hay token en el almacenamiento local, redirige a la página de inicio de sesión
-      router.push("/");
-    }
-  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -51,7 +37,6 @@ const Catalog = () => {
                 params: { category: category.name },
               }
             );
-            console.log("Subcategoria: ", subRes);
 
             const subcategories = subRes.data.map(
               (subcategory: { name: string }) => subcategory.name
@@ -62,9 +47,6 @@ const Catalog = () => {
             };
           })
         );
-
-        // Imprimir el resultado
-        console.log(formattedCategories);
 
         // Guardar el resultado en el estado
         setCategories(formattedCategories);
@@ -78,10 +60,79 @@ const Catalog = () => {
   // Galería de fotos dinámica
   const [gallery, setGallery] = useState(
     new Array(20).fill({
+      id: "111111",
       imgSrc: "/path/to/image.jpg",
       title: "Título de la imagen",
+      category: "Categoría",
+      subCategory: "Subcategoría",
     })
   );
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  // Función para manejar el cambio en la selección de categoría
+  const handleCategoryChange = (category: string) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  // Función para manejar el cambio en la selección de subcategoría
+  const handleSubCategoryChange = (subcategory: string) => {
+    if (selectedSubcategories.includes(subcategory)) {
+      setSelectedSubcategories(selectedSubcategories.filter((subcat) => subcat !== subcategory));
+    } else {
+      setSelectedSubcategories([...selectedSubcategories, subcategory]);
+    }
+  };
+
+  // Filtrar productos según las selecciones de categoría y subcategoría
+  useEffect(() => {
+    const filteredByCategory = selectedCategories.length > 0
+      ? gallery.filter((image) => selectedCategories.includes(image.category))
+      : gallery;
+
+    const filteredBySubcategory = selectedSubcategories.length > 0
+      ? filteredByCategory.filter((image) => selectedSubcategories.includes(image.subCategory))
+      : filteredByCategory;
+
+    setFilteredProducts(filteredBySubcategory);
+  }, [selectedCategories, selectedSubcategories, gallery]);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    const results = gallery.filter((image) =>
+      image.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchResults(results);
+  };
+
+  const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string, category: string, subCategory: string }>>([]);
+  const renderItems = searchResults.length > 0 ? searchResults : (filteredProducts.length > 0 ? filteredProducts : gallery);
+
+  useEffect(() => {
+    async function getImages() {
+      const res = await axios.get("http://localhost:4000/api/getGalPhotos");
+      setGallery(res.data.map((image: { _id: string, imageURL: string, name: string, category: string, subCategory: string }) => ({
+        id: image._id,
+        imgSrc: image.imageURL,
+        title: image.name,
+        category: image.category,
+        subCategory: image.subCategory
+
+      })));
+    } getImages();
+  }, []);
+
+  const handleViewDetails = (id: string) => {
+    localStorage.setItem("imageId", id);
+    router.push("/pages/users/imageDetails");
+  }
 
   return (
     <div>
@@ -102,8 +153,10 @@ const Catalog = () => {
                   type="text"
                   placeholder="Buscar en la tienda..."
                   className="border rounded-md p-1.5 text-sm w-2/3"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="boton-global ml-2">Buscar</button>
+                <button className="boton-global ml-2" onClick={handleSearch} >Buscar</button>
               </div>
             </div>
             <h2 className="text-xl font-bold mb-4">Categorías</h2>
@@ -111,14 +164,16 @@ const Catalog = () => {
               {categories.map((category) => (
                 <li key={category.name}>
                   <div className="flex items-center">
-                    <input type="checkbox" />
+                    <input type="checkbox" 
+                    onChange={() => handleCategoryChange(category.name)}/>
                     <span className="ml-2">{category.name}</span>
                   </div>
                   {category.subcategories.length > 0 && (
                     <ul className="ml-6 space-y-2 mt-2">
                       {category.subcategories.map((subcategory) => (
                         <li className="flex items-center" key={subcategory}>
-                          <input type="checkbox" />
+                          <input type="checkbox" 
+                          onChange={() => handleSubCategoryChange(subcategory)}/>
                           <span className="ml-2">{subcategory}</span>
                         </li>
                       ))}
@@ -133,7 +188,7 @@ const Catalog = () => {
             style={{ maxHeight: "80vh" }}
           >
             <div className="grid grid-cols-3 gap-4">
-              {gallery.map((image, idx) => (
+              {renderItems.map((image, idx) => (
                 <div key={idx} className="border rounded-md p-4">
                   <div className="mb-4">
                     <img
@@ -143,12 +198,12 @@ const Catalog = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="text-gray-700">{image.title}</div>
-                    <Link
+                    {/* <Link
                       href="/pages/users/imageDetails"
                       className="text-blue-500"
-                    >
-                      <button>Ver más</button>
-                    </Link>
+                    > */}
+                      <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
+                    {/* </Link> */}
                   </div>
                   <div className="mt-2 text-center text-gray-800">
                     {image.price}
