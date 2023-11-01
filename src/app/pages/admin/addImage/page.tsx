@@ -45,6 +45,7 @@ const AddImage = () => {
     console.log("Tag:", tag);
     console.log("Descripción:", description);
     console.log("¿Público?", isPublic);
+    console.log("Imagen:", data.img);
     if (file !== undefined) {
       try {
         const res = await axios.post("http://localhost:4000/api/addGalPhoto", {
@@ -57,7 +58,7 @@ const AddImage = () => {
           subCategory,
         });
 
-        console.log(res);
+        console.log(res.data);
         alert("Se ha subido la imagen a la galería.");
       } catch (error: any) {
         alert("No se agregó la imagen.");

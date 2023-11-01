@@ -17,13 +17,13 @@ router.post("/addGalPhoto", async (req, res) => {
   const subCategoryExists = await subCategorySchema.findOne({ name: subCategory, upperC: category });
   if (!subCategoryExists) return res.status(400).json({ message: "La subcategoría especificada no existe o no es una subcategoría de la categoría proporcionada." });
 
-  const productNameExists = await productSchema.findOne({ name });
+  const productNameExists = await galPhoto.findOne({ name });
   if (productNameExists) return res.status(400).json({ message: "El producto ya existe" });
   const product = galPhoto(req.body);
   product
     .save()
     .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+    .catch((error) =>res.json({ message: error }));
 });
 
 
