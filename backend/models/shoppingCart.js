@@ -15,7 +15,7 @@ status:
 {
     type: String,
     required: true,
-    default: "No finalizado"
+    default: "En Espera"
 }
 
 });
