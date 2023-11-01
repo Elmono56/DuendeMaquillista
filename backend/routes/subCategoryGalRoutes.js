@@ -1,11 +1,14 @@
 const express = require("express");
 const subcategorySchema = require("../models/subcategoryGal");
 const categorySchema = require("../models/categoryGal");
+const Database = require("../routes/singleton");
+const database = Database.getInstance();
 
 const router = express.Router();
 
 //create subCategory
 router.post("/createSubCategory", async (req, res) => {
+  await database.connect();
   const subC = subcategorySchema(req.body);
   const { name, upperC } = req.body;
   const cat = await categorySchema.findOne({ name: upperC });
@@ -28,6 +31,7 @@ router.post("/createSubCategory", async (req, res) => {
 
 //get all subcategories
 router.get("/getSubCategories", async (req, res) => {
+  await database.connect();
   const subcategories = await subcategorySchema.find();
   if (subcategories) {
     res.status(200).json(subcategories);
@@ -38,6 +42,7 @@ router.get("/getSubCategories", async (req, res) => {
 
 //get all subcategories from a category
 router.get("/getSubCategoriesFromCategory", async (req, res) => {
+  await database.connect();
   const { category } = req.query;
   const subcategories = await subcategorySchema.find({ upperC: category });
   if (subcategories) {

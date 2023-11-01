@@ -1,10 +1,13 @@
 const express = require("express");
 const orderSchema = require("../models/order.js");
+const Database = require("../routes/singleton");
+const database = Database.getInstance();
 
 const router = express.Router();
 
 //add product
-router.post("/createOrder", (req, res) => {
+router.post("/createOrder", async (req, res) => {
+  await database.connect();
   const order = orderSchema(req.body);
   order
     .save()
@@ -14,6 +17,7 @@ router.post("/createOrder", (req, res) => {
 
 // get all products
 router.get("/getOrders", async (req, res) => {
+  await database.connect();
   const orders = await orderSchema.find({ status: "En Espera" });
   if (orders) {
     res.status(200).json(orders);
@@ -25,6 +29,7 @@ router.get("/getOrders", async (req, res) => {
 
 //get a single product
 router.get("/getOrder", async (req, res) => {
+  await database.connect();
   const { id } = req.query;
   const order = await orderSchema.findById(id);
   if (order) {
@@ -37,6 +42,7 @@ router.get("/getOrder", async (req, res) => {
 
 //change visibility to visible
 router.put("/updateOrderStatus", async (req, res) => {
+  await database.connect();
   console.log(req.body);
   const { id, status } = req.body;
   const order = await orderSchema.findById(id);

@@ -1,10 +1,13 @@
 const express = require("express");
 const userSchema = require("../models/user");
+const Database = require("../routes/singleton");
+const database = Database.getInstance();
 
 const router = express.Router();
 
 //create user
-router.post("/createUser", (req, res) => {
+router.post("/createUser", async (req, res) => {
+  await database.connect();
   const user = userSchema(req.body);
   user
     .save()
@@ -13,18 +16,20 @@ router.post("/createUser", (req, res) => {
 });
 
 // update/recover password
-router.put("/updatePassword", async (req, res)=>{
-  const {email,newPassword} = req.body;
-  const user = await userSchema.findOne({email});
-  if (user){
+router.put("/updatePassword", async (req, res) => {
+  await database.connect();
+  const { email, newPassword } = req.body;
+  const user = await userSchema.findOne({ email });
+  if (user) {
     await userSchema.updateOne({ _id: user._id }, { $set: { password: newPassword } });
-    res.status(200).json({Mensaje: "Contraseña actualizada"});
+    res.status(200).json({ Mensaje: "Contraseña actualizada" });
   }
 
 });
 
 // update user
 router.put("/updateUser", async (req, res) => {
+  await database.connect();
   const updateFields = {};
   const { id, name, lastName, email, password } = req.body;
 
@@ -47,6 +52,7 @@ router.put("/updateUser", async (req, res) => {
 
 // get user
 router.get("/getUser", async (req, res) => {
+  await database.connect();
   const { id } = req.query;
   const user = await userSchema.findById(id);
   if (user) {
@@ -57,15 +63,16 @@ router.get("/getUser", async (req, res) => {
 });
 
 //"delete" user
-router.put("/deleteProfile", async (req,res)=>{
-  const {email} = req.body;
-  const user = await userSchema.findOne({email});
-  if (user){
-    await userSchema.updateOne({ _id: user._id }, { $set: { status: "Eliminado"  } });
-    res.status(200).json({Mensaje: "Perfil Eliminado"});
+router.put("/deleteProfile", async (req, res) => {
+  await database.connect();
+  const { email } = req.body;
+  const user = await userSchema.findOne({ email });
+  if (user) {
+    await userSchema.updateOne({ _id: user._id }, { $set: { status: "Eliminado" } });
+    res.status(200).json({ Mensaje: "Perfil Eliminado" });
   }
-  else{
-    res.status(404).json({Mensaje:"Usuario no encontrado"})
+  else {
+    res.status(404).json({ Mensaje: "Usuario no encontrado" })
   }
 })
 

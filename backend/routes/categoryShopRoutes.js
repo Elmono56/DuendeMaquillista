@@ -1,10 +1,13 @@
 const express = require("express");
 const categorySchema = require("../models/categoryShop");
+const Database = require("../routes/singleton");
+const database = Database.getInstance();
 
 const router = express.Router();
 
 //create category
 router.post("/createShopCategory", async (req, res) => {
+  await database.connect();
   const newCat = categorySchema(req.body);
   const { name } = req.body;
   const cat = await categorySchema.findOne({ name });
@@ -22,6 +25,7 @@ router.post("/createShopCategory", async (req, res) => {
 
 //get all categories
 router.get("/getShopCategories", async (req, res) => {
+  await database.connect();
   const categories = await categorySchema.find();
   if (categories) {
     res.status(200).json(categories);

@@ -1,10 +1,13 @@
 const express = require("express");
 const addressSchema = require("../models/address.js");
+const Database = require("../routes/singleton");
+const database = Database.getInstance();
 
 const router = express.Router();
 
 //create address
-router.post("/createAddress", (req, res) => {
+router.post("/createAddress", async (req, res) => {
+    await database.connect();
     const address = addressSchema(req.body);
     address
       .save()
@@ -14,6 +17,7 @@ router.post("/createAddress", (req, res) => {
 
 //modify addres
 router.put("/updateAddress", async (req, res)=>{
+    await database.connect();
     const {userID, city, district, details} = req.body;
     const address = await addressSchema.findOne({userID});
     if (address){
