@@ -164,11 +164,12 @@ const Catalog = () => {
     router.push("/pages/users/imageDetails");
   }
 
-  const handleDeleteImage = (id: string) => {
+  const handleDeleteImage = async (id: string) => {
     const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
     if (confirm) {
-      await axios.put('http://localhost:4000/api/');
+      await axios.put('http://localhost:4000/api/setImageVisibility', {id, status: false});
     }
+  }
 
   return (
     <div>

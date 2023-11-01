@@ -27,7 +27,7 @@ router.put("/modifyGalPhoto", async (req, res)=>{
 
 //get all gallery photos
 router.get("/getGalPhotos", async (req,res)=>{
-  const photos = await galPhoto.find();
+  const photos = await galPhoto.find({status: true});
   if (photos){
     res.status(200).json(photos);
   }
@@ -50,8 +50,8 @@ router.get("/getGalPhoto", async (req,res)=>{
 
 //change visibility to visible
 router.put("/setImageVisibility", async (req, res)=>{
-  const {name, status} = req.body;
-  const photo = await galPhoto.findOne({name});
+  const {id, status} = req.body;
+  const photo = await galPhoto.findById(id);
   if (photo){
     await galPhoto.updateOne({ _id: photo._id }, { $set: {status} });
     res.status(200).json({Mensaje: "Visibilidad de la Imagen fue Actualizada"});
