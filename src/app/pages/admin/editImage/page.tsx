@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import axios from "axios";
 
 const EditImage = () => {
   const [category, setCategory] = useState("");
@@ -10,6 +11,21 @@ const EditImage = () => {
   const [tag, setTag] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+
+  useEffect(() => {
+    // Cargar datos de la imagen
+    async function getData() {
+      const id = localStorage.getItem('imageId');
+      const res = await axios.get('http://localhost:4000/api/getGalPhoto', { params: { id } });
+      setCategory(res.data.category);
+      setSubCategory(res.data.subCategory);
+      setTitle(res.data.name);
+      setTag(res.data.tag);
+      setDescription(res.data.description);
+      setIsPublic(res.data.status);
+      //falta la imagen
+    } getData();
+  }, []);
 
   const handleSaveImage = () => {
     console.log("Categoría:", category);
