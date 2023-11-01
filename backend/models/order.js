@@ -1,16 +1,24 @@
 const mongoose = require("mongoose");
 const orderSchema = mongoose.Schema({
-  shopCartID: {
+  user_id: {
     type: String,
     required: true,
-    unique: true,
   },
-  delivery: {
-    type: Date,
+  products: {
+    type: Array, //{{productName,quantity},{productName,quantity}}
+    required: false,
+    default: [],
+  },
+  address: {
+    type: String,
     required: true,
   },
   pay: {
     type: Number,
+    required: true,
+  },
+  voucher: {
+    type: String,
     required: true,
   },
   status: {

@@ -3,8 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
+import axios from "axios";
 
 const EndPurchase = () => {
+  const idUser = localStorage.getItem("token");
+  const [image, setImage] = useState("");
+
   const [cartItems, setCartItems] = useState(
     [] as Array<{
       productName: string;
@@ -14,64 +18,50 @@ const EndPurchase = () => {
     }>
   );
 
-  const [address, setAddress] = useState("");
-  const [shipping, setShipping] = useState(3);
-
   useEffect(() => {
-    const userCart = [
-      {
-        productName: "Producto 1",
-        productPrice: 4,
-        productImage: "",
-        quantity: 100,
-      },
-      {
-        productName: "Producto 2",
-        productPrice: 5,
-        productImage: "",
-        quantity: 2,
-      },
-      {
-        productName: "Producto 3",
-        productPrice: 7,
-        productImage: "",
-        quantity: 1,
-      },
-      {
-        productName: "Producto 4",
-        productPrice: 9,
-        productImage: "",
-        quantity: 3,
-      },
-      {
-        productName: "Producto 5",
-        productPrice: 2,
-        productImage: "",
-        quantity: 1,
-      },
-      {
-        productName: "Producto 6",
-        productPrice: 6,
-        productImage: "",
-        quantity: 2,
-      },
-      {
-        productName: "Producto 7",
-        productPrice: 4,
-        productImage: "",
-        quantity: 1,
-      },
-    ];
-
-    setCartItems(userCart);
+    async function getShopCart() {
+      try {
+        const res = await axios.get("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
+        const transformedProducts = res.data.products.map((product: { name: string; price: number; image: string; quantity: number; }) => ({
+          productName: product.name,
+          productPrice: product.price,
+          productImage: product.image,
+          quantity: product.quantity
+        }));
+        setCartItems(transformedProducts);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getShopCart();
   }, []);
 
+  const [address, setAddress] = useState("");
+  const [shipping, setShipping] = useState(0);
+  const [total, setTotal] = useState(0);
+
   const calculateTotal = () => {
-    let total = cartItems.reduce(
-      (acc, item) => acc + item.productPrice * item.quantity,
-      0
-    );
-    return total + shipping;
+    const total = cartItems.reduce((acc, item) => acc + item.productPrice * item.quantity, 0);
+    return total;
+  };
+
+  useEffect(() => {
+    const total = calculateTotal();
+    const shippingCost = total * 0.05;
+    setShipping(shippingCost);
+    setTotal(total + shippingCost);
+  }, [cartItems]);
+
+  const handleEndPurchase = async () => {
+    const res = await axios.post("http://localhost:4000/api/createOrder", {
+      user_id: idUser,
+      products: cartItems,
+      address,
+      pay: total,
+      voucher: image,
+      status: "En Espera"
+    });
+    console.log(res);
   };
 
   return (
@@ -127,14 +117,14 @@ const EndPurchase = () => {
             </div>
             <div className="mt-6 flex justify-between items-center">
               <span>Total:</span>
-              <span className="font-bold">${calculateTotal()}</span>
+              <span className="font-bold">${total}</span>
             </div>
             <div className="mt-6 flex justify-center">
               <Link
                 href="/pages/users/Catalog
               "
               >
-                <button className="boton-global">Finalizar compra</button>
+                <button className="boton-global" onClick={handleEndPurchase}>Finalizar compra</button>
               </Link>
             </div>
           </div>

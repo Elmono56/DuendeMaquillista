@@ -59,6 +59,10 @@ const ShoppingCart = () => {
     router.push("/pages/users/Shop");
   };
 
+  const handleEndPurchase = () => {
+    router.push("/pages/users/endPurchase");
+  };
+
   return (
     <div>
       <Navbar />
@@ -116,7 +120,7 @@ const ShoppingCart = () => {
               href="/pages/users/endPurchase"
               className="block w-full flex justify-center items-center"
             >
-              <button className="boton-global">Finalizar compra</button>
+              <button className="boton-global" onClick={handleEndPurchase}>Finalizar compra</button>
             </Link>
           </footer>
         </div>
