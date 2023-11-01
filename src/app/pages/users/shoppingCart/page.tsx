@@ -2,9 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/AdminNavbar";
+import axios from "axios";
 
 const ShoppingCart = () => {
+  const idUser = localStorage.getItem("token");
+  const router = useRouter();
+
   const [cartItems, setCartItems] = useState(
     [] as Array<{
       productName: string;
@@ -15,46 +20,21 @@ const ShoppingCart = () => {
   );
 
   useEffect(() => {
-    const userCart = [
-      {
-        productName: "Nombre producto",
-        productPrice: 4,
-        productImage: "", // Aquí la imagen del producto
-        quantity: 1,
-      },
-      {
-        productName: "Nombre producto",
-        productPrice: 4,
-        productImage: "",
-        quantity: 1,
-      },
-      {
-        productName: "Nombre producto",
-        productPrice: 4,
-        productImage: "",
-        quantity: 1,
-      },
-      {
-        productName: "Nombre producto",
-        productPrice: 4,
-        productImage: "",
-        quantity: 1,
-      },
-      {
-        productName: "Nombre producto",
-        productPrice: 4,
-        productImage: "",
-        quantity: 1,
-      },
-      {
-        productName: "Nombre producto",
-        productPrice: 4,
-        productImage: "",
-        quantity: 1,
-      },
-    ];
-
-    setCartItems(userCart);
+    async function getShopCart() {
+      try {
+        const res = await axios.get("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
+        const transformedProducts = res.data.products.map((product: { name: string; price: number; image: string; quantity: number; }) => ({
+          productName: product.name,
+          productPrice: product.price,
+          productImage: product.image,
+          quantity: product.quantity
+        }));
+        setCartItems(transformedProducts);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getShopCart();
   }, []);
 
   const handleQuantityChange = (
@@ -74,6 +54,10 @@ const ShoppingCart = () => {
     (sum, item) => sum + item.productPrice * item.quantity,
     0
   );
+
+  const handleGoShopping = () => {
+    router.push("/pages/users/Shop");
+  };
 
   return (
     <div>
@@ -120,7 +104,8 @@ const ShoppingCart = () => {
           </main>
 
           <footer className="mt-4">
-            <button className="w-full mb-3 py-2 border border-black text-black hover:bg-gray-100 transition duration-300">
+            <button className="w-full mb-3 py-2 border border-black text-black hover:bg-gray-100 transition duration-300"
+              onClick={handleGoShopping}>
               + Agregar producto
             </button>
             <div className="flex justify-between items-center mb-3">

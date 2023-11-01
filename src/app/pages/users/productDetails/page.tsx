@@ -52,6 +52,9 @@ const ProductDetails = () => {
       user_id: idUser,
       products: {
         id: idProduct,
+        name: title,
+        price: price,
+        image: image,
         quantity: quantityToBuy
       }
     });

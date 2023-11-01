@@ -63,4 +63,17 @@ router.put("/changeSCstatus", async (req, res) => {
     res.status(400).json({ Mensaje: "No se pudo actulizar el estado del carrito" });
   }
 });
+
+//get shoppingCart for user
+router.get("/getShopCart", async (req, res) => {
+  await database.connect();
+  const { user_id } = req.query;
+  const shopCart = await shopCartSchema.findOne({ user_id });
+  if (shopCart) {
+    res.status(200).json(shopCart);
+  } else {
+    res.status(400).json({ Mensaje: "No se pudo encontrar el carrito" });
+  }
+});
+
 module.exports = router;
