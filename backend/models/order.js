@@ -16,7 +16,7 @@ const orderSchema = mongoose.Schema({
   status: {
     type: String,
     required: true,
-    default: "En revision",
+    default: "En Espera",
   },
 });
 module.exports = mongoose.model("Order", orderSchema);
