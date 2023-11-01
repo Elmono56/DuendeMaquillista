@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
 const shoppingCartSchema = mongoose.Schema({
-    id:
-{
-    type: Number,
-    required: false,
-},
 user_id:
 {
     type: String,
