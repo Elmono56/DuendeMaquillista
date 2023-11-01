@@ -59,6 +59,7 @@ const AddProduct = () => {
         console.log(res);
         alert("Se ha subido el producto a la tienda.");
       } catch (error: any) {
+        console.log("HOLAAA");
         alert("No se agregó el producto.");
         console.log(error);
       }

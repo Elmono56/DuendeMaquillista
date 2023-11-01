@@ -19,3 +19,4 @@ status:
 }
 
 });
+module.exports = mongoose.model("ShoppingCart", shoppingCartSchema);

@@ -40,6 +40,28 @@ const ProductDetails = () => {
     getProduct();
   }, []);
 
+  const handleAddToCart = async () => {
+    const newQuantity = quantity - quantityToBuy;
+    const idUser = localStorage.getItem("token");
+    const idProduct = localStorage.getItem("productID");
+    if (newQuantity < 0) {
+      alert("No hay suficientes productos en stock");
+      return;
+    }
+    const res = await axios.post("http://localhost:4000/api/updateShopCart", {
+      user_id: idUser,
+      products: {
+        id: idProduct,
+        quantity: quantityToBuy
+      }
+    });
+    console.log(res.status);
+    if (res.status !== 400) {
+      await axios.put("http://localhost:4000/api/updateQuantity", { id: idProduct, quantity: quantityToBuy });
+    }
+    alert("Producto agregado al carrito");
+  };
+
   return (
     <div className="bg-pink-lighter min-h-screen">
       <UserNavbar />
@@ -81,8 +103,8 @@ const ProductDetails = () => {
             <label className="text-lg font-medium text-gray-700 block mb-3">
               Total: ${total}
             </label>
-            <Link href="/pages/users/shoppingCart">
-              <button className="boton-global">Agregar al carrito</button>
+            <Link href="/pages/users/Shop">
+              <button className="boton-global" onClick={handleAddToCart}>Agregar al carrito</button>
             </Link>
           </div>
         </div>
