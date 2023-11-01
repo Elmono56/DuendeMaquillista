@@ -64,7 +64,7 @@ const EditImage = () => {
     console.log(data);
     if (file !== undefined) {
       try {
-        const res = await axios.put("http://localhost:4000/api/modifyProduct", {
+        const res = await axios.put("http://localhost:4000/api/modifyGalPhoto", {
           name: title,
           imageURL: data.img,
           description,
@@ -75,9 +75,9 @@ const EditImage = () => {
         });
 
         console.log(res);
-        alert("Se ha subido el producto a la tienda.");
+        alert("Se ha subido la imagen a la tienda.");
       } catch (error: any) {
-        alert("No se agregó el producto.");
+        alert("No se agregó la imagen.");
         console.log(error);
       }
     } else {
