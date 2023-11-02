@@ -31,6 +31,19 @@ router.get("/getOrders", async (req, res) => {
   }
 });
 
+//get all products for users
+router.get("/getOrdersById", async (req, res) => {
+  await database.connect();
+  const { user_id } = req.query;
+  const orders = await orderSchema.find({ user_id });
+  if (orders) {
+    res.status(200).json(orders);
+  }
+  else {
+    res.status(404).json({ Mensaje: "No hay ordenes registradas" })
+  }
+});
+
 //get a single product
 router.get("/getOrder", async (req, res) => {
   await database.connect();
