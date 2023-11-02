@@ -8,13 +8,15 @@ const router = express.Router();
 //add product
 router.post("/createOrder", async (req, res) => {
   await database.connect();
-  const { user_id, products, address, pay, voucher, status } = req.body;
-  console.log(req.body);
   const order = orderSchema(req.body);
   order
     .save()
     .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: "Error al guardar datos" });
+    }
+    );
 });
 
 // get all products

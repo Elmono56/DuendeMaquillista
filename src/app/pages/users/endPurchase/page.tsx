@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const EndPurchase = () => {
-  const idUser = localStorage.getItem("token");
   const [image, setImage] = useState("");
-
+  const router = useRouter();
+  const [idUser, setIdUser] = useState("");
   const [cartItems, setCartItems] = useState(
     [] as Array<{
       productName: string;
@@ -19,6 +20,10 @@ const EndPurchase = () => {
   );
 
   useEffect(() => {
+    const idUser = localStorage.getItem("token");
+    if (idUser) {
+      setIdUser(idUser);
+    }
     async function getShopCart() {
       try {
         const res = await axios.get("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
@@ -53,15 +58,26 @@ const EndPurchase = () => {
   }, [cartItems]);
 
   const handleEndPurchase = async () => {
-    const res = await axios.post("http://localhost:4000/api/createOrder", {
-      user_id: idUser,
-      products: cartItems,
-      address,
-      pay: total,
-      voucher: image,
-      status: "En Espera"
+    let newAddress = address.split(",").map((str) => str.trim());
+    const res2 = await axios.post("http://localhost:4000/api/createAddress", {
+      userID: idUser,
+      province: newAddress[0],
+      canton: newAddress[1],
+      district: newAddress[2],
+      details: newAddress[3]
     });
-    console.log(res);
+    const res3 = await axios.get("http://localhost:4000/api/getAddress", { params: { userID: idUser } });
+    const res = await axios.post("http://localhost:4000/api/createOrder", { 
+        user_id: idUser,
+        products: cartItems,
+        address: res3.data._id,
+        pay: Number(total),
+        voucher: "urlImagen", //aqui va {image} cuando se pueda cargar el comprobante de pago
+        status: "En Espera"
+    });
+    const res4 = await axios.put("http://localhost:4000/api/changeSCstatus", { user_id: idUser, status: "Procesado" });
+    alert("Compra realizada con éxito, pronto recibirá su pedido");
+    router.push("/pages/users/Shop");
   };
 
   return (
@@ -120,12 +136,12 @@ const EndPurchase = () => {
               <span className="font-bold">${total}</span>
             </div>
             <div className="mt-6 flex justify-center">
-              <Link
+              {/* <Link
                 href="/pages/users/Catalog
               "
-              >
+              > */}
                 <button className="boton-global" onClick={handleEndPurchase}>Finalizar compra</button>
-              </Link>
+              {/* </Link> */}
             </div>
           </div>
         </div>

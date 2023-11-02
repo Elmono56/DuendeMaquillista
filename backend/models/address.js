@@ -6,7 +6,11 @@ const addressSchema = mongoose.Schema({
     required: true,
     unique: true,
 },
-city:{
+province: {
+    type: String,
+    required: true
+}, 
+canton: {
     type: String,
     required: true
 },

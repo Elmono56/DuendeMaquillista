@@ -15,6 +15,18 @@ router.post("/createAddress", async (req, res) => {
       .catch((error) => res.json({ message: error }));
   });
 
+//get address
+router.get("/getAddress", async (req, res) => {
+  await database.connect();
+  const { userID } = req.query;
+  const address = await addressSchema.findOne({ userID });
+  if (address) {
+    res.status(200).json(address);
+  } else {
+    res.status(404).json({ Mensaje: "No se encontró la dirección" });
+  }
+});
+
 //modify addres
 router.put("/updateAddress", async (req, res)=>{
     await database.connect();

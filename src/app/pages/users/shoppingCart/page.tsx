@@ -7,7 +7,6 @@ import Navbar from "@/app/components/AdminNavbar";
 import axios from "axios";
 
 const ShoppingCart = () => {
-  const idUser = localStorage.getItem("token");
   const router = useRouter();
 
   const [cartItems, setCartItems] = useState(
@@ -20,9 +19,11 @@ const ShoppingCart = () => {
   );
 
   useEffect(() => {
+    const idUser = localStorage.getItem("token");
+    console.log(idUser);
     async function getShopCart() {
       try {
-        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopCart", { params: { user_id: idUser } });
+        const res = await axios.get("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
         const transformedProducts = res.data.products.map((product: { name: string; price: number; image: string; quantity: number; }) => ({
           productName: product.name,
           productPrice: product.price,

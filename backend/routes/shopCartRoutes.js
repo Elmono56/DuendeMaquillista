@@ -56,7 +56,7 @@ router.put("/changeSCstatus", async (req, res) => {
   const { user_id, status } = req.body;
   const shopCart = await shopCartSchema.findOne({ user_id });
   if (shopCart) {
-    await shopCartSchema.updateOne({ _id: product._id }, { $set: { status } });
+    await shopCartSchema.updateOne({ _id: shopCart._id }, { $set: { status } });
     res.status(200).json({ Mensaje: "Estado del Carrito ha sido actualizado" });
   }
   else {
@@ -68,7 +68,7 @@ router.put("/changeSCstatus", async (req, res) => {
 router.get("/getShopCart", async (req, res) => {
   await database.connect();
   const { user_id } = req.query;
-  const shopCart = await shopCartSchema.findOne({ user_id });
+  const shopCart = await shopCartSchema.findOne({ user_id, status: "En Espera" });
   if (shopCart) {
     res.status(200).json(shopCart);
   } else {
