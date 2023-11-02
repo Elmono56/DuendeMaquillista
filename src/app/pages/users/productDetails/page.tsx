@@ -58,9 +58,8 @@ const ProductDetails = () => {
         quantity: quantityToBuy
       }
     });
-    console.log(res.status);
     if (res.status !== 400) {
-      await axios.put("http://localhost:4000/api/updateQuantity", { id: idProduct, quantity: quantityToBuy });
+      await axios.put("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/updateQuantity", { id: idProduct, quantity: quantityToBuy });
     }
     alert("Producto agregado al carrito");
   };

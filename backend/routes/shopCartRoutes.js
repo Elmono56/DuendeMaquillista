@@ -20,35 +20,30 @@ router.post("/updateShopCart", async (req, res) => {
   try {
     await database.connect();
 
-    console.log("user_id: " + user_id);
-
-    // Buscar el carrito de compras existente del usuario
-    const existingShopCart = await shopCartSchema.findOne({user_id});
+    // Buscar el carrito de compras existente del usuario con estado "En Espera"
+    const existingShopCart = await shopCartSchema.findOne({ user_id, status: "En Espera" });
 
     if (existingShopCart) {
-      // Si el carrito ya existe, agrega los nuevos productos
+      // Si el carrito "En Espera" ya existe, agrega los nuevos productos
       existingShopCart.products = existingShopCart.products.concat(products);
-      await existingShopCart
-      .save()
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
+      await existingShopCart.save();
+      res.json(existingShopCart);
     } else {
-      // Si no existe un carrito para el usuario, crea uno nuevo
+      // Si no existe un carrito "En Espera" para el usuario, crea uno nuevo
       const newShopCart = new shopCartSchema({
         user_id,
         products,
         status: "En Espera",
       });
 
-      await newShopCart
-      .save()
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
+      await newShopCart.save();
+      res.json(newShopCart);
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 //modify a product
 router.put("/changeSCstatus", async (req, res) => {
