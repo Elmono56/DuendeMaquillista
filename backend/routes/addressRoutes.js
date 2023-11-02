@@ -27,6 +27,20 @@ router.get("/getAddress", async (req, res) => {
   }
 });
 
+//get address by id
+//get a single product
+router.get("/getAddressById", async (req, res) => {
+  await database.connect();
+  const { id } = req.query;
+  const address = await addressSchema.findById(id);
+  if (address) {
+    res.status(200).json(address);
+  }
+  else {
+    res.status(404).json({ Mensaje: "Orden no encontrado" });
+  }
+});
+
 //modify addres
 router.put("/updateAddress", async (req, res)=>{
     await database.connect();

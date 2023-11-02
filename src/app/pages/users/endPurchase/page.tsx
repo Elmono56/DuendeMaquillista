@@ -54,7 +54,7 @@ const EndPurchase = () => {
     const total = calculateTotal();
     const shippingCost = total * 0.05;
     setShipping(shippingCost);
-    setTotal(total + shippingCost);
+    setTotal(total);
   }, [cartItems]);
 
   const handleEndPurchase = async () => {

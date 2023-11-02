@@ -24,6 +24,11 @@ const Orders = () => {
   }
   , []);
 
+  const handleOrderDetails = (id: string) => () => {
+    localStorage.setItem("order_id", id);
+    window.location.href = "/pages/users/orderDetails";
+  }
+
   return (
     <div>
       <UserNavbar />
@@ -47,9 +52,9 @@ const Orders = () => {
                 <div className="pb-2">ID: { _.id }</div>
               </div>
               <div className="flex flex-col space-y-2">
-                <Link href="/pages/users/orderDetails">
-                  <button className="boton-global mr-3">Detalles</button>
-                </Link>
+                {/* <Link href="/pages/users/orderDetails"> */}
+                  <button className="boton-global mr-3" onClick={handleOrderDetails(_.id)}>Detalles</button>
+                {/* </Link> */}
 
                 <label className="text-sm">
                   Estado: {_.status}
