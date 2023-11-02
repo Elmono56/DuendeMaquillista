@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const router = useRouter();
   useEffect(() => {
     async function getData() {
       try {
@@ -26,10 +27,10 @@ const Orders = () => {
   }, []);
 
   const handleAction = async (actionType: string, idOrder: string) => {
-    const router = useRouter();
     switch (actionType) {
       case "details":
         // Aquí se redirige a la página de detalles de la orden
+        console.log("ID: ", idOrder);
         localStorage.setItem("idOrder", idOrder);
         router.push("/pages/users/orderDetails");
         break;
