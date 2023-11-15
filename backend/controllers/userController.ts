@@ -3,13 +3,15 @@ class UserController{
     async login(route: string, email: string, password: string){
         try{
             const response = await axios.post(route,{
-                email, password
+                email: email, password: password
             });
-            const {type, user} = response.data;
-            return type;
+            const { type, user } = response.data;
+            console.log(response.data)
+            return response.data;
         }
         catch(error: any){
-            return error.response.data.message;
+            console.log("Error: ");
+            return error;
         }
     }
 

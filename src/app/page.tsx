@@ -6,16 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Database from "../../backend/routes/singleton"
-async function makeRequest() {
-  const config = {
-    method: "get",
-    url: "http://localhost:4000/",
-  };
-
-  let res = await axios(config);
-
-  console.log(res.data);
-}
+import UserController from "../../backend/controllers/userController"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,24 +15,20 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/login", {
-        email,
-        password,
-      });
-
-      const { type, user } = res.data;
-      console.log("Usuario: ", user._id);
-
+      const req = await UserController.login("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/login", email, password);
+      console.log("email y pass: ", email, password)
+      const type = req.type;
       if (type == "admin") {
         console.log("se logueó un admin");
-        localStorage.setItem("token", user._id);
+        localStorage.setItem("token", req.user._id);
         router.push("/pages/admin/Catalog");
       } else if (type == "user") {
         console.log(" se logueó un user");
-        localStorage.setItem("token", user._id);
+        localStorage.setItem("token", req.user._id);
         router.push("/pages/users/Catalog");
       }
-    } catch (error: any) {
+    }
+    catch (error: any) {
       console.log(error);
       alert("Este usuario no existe o la contraseña es incorrecta. ");
     }
@@ -71,8 +58,8 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Link href="/pages/users/recoverPassword"> 
-          <div>¿Olvidó la contraseña?</div>
+          <Link href="/pages/users/recoverPassword">
+            <div>¿Olvidó la contraseña?</div>
           </Link>
           <button
             className="boton-global"
