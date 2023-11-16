@@ -4,13 +4,15 @@ import React, { useState } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import Link from "next/link";
 import axios from "axios";
+import UserController from "../../../../../backend/controllers/userController";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleSubmit = () => {
     console.log("Nombre:", name);
     console.log("Apellido:", lastName);
@@ -26,13 +28,14 @@ const Register = () => {
       isAdmin: false,
     };
 
-    try {
-      const res = axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createUser", data);
-      console.log(res);
-    } catch (error: any) {
-      console.log(error);
-      alert("La categoría ya existe. ");
-    }
+      const res = UserController.register("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createUser", data);
+      if(res){
+        alert("Usuario registrado.");
+      } 
+      else{
+        alert("El usuario ya existe.");
+      }
+      router.push("/");
   };
 
   return (

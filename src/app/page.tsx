@@ -5,7 +5,6 @@ import UserNavbar from "./components/UserNavBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Database from "../../backend/routes/singleton"
 import UserController from "../../backend/controllers/userController"
 
 const Login = () => {
