@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import Link from "next/link";
-import axios from "axios";
 import UserController from "../../../../../backend/controllers/userController";
 import { useRouter } from "next/navigation";
 

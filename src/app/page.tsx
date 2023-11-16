@@ -26,6 +26,9 @@ const Login = () => {
         localStorage.setItem("token", req.user._id);
         router.push("/pages/users/Catalog");
       }
+      else{
+        alert("Este usuario no existe o la contraseña es incorrecta. ");
+      }
     }
     catch (error: any) {
       console.log(error);

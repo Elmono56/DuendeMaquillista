@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import UserController from "../../../../../backend/controllers/userController";
 
 const EditProfile = () => {
   const [nombre, setNombre] = useState("");
@@ -19,10 +20,10 @@ const EditProfile = () => {
     async function getData() {
       try {
         const userId = localStorage.getItem("token");
-        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getUser", { params: {id: userId}});
-        setNombre(res.data.name);
-        setApellido(res.data.lastName);
-        setEmail(res.data.email);
+        const res = await UserController.getUser("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getUser", { params: {id: userId}});
+        setNombre(res.name);
+        setApellido(res.lastName);
+        setEmail(res.email);
       } catch (error: any) {
         console.log(error);
       }
