@@ -5,6 +5,7 @@ import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
 import axios from "axios";
 import ProductController from "../../../../../backend/controllers/productController";
+import shopCartController from "../../../../../backend/controllers/shopCartController";
 
 const ProductDetails = () => {
   // Suponiendo un precio fijo para el producto. Esto deberías obtenerlo de tus datos.
@@ -36,7 +37,6 @@ const ProductDetails = () => {
       setQuantity(product.cantStock);
       setIsAvailable(product.status);
       setImage(product.imageURL);
-      console.log(product.imageURL);
     }
     getProduct();
   }, []);
@@ -49,7 +49,7 @@ const ProductDetails = () => {
       alert("No hay suficientes productos en stock");
       return;
     }
-    const res = await axios.post("http://localhost:4000/api/updateShopCart", {
+    const res = await shopCartController.updateShopCart("http://localhost:4000/api/updateShopCart", {
       user_id: idUser,
       products: {
         id: idProduct,

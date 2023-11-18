@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/AdminNavbar";
 import axios from "axios";
+import ShopCartController from "../../../../../backend/controllers/shopCartController";
 
 const ShoppingCart = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const ShoppingCart = () => {
     console.log(idUser);
     async function getShopCart() {
       try {
-        const res = await axios.get("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
+        const res = await ShopCartController.getShopCart("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
         const transformedProducts = res.data.products.map((product: { name: string; price: number; image: string; quantity: number; }) => ({
           productName: product.name,
           productPrice: product.price,
