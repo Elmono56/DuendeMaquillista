@@ -35,6 +35,8 @@ const ProductDetails = () => {
       setPrice(product.price);
       setQuantity(product.cantStock);
       setIsAvailable(product.status);
+      setImage(product.imageURL);
+      console.log(product.imageURL);
       //falta el set de la imagen
     }
     getProduct();
@@ -75,7 +77,7 @@ const ProductDetails = () => {
 
           <div className="flex flex-row items-start justify-between mt-5 space-x-6">
             <div className="flex-1 flex justify-center items-center">
-              <div className="rounded-md border border-gray-300 w-80 h-80 transition duration-300 hover:border-blue-500"></div>
+              <div className="rounded-md border border-gray-300 w-80 h-80 transition duration-300 hover:border-blue-500"><img src={image}/></div>
             </div>
 
             <div className="flex-1 flex flex-col items-start space-y-3">

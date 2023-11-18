@@ -15,6 +15,7 @@ const EditImage = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [file, setFile] = useState<File>();
   const [data, setData] = useState({});
+  const [image, setImage] = useState({});
 
   useEffect(() => {
     // Cargar datos de la imagen
