@@ -21,6 +21,7 @@ const ImageDetails = () => {
       setCategory(res.data.category);
       setSubcategory(res.data.subCategory);
       setDescription(res.data.description);
+      console.log(res.data.imageURL);
     } getData();
   }, []);
 
@@ -34,7 +35,7 @@ const ImageDetails = () => {
             {name}
           </div>
           <div className="flex items-center justify-between space-x-6">
-            <div className="w-96 h-96 rounded-md border border-gray-300 transition duration-300 hover:border-blue-500"></div>
+            <div className="w-96 h-96 rounded-md border border-gray-300 transition duration-300 hover:border-blue-500"><img src={image}/></div>
             <div className="text-center w-72 flex flex-col space-y-4">
               <div className="text-gray-700 font-semibold">Categoría: {category}</div>
               <div className="text-gray-700 font-semibold">Subcategoría: {subcategory}</div>
