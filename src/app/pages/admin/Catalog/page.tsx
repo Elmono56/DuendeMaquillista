@@ -6,6 +6,9 @@ import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import CategoryGalController from "../../../../../backend/controllers/categoryGalController";
+import SubCatagoryGalController from "../../../../../backend/controllers/subCatagoryGalController";
+import GalPhotoController from "../../../../../backend/controllers/galPhotoController";
 
 const Catalog = () => {
   // Categorías y subcategorías dinámicas
@@ -39,13 +42,13 @@ const Catalog = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories");
+        const res = await CategoryGalController.getCategories("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories");
         const categoriesData = res.data;
 
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
-            const subRes = await axios.get(
+            const subRes = await SubCatagoryGalController.getSubCategoriesFromCategory(
               "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getSubCategoriesFromCategory",
               {
                 params: { category: category.name },
@@ -142,7 +145,7 @@ const Catalog = () => {
   //useEffect para conseguir las imagenes de la base de datos
   useEffect(() => {
     async function getImages() {
-      const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos");
+      const res = await GalPhotoController.getGalPhotos("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos");
       setGallery(res.data.map((image: { _id: string, imageURL: string, name: string, category: string, subCategory: string }) => ({
         id: image._id,
         imgSrc: image.imageURL,
