@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
 import axios from "axios";
+import ProductController from "../../../../../backend/controllers/productController";
 
 const ProductDetails = () => {
   // Suponiendo un precio fijo para el producto. Esto deberías obtenerlo de tus datos.
@@ -26,8 +27,7 @@ const ProductDetails = () => {
   useEffect(() => {
     async function getProduct () {
       let idProduct = localStorage.getItem('productID');
-      const res = await axios.get('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProductById', { params: { id: idProduct }});
-      const product = res.data;
+      const product = await ProductController.getProductById('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProductById', { params: { id: idProduct }});
       setCategory(product.category);
       setSubCategory(product.subCategory);
       setDescription(product.description);

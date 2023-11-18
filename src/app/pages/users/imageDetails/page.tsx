@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
-import axios from "axios";
 import GalPhotoController from "../../../../../backend/controllers/galPhotoController";
 
 const ImageDetails = () => {
