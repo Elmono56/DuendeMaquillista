@@ -170,7 +170,7 @@ const Catalog = () => {
   const handleDeleteImage = async (id: string) => {
     const confirm = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
     if (confirm) {
-      await axios.put('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/setImageVisibility', {id, status: false});
+      await GalPhotoController.setimageVisibility('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/setImageVisibility', {id, status: false});
     }
   }
 
