@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/AdminNavbar";
-import axios from "axios";
 import ShopCartController from "../../../../../backend/controllers/shopCartController";
 
 const ShoppingCart = () => {
