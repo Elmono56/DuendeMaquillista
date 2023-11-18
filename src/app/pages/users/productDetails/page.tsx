@@ -37,7 +37,6 @@ const ProductDetails = () => {
       setIsAvailable(product.status);
       setImage(product.imageURL);
       console.log(product.imageURL);
-      //falta el set de la imagen
     }
     getProduct();
   }, []);
