@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         'black': '#000000',
-        'pink-lighter': '#ffef6', 
+        'pink-lighter-b': '#fbb6b6', 
         'gray-input': '#d1d5db',
         'hover-pink': '#ed8f8f',
       },

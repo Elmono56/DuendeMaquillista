@@ -1,71 +1,38 @@
 "use client";
-
 import React, { useState } from "react";
 import UserNavbar from "@/app/components/UserNavBar";
 
-const Chat = () => {
-  const [chats, setChats] = useState([{ name: "Juan", message: "Hola!" }]);
-  const [message, setMessage] = useState("");
-
-  const sendMessage = () => {
-    if (message.trim() !== "") {
-      setChats([...chats, { name: "Tú", message: message }]);
-      setMessage("");
-    }
-  };
-
-  const changeStatus = (index, newStatus) => {
-    const updatedChats = [...chats];
-    updatedChats[index].status = newStatus;
-    setChats(updatedChats);
-  };
+const Chats = () => {
+  const [chats, setChats] = useState([
+    { asunto: "Pedido confirmado", fecha: "2023-11-20" },
+    { asunto: "Mensaje de Daniela", fecha: "2023-11-19" },
+    { asunto: "Recordatorio de Ariel", fecha: "2023-11-18" },
+    // Añade más chats aquí
+  ]);
 
   return (
     <div>
       <UserNavbar />
       <div className="flex justify-center items-center h-screen">
-        <div className="flex flex-col h-[600px] w-[400px] bg-white border border-gray-300">
-          <div className="p-2">
-            <div className="flex justify-end">
-              <select
-                className="cursor-pointer text-sm"
-                onChange={(e) => changeStatus(0, e.target.value)}
-              >
-                <option value="pendiente">Pendiente</option>
-                <option value="en revision">En revisión</option>
-                <option value="denegar">Rechazar</option>
-              </select>
-            </div>
-            <div className="mt-2 overflow-y-auto">
-              {chats.map((chat, index) => (
-                <div
-                  key={index}
-                  className="p-1 border-b border-gray-300 text-sm"
-                >
-                  <strong>{chat.name}:</strong> {chat.message}
-                </div>
-              ))}
-            </div>
+        <div className="max-w-md w-full mx-auto overflow-y-auto max-h-[400px] bg-white rounded-md shadow-lg">
+          <div className="text-center py-4 border-b border-gray-300">
+            <h1 className="text-2xl font-bold">Centro de Notificaciones</h1>
           </div>
-          <div className="p-2 mt-auto bg-gray-100">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="border p-1 w-full text-sm"
-              placeholder="Escribe un mensaje..."
-            />
-            <button
-              onClick={sendMessage}
-              className=" bg-hover-pink text-white p-1 mt-1 w-full text-sm"
+          {chats.map((chat, index) => (
+            <div
+              key={index}
+              className="flex flex-col p-4 border-b border-gray-300 hover:bg-gray-100 transition duration-300"
             >
-              Enviar
-            </button>
-          </div>
+              <button className="text-lg font-semibold hover:underline">
+                {chat.asunto}
+              </button>
+              <span className="text-sm text-gray-600">Fecha: {chat.fecha}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default Chat;
+export default Chats;

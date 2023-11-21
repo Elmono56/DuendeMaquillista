@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import CategoryGalController from "../../../../../backend/controllers/categoryGalController";
 import subCatagoryGalController from "../../../../../backend/controllers/subCatagoryGalController";
+import NotificationButton from "@/app/components/NotificationButton";
 
 const Catalog = () => {
   // Categorías y subcategorías dinámicas
@@ -27,18 +28,21 @@ const Catalog = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await CategoryGalController.getCategories("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories");
+        const res = await CategoryGalController.getCategories(
+          "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories"
+        );
         const categoriesData = res.data;
 
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
-            const subRes = await subCatagoryGalController.getSubCategoriesFromCategory(
-              "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getSubCategoriesFromCategory",
-              {
-                params: { category: category.name },
-              }
-            );
+            const subRes =
+              await subCatagoryGalController.getSubCategoriesFromCategory(
+                "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getSubCategoriesFromCategory",
+                {
+                  params: { category: category.name },
+                }
+              );
 
             const subcategories = subRes.data.map(
               (subcategory: { name: string }) => subcategory.name
@@ -71,13 +75,17 @@ const Catalog = () => {
   );
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
+    []
+  );
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
 
   // Función para manejar el cambio en la selección de categoría
   const handleCategoryChange = (category: string) => {
     if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+      setSelectedCategories(
+        selectedCategories.filter((cat) => cat !== category)
+      );
     } else {
       setSelectedCategories([...selectedCategories, category]);
     }
@@ -86,7 +94,9 @@ const Catalog = () => {
   // Función para manejar el cambio en la selección de subcategoría
   const handleSubCategoryChange = (subcategory: string) => {
     if (selectedSubcategories.includes(subcategory)) {
-      setSelectedSubcategories(selectedSubcategories.filter((subcat) => subcat !== subcategory));
+      setSelectedSubcategories(
+        selectedSubcategories.filter((subcat) => subcat !== subcategory)
+      );
     } else {
       setSelectedSubcategories([...selectedSubcategories, subcategory]);
     }
@@ -94,13 +104,17 @@ const Catalog = () => {
 
   // Filtrar productos según las selecciones de categoría y subcategoría
   useEffect(() => {
-    const filteredByCategory = selectedCategories.length > 0
-      ? gallery.filter((image) => selectedCategories.includes(image.category))
-      : gallery;
+    const filteredByCategory =
+      selectedCategories.length > 0
+        ? gallery.filter((image) => selectedCategories.includes(image.category))
+        : gallery;
 
-    const filteredBySubcategory = selectedSubcategories.length > 0
-      ? filteredByCategory.filter((image) => selectedSubcategories.includes(image.subCategory))
-      : filteredByCategory;
+    const filteredBySubcategory =
+      selectedSubcategories.length > 0
+        ? filteredByCategory.filter((image) =>
+            selectedSubcategories.includes(image.subCategory)
+          )
+        : filteredByCategory;
 
     setFilteredProducts(filteredBySubcategory);
   }, [selectedCategories, selectedSubcategories, gallery]);
@@ -114,27 +128,52 @@ const Catalog = () => {
     setSearchResults(results);
   };
 
-  const [searchResults, setSearchResults] = useState<Array<{ id: string, imgSrc: string, title: string, category: string, subCategory: string }>>([]);
-  const renderItems = searchResults.length > 0 ? searchResults : (filteredProducts.length > 0 ? filteredProducts : gallery);
+  const [searchResults, setSearchResults] = useState<
+    Array<{
+      id: string;
+      imgSrc: string;
+      title: string;
+      category: string;
+      subCategory: string;
+    }>
+  >([]);
+  const renderItems =
+    searchResults.length > 0
+      ? searchResults
+      : filteredProducts.length > 0
+      ? filteredProducts
+      : gallery;
 
   useEffect(() => {
     async function getImages() {
-      const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos");
-      setGallery(res.data.map((image: { _id: string, imageURL: string, name: string, category: string, subCategory: string }) => ({
-        id: image._id,
-        imgSrc: image.imageURL,
-        title: image.name,
-        category: image.category,
-        subCategory: image.subCategory
-
-      })));
-    } getImages();
+      const res = await axios.get(
+        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos"
+      );
+      setGallery(
+        res.data.map(
+          (image: {
+            _id: string;
+            imageURL: string;
+            name: string;
+            category: string;
+            subCategory: string;
+          }) => ({
+            id: image._id,
+            imgSrc: image.imageURL,
+            title: image.name,
+            category: image.category,
+            subCategory: image.subCategory,
+          })
+        )
+      );
+    }
+    getImages();
   }, []);
 
   const handleViewDetails = (id: string) => {
     localStorage.setItem("imageId", id);
     router.push("/pages/users/imageDetails");
-  }
+  };
 
   return (
     <div>
@@ -158,7 +197,9 @@ const Catalog = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="boton-global ml-2" onClick={handleSearch} >Buscar</button>
+                <button className="boton-global ml-2" onClick={handleSearch}>
+                  Buscar
+                </button>
               </div>
             </div>
             <h2 className="text-xl font-bold mb-4">Categorías</h2>
@@ -166,16 +207,22 @@ const Catalog = () => {
               {categories.map((category) => (
                 <li key={category.name}>
                   <div className="flex items-center">
-                    <input type="checkbox" 
-                    onChange={() => handleCategoryChange(category.name)}/>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCategoryChange(category.name)}
+                    />
                     <span className="ml-2">{category.name}</span>
                   </div>
                   {category.subcategories.length > 0 && (
                     <ul className="ml-6 space-y-2 mt-2">
                       {category.subcategories.map((subcategory) => (
                         <li className="flex items-center" key={subcategory}>
-                          <input type="checkbox" 
-                          onChange={() => handleSubCategoryChange(subcategory)}/>
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleSubCategoryChange(subcategory)
+                            }
+                          />
                           <span className="ml-2">{subcategory}</span>
                         </li>
                       ))}
@@ -184,6 +231,9 @@ const Catalog = () => {
                 </li>
               ))}
             </ul>
+            <Link href="/pages/users/Chat">
+              <NotificationButton hayNotificacionesPendientes={true} />
+            </Link>
           </div>
           <div
             className="flex-1 bg-white border rounded-md p-4 overflow-y-auto ml-6"
@@ -204,7 +254,9 @@ const Catalog = () => {
                       href="/pages/users/imageDetails"
                       className="text-blue-500"
                     > */}
-                      <button onClick={() => handleViewDetails(image.id)}>Ver más</button>
+                    <button onClick={() => handleViewDetails(image.id)}>
+                      Ver más
+                    </button>
                     {/* </Link> */}
                   </div>
                   <div className="mt-2 text-center text-gray-800">

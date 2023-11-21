@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const AdminNavbar = () => {
-  
   const handleLogout = () => {
     localStorage.removeItem("token");
   };
@@ -69,12 +68,12 @@ const AdminNavbar = () => {
           >
             <button>Tienda</button>
           </Link>
-          <button
+          <Link
+            href="/pages/admin/Appointment"
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
-            onClick={() => alert("Función en desarrollo")}
           >
-            Agenda
-          </button>
+            <button>Agenda</button>
+          </Link>
           <Link
             href="/"
             className="flex-grow border border-black text-center py-1 hover:bg-hover-pink transition duration-300"
