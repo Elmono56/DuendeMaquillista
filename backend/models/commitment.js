@@ -21,11 +21,11 @@ const commitmentSchema = mongoose.Schema({
         required: true
     },
     startTime: {
-        type: Date,
+        type: String,
         required: false
     },
     endTime: {
-        type: Date,
+        type: String,
         required: false
     },
     status:{
