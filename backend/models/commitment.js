@@ -29,7 +29,7 @@ const commitmentSchema = mongoose.Schema({
         required: false
     },
     status:{
-        type: String,
+        type: Boolean,
         required: true
     },
 

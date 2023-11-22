@@ -9,6 +9,17 @@ const AddEvent = () => {
   const [InitialHour, setInitialHour] = useState("");
   const [FinalHour, setFinalHour] = useState("");
 
+  // PARA CUANDO SE AGREGUE EL DATE A LA BD
+  // let dateString = "11/10/2023";
+  // let parts = dateString.split('/');
+  // // Se asume el formato dd/mm/aaaa
+  // let day = parseInt(parts[0], 10);
+  // let month = parseInt(parts[1], 10) - 1; // Se resta 1 al mes, ya que en JavaScript los meses van de 0 a 11
+  // let year = parseInt(parts[2], 10);
+  
+  // let date = new Date(year, month, day);
+  // console.log(date);
+
   return (
     <div>
       <AdminNavbar />
