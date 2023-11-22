@@ -18,6 +18,7 @@ const galSubCategory = require("./routes/subCategoryGalRoutes");
 const shopCategory = require("./routes/categoryShopRoutes");
 const shopSubCategory = require("./routes/subCategoryShopRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const commitmentRoutes = require("./routes/commitmentRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 const shopCartRoutes = require("./routes/shopCartRoutes");
 const multer = require("multer");
