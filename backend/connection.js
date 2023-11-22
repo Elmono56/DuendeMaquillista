@@ -41,6 +41,7 @@ app.use("/api",shopSubCategory);
 app.use("/api",orderRoutes);
 app.use("/api",addressRoutes);
 app.use("/api", shopCartRoutes);
+app.use("/api", commitmentRoutes);
 //mongodb connection
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

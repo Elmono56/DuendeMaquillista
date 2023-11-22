@@ -63,3 +63,5 @@ router.put("/changeVisibility", async (req, res) => {
         res.status(404).json({ Mensaje: "Compromiso no encontrado" });
     }
 });
+
+module.exports = router;
