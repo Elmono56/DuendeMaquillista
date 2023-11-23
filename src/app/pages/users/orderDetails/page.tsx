@@ -23,7 +23,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     async function getData() {
-      const idOrder = localStorage.getItem("order_id");
+      const idOrder = localStorage.getItem("idOrder");
       const response = await axios.get("http://localhost:4000/api/getOrder", { params: { id: idOrder } });
       let costShipping = response.data.pay * 0.05;
       setOrderTotal(response.data.pay);

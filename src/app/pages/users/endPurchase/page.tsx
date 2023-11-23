@@ -61,6 +61,10 @@ const EndPurchase = () => {
   }, [cartItems]);
 
   const handleEndPurchase = async () => {
+    if (!address) {
+      alert("Debe ingresar una dirección");
+      return;
+    }
     let newAddress = address.split(",").map((str) => str.trim());
     const res2 = await axios.post("http://localhost:4000/api/createAddress", {
       userID: idUser,
@@ -140,7 +144,7 @@ const EndPurchase = () => {
             </div>
             <div className="mt-6 flex justify-between items-center">
               <span>Total:</span>
-              <span className="font-bold">${total}</span>
+              <span className="font-bold">${total + shipping}</span>
             </div>
             <div className="mt-6 flex justify-center">
               {/* <Link
