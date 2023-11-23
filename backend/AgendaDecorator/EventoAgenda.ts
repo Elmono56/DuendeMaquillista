@@ -1,0 +1,3 @@
+interface EventoAgenda {
+    getInfo():String;
+  }
