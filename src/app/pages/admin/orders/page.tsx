@@ -89,7 +89,7 @@ const Orders = () => {
           status: true
         }
         await axios.post('http://localhost:4000/api/createCommitment', data)
-        // await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" })
+        await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" })
         // FALTA AGREGAR AL CENTRO DE NOTIFICACIONES
         // En el lugar donde cambias el estado de las órdenes
         notificationSubject.notifyObservers("Se ha confirmado una orden #" + idOrder, res.data.user_id,  idOrder);
@@ -100,7 +100,7 @@ const Orders = () => {
         // Aquí se rechaza la orden
         console.log("ID: ", idOrder);
         const res1 = await axios.get('http://localhost:4000/api/getOrder', { params: { id: idOrder } })
-        // await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado" })
+        await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado" })
         notificationSubject.notifyObservers("Se ha rechazado una orden #" + idOrder, res1.data.user_id,  idOrder);
         break;
       default:
