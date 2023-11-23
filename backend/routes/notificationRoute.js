@@ -15,14 +15,16 @@ router.post("/createNotification", async (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get all notifications
-router.get("/getAllNotifications", async (req, res) => {
+// get all notifications for user
+router.get("/getNotifications", async (req, res) => {
   await database.connect();
-  const notification = await notificationSchema.find();
-  if (notification) {
-    res.status(200).json(notification);
-  } else {
-    res.status(404).json({ Mensaje: "No hay notificaciones" });
+  const { userId } = req.query;
+  const notifications = await notificationSchema.find({ userId });
+  if (notifications) {
+    res.status(200).json(notifications);
+  }
+  else {
+    res.status(404).json({ Mensaje: "No hay notificaciones" })
   }
 });
 
