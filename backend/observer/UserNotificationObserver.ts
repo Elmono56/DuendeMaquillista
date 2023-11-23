@@ -7,8 +7,8 @@ export class UserNotificationObserver implements Observer {
         console.log("Notification received:", message);
         // Aquí se puede actualizar el estado del componente para mostrar la notificación
         // crear la notificacion en la base de datos
-        let fechaActual = Date.now();
-        let fecha = new Date(fechaActual);
-        await axios.post('http://localhost:4000/api/createNotification', { message, fecha, orderId, userId })
+        const fechaActual = Date.now();
+        const fecha = new Date(fechaActual);
+        await axios.post('http://localhost:4000/api/createNotification', { message, timestamp: fecha, orderId, userId })
     }
 }
