@@ -6,6 +6,8 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import BasicCard from "@/app/components/BasicCard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Subject } from "../../../../../backend/observer/Subject";
+import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -55,6 +57,8 @@ const Orders = () => {
   };
 
   const handleAction = async (actionType: string, idOrder: string) => {
+    const notificationSubject = new NotificationSubject();
+    const res = await axios.get('http://localhost:4000/api/getOrder', { params: { id: idOrder } })
     switch (actionType) {
       case "details":
         // Aquí se redirige a la página de detalles de la orden
@@ -66,7 +70,6 @@ const Orders = () => {
         // Aquí se confirma la orden
         // AQUI SE DEBE MANEJAR EL COMPROMISO
         // CREARLO CON EL TIPO DE COMPROMISO "ENTREGA"
-        const res = await axios.get('http://localhost:4000/api/getOrder', { params: { id: idOrder } })
         console.log(res.data.user_id);
         const resUser = await axios.get('http://localhost:4000/api/getUser', { params: { id: res.data.user_id } })
         let data = {
@@ -84,12 +87,16 @@ const Orders = () => {
         await axios.post('http://localhost:4000/api/createCommitment', data)
         await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" })
         // FALTA AGREGAR AL CENTRO DE NOTIFICACIONES
+        // En el lugar donde cambias el estado de las órdenes
+        notificationSubject.notifyObservers("Se ha confirmado una orden #" + idOrder, res.data.user_id,  idOrder);
+        // se debe desuscribir el observer despues de notificar
 
         break;
       case "decline":
         // Aquí se rechaza la orden
         console.log("ID: ", idOrder);
         await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado" })
+        notificationSubject.notifyObservers("Se ha confirmado una orden #" + idOrder, res.data.user_id,  idOrder);
         break;
       default:
         break;
