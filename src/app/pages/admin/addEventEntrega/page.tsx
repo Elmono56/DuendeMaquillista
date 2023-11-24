@@ -15,6 +15,7 @@ const AddEventEntrega = () => {
   const [contacto, setContacto] = useState("");
 
   const handleEntrega = async () => {
+    try{
     // Logic to handle the form submission
     // Example: console.log({ asunto, fecha, nombre, apellido, numeroPedido, contacto });
     const eventoAgenda = new AgendaConcrete(asunto, fecha, "true");
