@@ -31,7 +31,7 @@ class UserController {
   async getUser(route: string, id: any) {
     try {
       const response = await axios.get(route, id);
-      return response.data;
+      return response;
     } catch (error: any) {
       return error;
     }
