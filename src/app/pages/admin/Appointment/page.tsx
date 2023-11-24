@@ -107,7 +107,7 @@ const Shop = () => {
             style={{ maxHeight: "80vh" }}
           >
             <div className="my-4">
-              <Link href="/pages/admin/addEvent" className="boton-global mb-4">
+              <Link href="/pages/admin/addEventEntrega" className="boton-global mb-4">
                 <button>+ Agregar</button>
               </Link>
             </div>

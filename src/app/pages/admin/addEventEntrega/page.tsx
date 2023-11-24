@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-
+import commitmentController from "../../../../../backend/controllers/commitmentController";
 const AddEventEntrega = () => {
   const [asunto, setAsunto] = useState("");
   const [fecha, setFecha] = useState("");
@@ -12,6 +12,22 @@ const AddEventEntrega = () => {
   const [contacto, setContacto] = useState("");
 
   const handleEntrega = async () => {
+    try{
+      const response = await commitmentController.createCommitment("http://localhost:4000/api/createCommitment", {
+        name: nombre + apellido,
+        type: "Entrega",
+        description: asunto,
+        deadline: fecha,
+        status: true,
+        address: contacto
+        });
+        alert("Se añadió el evento de entrega correctamente. ")
+    }
+    catch(error){
+      console.log("error: ", error);
+    }
+
+    
     // Logic to handle the form submission
     // Example: console.log({ asunto, fecha, nombre, apellido, numeroPedido, contacto });
   };
