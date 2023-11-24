@@ -8,5 +8,9 @@ class ShopCartController {
     const response = await axios.get(route, id);
     return response;
   }
+  async changeSCstatus(route: string, data: any) {
+    await axios.put(route, data);
+    return;
+  }
 }
 export default new ShopCartController();
