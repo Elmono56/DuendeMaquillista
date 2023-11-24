@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import CategoryGalController from "../../../../../backend/controllers/categoryGalController";
 import SubCatagoryGalController from "../../../../../backend/controllers/subCatagoryGalController";
@@ -29,11 +28,8 @@ const Catalog = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get(
-          "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories"
-        );
+        const res = await CategoryGalController.getCategories("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getCategories");
         const categoriesData = res.data;
-
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
@@ -44,7 +40,6 @@ const Catalog = () => {
                   params: { category: category.name },
                 }
               );
-            console.log("Subcategoria: ", subRes);
 
             const subcategories = subRes.data.map(
               (subcategory: { name: string }) => subcategory.name
@@ -158,9 +153,7 @@ const Catalog = () => {
   //useEffect para conseguir las imagenes de la base de datos
   useEffect(() => {
     async function getImages() {
-      const res = await axios.get(
-        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos"
-      );
+      const res = await GalPhotoController.getGalPhotos("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos");
       setGallery(
         res.data.map(
           (image: {
@@ -197,10 +190,8 @@ const Catalog = () => {
       "¿Estás seguro de que quieres eliminar esta imagen?"
     );
     if (confirm) {
-      await axios.put(
-        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/setImageVisibility",
-        { id, status: false }
-      );
+      await GalPhotoController.setimageVisibility("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/setImageVisibility",
+      { id, status: false });
     }
   };
 

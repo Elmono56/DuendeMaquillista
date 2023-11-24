@@ -4,9 +4,11 @@ import React, { useState, useEffect } from "react";
 import Order from "@/app/components/Order";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import BasicCard from "@/app/components/BasicCard";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Subject } from "../../../../../backend/observer/Subject";
+import OrderController from "../../../../../backend/controllers/orderController";
+import UserController from "../../../../../backend/controllers/userController";
+import CommitmentController from "../../../../../backend/controllers/commitmentController";
+
 import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
 import { UserNotificationObserver } from "../../../../../backend/observer/UserNotificationObserver";
 
@@ -16,7 +18,7 @@ const Orders = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getOrders");
+        const res = await OrderController.getOrders('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getOrders');
         const extractedIds = res.data.map((order: { _id: string }) => {
           const truncatedId = order._id.slice(0, 24); // Recorta a 24 dígitos (todos)
           return { _id: truncatedId };
@@ -65,7 +67,6 @@ const Orders = () => {
     switch (actionType) {
       case "details":
         // Aquí se redirige a la página de detalles de la orden
-        console.log("ID: ", idOrder);
         localStorage.setItem("idOrder", idOrder);
         router.push("/pages/users/orderDetails");
         break;
@@ -73,9 +74,8 @@ const Orders = () => {
         // Aquí se confirma la orden
         // AQUI SE DEBE MANEJAR EL COMPROMISO
         // CREARLO CON EL TIPO DE COMPROMISO "ENTREGA"
-        const res = await axios.get('http://localhost:4000/api/getOrder', { params: { id: idOrder } })
-        console.log(res.data.user_id);
-        const resUser = await axios.get('http://localhost:4000/api/getUser', { params: { id: res.data.user_id } })
+        const res = await OrderController.getOrder('http://localhost:4000/api/getOrder', { params: { id: idOrder } });
+        const resUser = await UserController.getUser('http://localhost:4000/api/getUser', { params: { id: res.data.user_id } });
         let data = {
           name: `Pedido #${idOrder}`,
           type: "Entrega",
@@ -88,8 +88,8 @@ const Orders = () => {
           deadline: getDeliveryDate(),
           status: true
         }
-        await axios.post('http://localhost:4000/api/createCommitment', data)
-        await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" })
+        await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', data);
+        await OrderController.updateOrderStatus('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" });
         // FALTA AGREGAR AL CENTRO DE NOTIFICACIONES
         // En el lugar donde cambias el estado de las órdenes
         notificationSubject.notifyObservers("Se ha confirmado una orden #" + idOrder, res.data.user_id,  idOrder);
@@ -98,9 +98,8 @@ const Orders = () => {
         break;
       case "decline":
         // Aquí se rechaza la orden
-        console.log("ID: ", idOrder);
-        const res1 = await axios.get('http://localhost:4000/api/getOrder', { params: { id: idOrder } })
-        await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado" })
+        const res1 = await OrderController.getOrder('http://localhost:4000/api/getOrder', { params: { id: idOrder } });
+        await OrderController.updateOrderStatus('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado" });
         notificationSubject.notifyObservers("Se ha rechazado una orden #" + idOrder, res1.data.user_id,  idOrder);
         break;
       default:

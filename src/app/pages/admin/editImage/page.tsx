@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../../backend/firebase/connection"
+import GalPhotoController from "../../../../../backend/controllers/galPhotoController";
 
 const EditImage = () => {
   const [category, setCategory] = useState("");
@@ -21,7 +21,7 @@ const EditImage = () => {
     // Cargar datos de la imagen
     async function getData() {
       const id = localStorage.getItem('imageId');
-      const res = await axios.get('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhoto', { params: { id } });
+      const res = await GalPhotoController.getGalPhoto('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhoto', { params: { id } });
       setCategory(res.data.category);
       setSubCategory(res.data.subCategory);
       setTitle(res.data.name);
@@ -56,16 +56,9 @@ const EditImage = () => {
   }, [file]);
 
   const handleSaveImage = async () => {
-    console.log("Categoría:", category);
-    console.log("Subcategoría:", subCategory);
-    console.log("Título:", title);
-    console.log("Tag:", tag);
-    console.log("Descripción:", description);
-    console.log("¿Público?", isPublic);
-    console.log(data);
     if (file !== undefined) {
       try {
-        const res = await axios.put("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/modifyGalPhoto", {
+        await GalPhotoController.modifyGalPhoto("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/modifyGalPhoto", {
           name: title,
           imageURL: data.img,
           description,
@@ -74,8 +67,6 @@ const EditImage = () => {
           category,
           subCategory,
         });
-
-        console.log(res);
         alert("Se ha subido la imagen a la tienda.");
       } catch (error: any) {
         alert("No se agregó la imagen.");

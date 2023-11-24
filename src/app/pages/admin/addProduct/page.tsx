@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
 import { useEffect } from "react";
 import { storage } from "../../../../../backend/firebase/connection"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import ProductController from "../../../../../backend/controllers/productController";
 
 const AddProduct = () => {
   const [category, setCategory] = useState("");
@@ -45,7 +45,7 @@ const AddProduct = () => {
 
     if (file !== undefined) {
       try {
-        const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/addProduct", {
+        ProductController.addProduct("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/addProduct", {
           name: title,
           price,
           cantStock: quantity,
@@ -55,11 +55,8 @@ const AddProduct = () => {
           category,
           subCategory,
         });
-
-        console.log(res);
         alert("Se ha subido el producto a la tienda.");
       } catch (error: any) {
-        console.log("HOLAAA");
         alert("No se agregó el producto.");
         console.log(error);
       }

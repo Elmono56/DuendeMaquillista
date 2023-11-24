@@ -2,36 +2,27 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
+import SubCatagoryGalController from "../../../../../backend/controllers/subCatagoryGalController";
 
 const AddSubcategory = () => {
   const [mainCategory, setMainCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
-  const [description, setDescription] = useState("");
 
   const handleClean = () => {
     setMainCategory("");
     setSubcategory("");
-    setDescription("");
   };
 
   const handleAddSubcategory = async () => {
-    console.log("Categoría principal:", mainCategory);
-    console.log("Subcategoría:", subcategory);
-    console.log("Descripción:", description);
     try {
-      const res = await axios.post(
-        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createSubCategory",
-        {
-          name: subcategory,
-          description,
-          upperC: mainCategory,
-        }
-      );
+      SubCatagoryGalController.createSubCategory("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createSubCategory", 
+      {
+        name: subcategory,
+        upperC: mainCategory,
+      });
       alert("Subcategoría agregada");
       handleClean();
     } catch (error: any) {
-      console.log(error.response.status);
       if (error.response.status === 400) {
         console.log(error.response.data.ErrorN);
         if (error.response.data.ErrorN === 1) {

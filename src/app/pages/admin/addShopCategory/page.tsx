@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import BasicCard from "@/app/components/BasicCard";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
+import CategoryShopController from "../../../../../backend/controllers/categoryShopController";
 
 const AddShopCategory = () => {
   const [category, setCategory] = useState("");
 
   const handleAddCategory = async () => {
     try {
-      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createShopCategory", {
+      CategoryShopController.createShopCategory("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createShopCategory", {
         name: category,
       });
       alert("Categoría agregada");

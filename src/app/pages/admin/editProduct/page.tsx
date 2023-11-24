@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../../backend/firebase/connection"
+import ProductController from "../../../../../backend/controllers/productController";
 
 const EditProduct = () => {
   const [category, setCategory] = useState("");
@@ -43,7 +43,7 @@ const EditProduct = () => {
   useEffect(() => {
     async function getProduct() {
       let idProduct = localStorage.getItem('productID');
-      const res = await axios.get('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProductById', { params: { id: idProduct } });
+      const res = await ProductController.getProductById('https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProductById', { params: { id: idProduct } });
       const product = res.data;
       setCategory(product.category);
       setSubCategory(product.subCategory);
@@ -57,10 +57,9 @@ const EditProduct = () => {
   }, []);
 
   const handleSaveProduct = async () => {
-    console.log(data);
     if (file !== undefined) {
       try {
-        const res = await axios.put("http://localhost:4000/api/modifyProduct", {
+        await ProductController.modifyProduct("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/modifyProduct", {
           name: title,
           price,
           cantStock: quantity,
@@ -70,8 +69,6 @@ const EditProduct = () => {
           category,
           subCategory,
         });
-
-        console.log(res);
         alert("Se ha subido el producto a la tienda.");
       } catch (error: any) {
         alert("No se agregó el producto.");

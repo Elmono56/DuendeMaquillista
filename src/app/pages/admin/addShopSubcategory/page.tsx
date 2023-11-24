@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
+import SubCategoryShopController from "../../../../../backend/controllers/subCategoryShopController";
 
 const AddShopSubcategory = () => {
   const [mainCategory, setMainCategory] = useState("");
@@ -15,13 +15,10 @@ const AddShopSubcategory = () => {
 
   const handleAddSubcategory = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:4000/api/createShopSubCategory",
-        {
-          name: subcategory,
-          upperC: mainCategory,
-        }
-      );
+      SubCategoryShopController.createShopSubCategory("http://localhost:4000/api/createShopSubCategory", {
+        name: subcategory,
+        upperC: mainCategory,
+      });
       alert("Subcategoría agregada");
       handleClean();
     } catch (error: any) {

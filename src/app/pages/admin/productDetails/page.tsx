@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import UserNavbar from "../../../components/UserNavBar";
-import axios from "axios";
+import AdminNavbar from "@/app/components/AdminNavbar";
+import ProductController from "../../../../../backend/controllers/productController";
 
 const ProductDetails = () => {
   // Suponiendo un precio fijo para el producto. Esto deberías obtenerlo de tus datos.
@@ -25,7 +24,7 @@ const ProductDetails = () => {
   useEffect(() => {
     async function getProduct() {
       let idProduct = localStorage.getItem("productID");
-      const res = await axios.get(
+      const res = await ProductController.getProductById(
         "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProductById",
         { params: { id: idProduct } }
       );
@@ -42,37 +41,9 @@ const ProductDetails = () => {
     getProduct();
   }, []);
 
-  const handleAddToCart = async () => {
-    const newQuantity = quantity - quantityToBuy;
-    const idUser = localStorage.getItem("token");
-    const idProduct = localStorage.getItem("productID");
-    if (newQuantity < 0) {
-      alert("No hay suficientes productos en stock");
-      return;
-    }
-    const res = await axios.post("http://localhost:4000/api/updateShopCart", {
-      user_id: idUser,
-      products: {
-        id: idProduct,
-        name: title,
-        price: price,
-        image: image,
-        quantity: quantityToBuy,
-      },
-    });
-    console.log(res.status);
-    if (res.status !== 400) {
-      await axios.put("http://localhost:4000/api/updateQuantity", {
-        id: idProduct,
-        quantity: quantityToBuy,
-      });
-    }
-    alert("Producto agregado al carrito");
-  };
-
   return (
     <div className="bg-pink-lighter min-h-screen">
-      <UserNavbar />
+      <AdminNavbar />
       <main className="flex justify-center items-center h-screen p-5">
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl transition-all transform hover:scale-105">
           <h1 className="text-center text-2xl py-2 mb-3 border-b-2">
@@ -96,25 +67,7 @@ const ProductDetails = () => {
               <label className="text-gray-700 font-medium">
                 Precio: ${price}
               </label>
-              <div className="flex items-center space-x-2 mt-3">
-                <label className="text-sm font-medium text-gray-700">
-                  Cantidad: {quantity}
-                </label>
-                <input
-                  type="number"
-                  id="cantidad"
-                  className="w-20 h-8 p-1 text-sm border rounded bg-gray-50 focus:border-blue-500"
-                  value={quantityToBuy}
-                  onChange={(e) => setQuantityToBuy(parseInt(e.target.value))}
-                />
-              </div>
             </div>
-          </div>
-
-          <div className="mt-5">
-            <label className="text-lg font-medium text-gray-700 block mb-3">
-              Total: ${total}
-            </label>
           </div>
         </div>
       </main>

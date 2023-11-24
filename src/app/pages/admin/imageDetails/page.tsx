@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
-import axios from "axios";
+import GalPhotoController from "../../../../../backend/controllers/galPhotoController";
 
 const ImageDetails = () => {
   const [image, setImage] = useState({});
@@ -15,10 +14,8 @@ const ImageDetails = () => {
   useEffect(() => {
     async function getData() {
       const id = localStorage.getItem("imageId");
-      const res = await axios.get(
-        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhoto",
-        { params: { id } }
-      );
+      const res = await GalPhotoController.getGalPhoto("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhoto",
+      { params: { id } });
       setName(res.data.name);
       setImage(res.data.imageURL);
       setCategory(res.data.category);

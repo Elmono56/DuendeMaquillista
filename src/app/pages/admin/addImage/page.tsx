@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
-import axios from "axios";
 import { useEffect } from "react";
 import { storage } from "../../../../../backend/firebase/connection"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import GalPhotoController from "../../../../../backend/controllers/galPhotoController";
+
 const AddImage = () => {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
@@ -39,16 +40,10 @@ const AddImage = () => {
     file && uploadFile();
   }, [file]);
   const handleImageUpload = async () => {
-    console.log("Categoría:", category);
-    console.log("Subcategoría:", subCategory);
-    console.log("Título:", title);
-    console.log("Tag:", tag);
-    console.log("Descripción:", description);
-    console.log("¿Público?", isPublic);
-    console.log("Imagen:", data.img);
     if (file !== undefined) {
       try {
-        const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/addGalPhoto", {
+        GalPhotoController.addGalPhoto("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/addGalPhoto",
+        {
           name: title,
           imageURL: data.img,
           description,
@@ -57,8 +52,6 @@ const AddImage = () => {
           category, 
           subCategory,
         });
-
-        console.log(res.data);
         alert("Se ha subido la imagen a la galería.");
       } catch (error: any) {
         alert("No se agregó la imagen.");

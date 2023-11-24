@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import CategoryShopController from "../../../../../backend/controllers/categoryShopController";
+import SubCategoryShopController from "../../../../../backend/controllers/subCategoryShopController";
+import ProductController from "../../../../../backend/controllers/productController";
 
 const Shop = () => {
   // Categorías y subcategorías dinámicas
@@ -26,7 +28,7 @@ const Shop = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get(
+        const res = await CategoryShopController.getShopCategories(
           "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopCategories"
         );
         const categoriesData = res.data;
@@ -34,13 +36,12 @@ const Shop = () => {
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
-            const subRes = await axios.get(
+            const subRes = await SubCategoryShopController.getShopSubCategoriesFromCategory(
               "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopSubCategoriesFromCategory",
               {
                 params: { category: category.name },
               }
             );
-            console.log("Subcategoria: ", subRes);
 
             const subcategories = subRes.data.map(
               (subcategory: { name: string }) => subcategory.name
@@ -51,10 +52,6 @@ const Shop = () => {
             };
           })
         );
-
-        // Imprimir el resultado
-        console.log(formattedCategories);
-
         // Guardar el resultado en el estado
         setCategories(formattedCategories);
       } catch (error) {
@@ -81,29 +78,6 @@ const Shop = () => {
     []
   );
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-
-  // const handleCategoryChange = (categoryName: string) => {
-  //   console.log("Categoría: ", categoryName);
-  //   if (selectedCategories.includes(categoryName)) {
-  //     setSelectedCategories(selectedCategories.filter((name) => name !== categoryName));
-  //   } else {
-  //     setSelectedCategories([...selectedCategories, categoryName]);
-  //   }
-  //   console.log("Primer handle")
-  //   console.log("Categorías: ", selectedCategories);
-  //   console.log("Subcategorías: ", selectedSubcategories);
-  //   setFilteredProducts(filterProducts());
-  // };
-
-  // const handleSubCategoryChange = (subCategoryName: string) => {
-  //   // console.log("Subcategoría: ", subCategoryName);
-  //   if (selectedSubcategories.includes(subCategoryName)) {
-  //     setSelectedSubcategories(selectedSubcategories.filter((name) => name !== subCategoryName));
-  //   } else {
-  //     setSelectedSubcategories([...selectedSubcategories, subCategoryName]);
-  //   }
-  //   setFilteredProducts(filterProducts());
-  // };
 
   // Función para manejar el cambio en la selección de categoría
   const handleCategoryChange = (category: string) => {
@@ -192,9 +166,7 @@ const Shop = () => {
     // Aqui se hace la peticion para obtener los productos
     // y se actualiza el estado de la tienda
     async function getProducts() {
-      const res = await axios.get(
-        "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProducts"
-      );
+      const res = await ProductController.getProducts("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProducts");
       // Actualiza el estado gallery con la matriz de productos
       setGallery(
         res.data.map(
@@ -224,7 +196,7 @@ const Shop = () => {
     const confirm = window.confirm("¿Estás seguro?");
     if (confirm) {
       // Aqui se hace la peticion para eliminar el producto
-      const res = await axios.put(
+      await ProductController.setProductVisible(
         "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/setProductVisible",
         { id, status: false }
       );
