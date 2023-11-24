@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
 import { UserNotificationObserver } from "../../../../../backend/observer/UserNotificationObserver";
 import { storage } from "../../../../../backend/firebase/connection"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import ShopCartController from "../../../../../backend/controllers/shopCartController";
+import OrderController from "../../../../../backend/controllers/orderController";
+import AddressController from "../../../../../backend/controllers/addressController";
 
 const EndPurchase = () => {
   const [file, setFile] = useState<File>();
@@ -54,7 +55,7 @@ const EndPurchase = () => {
     }
     async function getShopCart() {
       try {
-        const res = await axios.get("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
+        const res = await ShopCartController.getShopCart("http://localhost:4000/api/getShopCart", { params: { user_id: idUser } });
         const transformedProducts = res.data.products.map((product: { name: string; price: number; image: string; quantity: number; }) => ({
           productName: product.name,
           productPrice: product.price,
@@ -91,15 +92,15 @@ const EndPurchase = () => {
       return;
     }
     let newAddress = address.split(",").map((str) => str.trim());
-    const res2 = await axios.post("http://localhost:4000/api/createAddress", {
+    await AddressController.createAddress("http://localhost:4000/api/createAddress", {
       userID: idUser,
       province: newAddress[0],
       canton: newAddress[1],
       district: newAddress[2],
       details: newAddress[3]
     });
-    const res3 = await axios.get("http://localhost:4000/api/getAddress", { params: { userID: idUser } });
-    const res = await axios.post("http://localhost:4000/api/createOrder", { 
+    const res3 = await AddressController.getAddress("http://localhost:4000/api/getAddress", { params: { userID: idUser } });
+    const res = await OrderController.createOrder("http://localhost:4000/api/createOrder", { 
         user_id: idUser,
         products: cartItems,
         address: res3.data._id,
@@ -108,8 +109,7 @@ const EndPurchase = () => {
         status: "En Espera"
     }
     );    
-    console.log("Aquí: ", res.data);
-    const res4 = await axios.put("http://localhost:4000/api/changeSCstatus", { user_id: idUser, status: "Procesado" });
+    await ShopCartController.changeSCstatus("http://localhost:4000/api/changeSCstatus", { user_id: idUser, status: "Procesado" });
     alert("Compra realizada con éxito, pronto recibirá su pedido");
     // se crea el observer y lo suscriben al subject (attach)
     const notificationSubject = new NotificationSubject();

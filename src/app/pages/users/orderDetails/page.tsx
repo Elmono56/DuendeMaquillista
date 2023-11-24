@@ -1,7 +1,9 @@
 'use client';
 import React, { useState, useEffect, use } from "react";
 import UserNavbar from "../../../components/UserNavBar";
-import axios from "axios";
+import OrderController from "../../../../../backend/controllers/orderController";
+import UserController from "../../../../../backend/controllers/userController";
+import AddressController from "../../../../../backend/controllers/addressController";
 
 const OrderDetails = () => {
   const [image, setImage] = useState({});
@@ -25,7 +27,7 @@ const OrderDetails = () => {
   useEffect(() => {
     async function getData() {
       const idOrder = localStorage.getItem("idOrder");
-      const response = await axios.get("http://localhost:4000/api/getOrder", { params: { id: idOrder } });
+      const response = await OrderController.getOrder("http://localhost:4000/api/getOrder", { params: { id: idOrder } });
       let costShipping = response.data.pay * 0.05;
       setOrderTotal(response.data.pay);
       setProducts(response.data.products.map((product: { productName: string; productPrice: number; quantity: number; }) => ({
@@ -33,12 +35,12 @@ const OrderDetails = () => {
         quantity: product.quantity,
         price: product.productPrice
       })));
-      const responseUser = await axios.get("http://localhost:4000/api/getUser", { params: { id: response.data.user_id } });
+      const responseUser = await UserController.getUser("http://localhost:4000/api/getUser", { params: { id: response.data.user_id } });
       setCustomer({
         name: responseUser.data.name + " " + responseUser.data.lastName,
         email: responseUser.data.email
       });
-      const responseShipping = await axios.get("http://localhost:4000/api/getAddressById", { params: { id: response.data.address } });
+      const responseShipping = await AddressController.getAddress("http://localhost:4000/api/getAddressById", { params: { id: response.data.address } });
       setShipping({
         address: responseShipping.data.province + ", " + responseShipping.data.canton + ", " + responseShipping.data.district + ", " + responseShipping.data.details,
         method: "Envío estándar",

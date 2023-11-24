@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import UserNavbar from "@/app/components/UserNavBar";
-import axios from "axios";
+import NotificationController from "../../../../../backend/controllers/notificationController";
 
 const Chats = () => {
   const [chats, setChats] = useState([
@@ -19,15 +19,12 @@ const Chats = () => {
     async function fetchData() {
       try {
         const user = localStorage.getItem("token");
-        console.log(user);
-        const res = await axios.get("http://localhost:4000/api/getNotifications", { params: { userId: user } });
-        console.log(res.data[0].timestamp);
+        const res = await NotificationController.getNotifications("http://localhost:4000/api/getNotifications", { params: { userId: user } });
         const transformedChats = res.data.map((chat: { message: string; timestamp: string; }) => ({
           asunto: chat.message,
           fecha: transformDate(chat.timestamp),
         }));
         setChats(transformedChats);
-        console.log(chats);
       } catch (error) {
         // Handle the error here
         console.error(error);

@@ -4,7 +4,9 @@ import UserNavbar from "../../../components/UserNavBar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import CategoryShopController from "../../../../../backend/controllers/categoryShopController";
+import ProductController from "../../../../../backend/controllers/productController";
+import SubCategoryShopController from "../../../../../backend/controllers/subCategoryShopController";
 
 const Shop = () => {
   // Categorías y subcategorías dinámicas
@@ -25,13 +27,13 @@ const Shop = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopCategories");
+        const res = await CategoryShopController.getShopCategories("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopCategories");
         const categoriesData = res.data;
 
         // Mapear las categorías y obtener las subcategorías para cada categoría
         const formattedCategories = await Promise.all(
           categoriesData.map(async (category: { name: string }) => {
-            const subRes = await axios.get(
+            const subRes = await SubCategoryShopController.getShopSubCategoriesFromCategory(
               "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getShopSubCategoriesFromCategory",
               {
                 params: { category: category.name },
@@ -124,7 +126,7 @@ const Shop = () => {
     // Aqui se hace la peticion para obtener los productos
     // y se actualiza el estado de la tienda
     async function getProducts() {
-      const res = await axios.get("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProducts");
+      const res = await ProductController.getProducts("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getProducts");
       // Actualiza el estado gallery con la matriz de productos
       setGallery(res.data.map((product: { _id: string, imageURL: string, name: string, price: string, category: string, subCategory: string }) => ({
         id: product._id,

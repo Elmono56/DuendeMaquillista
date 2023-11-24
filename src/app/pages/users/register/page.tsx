@@ -12,12 +12,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const handleSubmit = () => {
-    console.log("Nombre:", name);
-    console.log("Apellido:", lastName);
-    console.log("Correo:", email);
-    console.log("Contraseña:", password);
-
+  const handleSubmit = async () => {
     let data = {
       name,
       lastName,
@@ -27,7 +22,7 @@ const Register = () => {
       isAdmin: false,
     };
 
-      const res = UserController.register("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createUser", data);
+      const res = await UserController.register("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/createUser", data);
       if(res){
         alert("Usuario registrado.");
       } 

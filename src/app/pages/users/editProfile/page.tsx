@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import UserNavbar from "../../../components/UserNavBar";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import UserController from "../../../../../backend/controllers/userController";
 
@@ -35,7 +34,7 @@ const EditProfile = () => {
   const handleSaveChanges = async () => {
     // se necesita validar primero que la contraseña actual sea correcta
     try {
-      const res = await axios.post("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/login", {
+      const res = await UserController.validateAccess("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/login", {
         email,
         password: currentPassword,
       });
@@ -45,7 +44,7 @@ const EditProfile = () => {
       }
       // si la contraseña es correcta, se procede a actualizar el usuario
       const userId = localStorage.getItem("token");
-      const res2 = await axios.put("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/updateUser", {
+      const res2 = await UserController.updateUser("https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/updateUser", {
         id: userId,
         name: nombre,
         lastName: apellido,

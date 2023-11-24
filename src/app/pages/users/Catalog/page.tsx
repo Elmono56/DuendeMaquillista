@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import CategoryGalController from "../../../../../backend/controllers/categoryGalController";
 import subCatagoryGalController from "../../../../../backend/controllers/subCatagoryGalController";
+import GalPhotoController from "../../../../../backend/controllers/galPhotoController";
 import NotificationButton from "@/app/components/NotificationButton";
 
 const Catalog = () => {
@@ -146,7 +146,7 @@ const Catalog = () => {
 
   useEffect(() => {
     async function getImages() {
-      const res = await axios.get(
+      const res = await GalPhotoController.getGalPhotos(
         "https://us-central1-duendemaquillista-8f457.cloudfunctions.net/api/api/getGalPhotos"
       );
       setGallery(

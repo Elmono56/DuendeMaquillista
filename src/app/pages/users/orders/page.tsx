@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import UserNavbar from "../../../components/UserNavBar";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
+import OrderController from "../../../../../backend/controllers/orderController";
 
 const Orders = () => {
   const [orders, setOrders] = useState([] as Array<{
@@ -15,7 +14,7 @@ const Orders = () => {
   useEffect(() => {
     async function getData() {
       const idUser = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:4000/api/getOrdersById", { params: { user_id: idUser } });
+      const res = await OrderController.getOrdersByUser("http://localhost:4000/api/getOrdersById", { params: { user_id: idUser } });
       setOrders(res.data.map((order: { _id: string; status: string; }) => ({
         id: order._id,
         status: order.status
