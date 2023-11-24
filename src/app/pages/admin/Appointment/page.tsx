@@ -56,7 +56,7 @@ const Shop = () => {
     }
   };
   async function getAppointments() {
-    const res = await axios.get(
+    const res = await CommitmentController.getCommitments(
       "http://localhost:4000/api/getCommitments"
     );
     return res;
