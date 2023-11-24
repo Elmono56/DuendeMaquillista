@@ -60,7 +60,6 @@ router.get("/getOrder", async (req, res) => {
 //change visibility to visible
 router.put("/updateOrderStatus", async (req, res) => {
   await database.connect();
-  console.log(req.body);
   const { id, status } = req.body;
   const order = await orderSchema.findById(id);
   if (order) {
