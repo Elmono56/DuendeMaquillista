@@ -25,7 +25,9 @@ const AddEventEntrega = () => {
       [{ nombre, apellido, contacto, numeroPedido }]
     );
     await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', eventoPedido);
-  };
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <div>
