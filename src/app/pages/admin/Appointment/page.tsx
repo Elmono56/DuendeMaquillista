@@ -5,6 +5,7 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import axios from "axios";
+import CommitmentController from "../../../../../backend/controllers/commitmentController";
 
 const Shop = () => {
   const [categories, setCategories] = useState([
@@ -60,6 +61,11 @@ const Shop = () => {
     );
     return res;
   }
+
+  const handleDelete = async (id: string) => {
+    await CommitmentController.changeVisibility("http://localhost:4000/api/changeVisibility", { id, status: "false" });
+    alert("Se ha eliminado el compromiso");
+  };
 
   return (
     <div>
@@ -130,7 +136,7 @@ const Shop = () => {
                         >
                           <button>Editar</button>
                         </Link>
-                        <button className="block w-full text-left px-2 py-1 text-sm">
+                        <button className="block w-full text-left px-2 py-1 text-sm" onClick={() => handleDelete(commitment.id)}>
                           Eliminar
                         </button>
                       </div>

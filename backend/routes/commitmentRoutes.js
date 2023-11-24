@@ -18,7 +18,7 @@ router.post("/createCommitment", async (req, res) => {
 //get all commitments
 router.get("/getCommitments", async (req, res) => {
     await database.connect();
-    const commitments = await commitmentSchema.find();
+    const commitments = await commitmentSchema.find({ status: "true" });
     if (commitments) {
         res.status(200).json(commitments);
     } else {
