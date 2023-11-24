@@ -4,16 +4,6 @@ const Database = require("../routes/singleton");
 const database = Database.getInstance();
 
 const router = express.Router();
-// //create shopCart
-// router.post("/createShopCart", async (req, res) => {
-//   await database.connect();
-//   const shopCart = shopCartSchema(req.body);
-//   shopCart
-//     .save()
-//     .then((data) => res.json(data))
-//     .catch((error) => res.json({ message: error }));
-// });
-
 router.post("/updateShopCart", async (req, res) => {
   const { user_id, products } = req.body;
 
