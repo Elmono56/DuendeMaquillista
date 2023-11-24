@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
 import { UserNotificationObserver } from "../../../../../backend/observer/UserNotificationObserver";
+import { storage } from "../../../../../backend/firebase/connection"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 const EndPurchase = () => {
-  const [image, setImage] = useState("");
+  const [file, setFile] = useState<File>();
   const router = useRouter();
   const [idUser, setIdUser] = useState("");
+  const [data, setData] = useState({});
   const [cartItems, setCartItems] = useState(
     [] as Array<{
       productName: string;
@@ -21,6 +23,29 @@ const EndPurchase = () => {
       quantity: number;
     }>
   );
+  useEffect(() => {
+    const uploadFile = () => {
+      const storageRef = ref(storage, file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setData((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
+    };
+    file && uploadFile();
+  }, [file]);
 
   useEffect(() => {
     const idUser = localStorage.getItem("token");
@@ -79,9 +104,11 @@ const EndPurchase = () => {
         products: cartItems,
         address: res3.data._id,
         pay: Number(total),
-        voucher: "urlImagen", //aqui va {image} cuando se pueda cargar el comprobante de pago
+        voucher: data.img, //aqui va {image} cuando se pueda cargar el comprobante de pago
         status: "En Espera"
-    });
+    }
+    );    
+    console.log("Aquí: ", res.data);
     const res4 = await axios.put("http://localhost:4000/api/changeSCstatus", { user_id: idUser, status: "Procesado" });
     alert("Compra realizada con éxito, pronto recibirá su pedido");
     // se crea el observer y lo suscriben al subject (attach)
@@ -136,6 +163,7 @@ const EndPurchase = () => {
                 className="w-full p-2 border"
                 type="file"
                 placeholder="Subir archivo"
+                onChange={(e) => {setFile(e.target.files[0]); console.log(e.target.files) }}
               />
             </div>
             <div className="flex justify-between items-center mb-3">

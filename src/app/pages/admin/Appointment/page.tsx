@@ -21,7 +21,7 @@ const Shop = () => {
   // Estado para el menú desplegable
   const [dropdownVisible, setDropdownVisible] = useState(null);
 
-  const toggleDropdown = (idx) => {
+  const toggleDropdown = (idx: any) => {
     if (dropdownVisible === idx) {
       setDropdownVisible(null);
     } else {
@@ -33,9 +33,6 @@ const Shop = () => {
     <div>
       <AdminNavbar />
       <div className="bg-pink-lighter min-h-screen p-6">
-        <h1>
-          <title>Tienda</title>
-        </h1>
         <div className="flex">
           <div
             className="w-1/4 bg-white border rounded-md p-4 overflow-y-auto"
