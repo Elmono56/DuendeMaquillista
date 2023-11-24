@@ -1,19 +1,18 @@
 import axios from "axios";
 import { EventoAgenda } from "../AgendaDecorator/EventoAgenda";
 
+function convertToDateObject(dateString: string): Date {
+  console.log(dateString);
+  const [year, month, day] = dateString.match(/\d+/g)!.map(Number);
+  return new Date(year, month - 1, day);
+}
+
 class CommitmentController {
   async createCommitment(route: string, data: EventoAgenda) {
     const info = data.getInfo();
-    console.log(info);
+    console.log(typeof info.type);
     if (info.type == "Maquillaje") {
-      console.log(info.deadline);
-      const parts = info.deadline.split("-");
-      const year = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Restar 1 porque los meses en JavaScript van de 0 a 11
-      const day = parseInt(parts[2], 10);
-
-      const dateObject = new Date(year, month, day);
-      console.log(dateObject);
+      const dateObject = convertToDateObject(info.deadline);
       let dataFormat = {
         name: info.name,
         type: info.type,
@@ -27,13 +26,7 @@ class CommitmentController {
       const response = await axios.post(route, dataFormat);
       return response;
     } else if (info.type == "Curso/Taller") {
-      const parts = info.deadline.split("-");
-      const year = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Restar 1 porque los meses en JavaScript van de 0 a 11
-      const day = parseInt(parts[2], 10);
-
-      const dateObject = new Date(year, month, day);
-      console.log(dateObject);
+      const dateObject = convertToDateObject(info.deadline);
       let dataFormat = {
         name: info.name,
         type: info.type,
@@ -46,13 +39,7 @@ class CommitmentController {
       const response = await axios.post(route, dataFormat);
       return response;
     } else if (info.type == "Entrega") {
-      const parts = info.deadline.split("-");
-      const year = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Restar 1 porque los meses en JavaScript van de 0 a 11
-      const day = parseInt(parts[2], 10);
-
-      const dateObject = new Date(year, month, day);
-      console.log(dateObject);
+      const dateObject = convertToDateObject(info.deadline);
       let dataFormat = {
         name: info.name,
         type: info.type,
