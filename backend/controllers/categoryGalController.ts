@@ -5,6 +5,13 @@ class CategoryGalController{
       route
     );
     return response;
-  }
+  };
+  async createCategory(route: string, data: any) {
+    const response = await axios.post(
+      route,
+      data
+    );
+    return;
+  };
 }
 export default new CategoryGalController;
