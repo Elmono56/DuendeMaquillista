@@ -4,6 +4,7 @@ import UserNavbar from "../../../components/UserNavBar";
 import axios from "axios";
 
 const OrderDetails = () => {
+  const [image, setImage] = useState({});
   const [customer, setCustomer] = useState({} as {
     name: string;
     email: string;
@@ -43,6 +44,7 @@ const OrderDetails = () => {
         method: "Envío estándar",
         cost: costShipping
       });
+      setImage(response.data.voucher);
     } getData();
   }
   , []);
@@ -110,6 +112,9 @@ const OrderDetails = () => {
         <div className="mb-4 w-1/3 bg-white shadow-md m-2 p-4 rounded text-center">
           <h2 className="text-md font-semibold mb-1">Comprobante de Pago</h2>
           <img src={paymentReceipt} className="w-full h-auto" />
+          <div>
+          <img src={image}/>
+          </div>
         </div>
       </div>
     </div>
