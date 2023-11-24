@@ -77,7 +77,7 @@ const Orders = () => {
         const res = await OrderController.getOrder('http://localhost:4000/api/getOrder', { params: { id: idOrder } });
         const resUser = await UserController.getUser('http://localhost:4000/api/getUser', { params: { id: res.data.user_id } });
         let data = {
-          name: `Pedido #${idOrder}`,
+          name: `Entrega de Pedido`,
           type: "Entrega",
           userDetail: {
             name: resUser.data.name,
