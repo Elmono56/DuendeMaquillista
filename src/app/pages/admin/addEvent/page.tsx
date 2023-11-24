@@ -60,11 +60,72 @@ const AddEvent = () => {
               placeholder="HorarioFinal"
               value={FinalHour}
             />
+
+            <div>
+              <input type="radio" value="Maquillaje" name="gender" /> Maquillaje
+              <input type="radio" value="Curso/Taller" name="gender" /> Curso/Taller
+              <input type="radio" value="Entrega" name="gender" /> Entrega
+            </div>
           </div>
-          <div >
-            <input type="radio" value="Maquillaje" name="gender" /> Maquillaje
-            <input type="radio" value="Curso/Taller" name="gender" /> Curso/Taller
-            <input type="radio" value="Entrega" name="gender" /> Entrega
+          <div> Maquillaje:
+            <input
+              type="text"
+              className="input-global"
+              placeholder="Nombre del cliente"
+            />
+            <input
+              type="text"
+              className="input-global"
+              placeholder="Apellido"
+            />
+            <input
+              type="text"
+              className="input-global"
+              placeholder="Contacto"
+            />
+            <input
+              type="time"
+              className="input-global"
+              placeholder="Hora Inicio"
+            />
+            <input
+              type="time"
+              className="input-global"
+              placeholder="Hora Fin" />
+            <input
+              type="text"
+              className="input-global"
+              placeholder="Descripción" />
+            <input
+              type="text"
+              className="input-global"
+              placeholder="Tipo" />
+            <input
+              type="date"
+              className="input-global"
+              placeholder="Tipo" />
+            <input
+              type="text"
+              className="input-global"
+              placeholder="Asunto" /></div>
+          <div>Curso/Taller:
+            <input
+              type="time"
+              className="input-global"
+              placeholder="Hora Inicio"
+            />
+            <input
+              type="time"
+              className="input-global"
+              placeholder="Hora Fin" />
+            <input
+              type="date"
+              className="input-global"
+              placeholder="Tipo" />
+            <input
+              type="date"
+              className="input-global"
+              placeholder="Tipo" />
           </div>
           <button className="boton-global">Añadir compromiso</button>
         </div>
