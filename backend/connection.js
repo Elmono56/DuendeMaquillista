@@ -19,6 +19,7 @@ const shopCategory = require("./routes/categoryShopRoutes");
 const shopSubCategory = require("./routes/subCategoryShopRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const commitmentRoutes = require("./routes/commitmentRoutes");
+const notificationRoutes = require("./routes/notificationRoute");
 const addressRoutes = require("./routes/addressRoutes");
 const shopCartRoutes = require("./routes/shopCartRoutes");
 const multer = require("multer");
@@ -42,6 +43,7 @@ app.use("/api",orderRoutes);
 app.use("/api",addressRoutes);
 app.use("/api", shopCartRoutes);
 app.use("/api", commitmentRoutes);
+app.use("/api", notificationRoutes);
 //mongodb connection
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

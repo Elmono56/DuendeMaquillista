@@ -5,6 +5,9 @@ import Link from "next/link";
 import UserNavbar from "../../../components/UserNavBar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
+import { UserNotificationObserver } from "../../../../../backend/observer/UserNotificationObserver";
+
 
 const EndPurchase = () => {
   const [image, setImage] = useState("");
@@ -58,6 +61,10 @@ const EndPurchase = () => {
   }, [cartItems]);
 
   const handleEndPurchase = async () => {
+    if (!address) {
+      alert("Debe ingresar una dirección");
+      return;
+    }
     let newAddress = address.split(",").map((str) => str.trim());
     const res2 = await axios.post("http://localhost:4000/api/createAddress", {
       userID: idUser,
@@ -77,6 +84,10 @@ const EndPurchase = () => {
     });
     const res4 = await axios.put("http://localhost:4000/api/changeSCstatus", { user_id: idUser, status: "Procesado" });
     alert("Compra realizada con éxito, pronto recibirá su pedido");
+    // se crea el observer y lo suscriben al subject (attach)
+    const notificationSubject = new NotificationSubject();
+    const observer = new UserNotificationObserver();
+    notificationSubject.attach(observer);
     router.push("/pages/users/Shop");
   };
 
@@ -133,7 +144,7 @@ const EndPurchase = () => {
             </div>
             <div className="mt-6 flex justify-between items-center">
               <span>Total:</span>
-              <span className="font-bold">${total}</span>
+              <span className="font-bold">${total + shipping}</span>
             </div>
             <div className="mt-6 flex justify-center">
               {/* <Link

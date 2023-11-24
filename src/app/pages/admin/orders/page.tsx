@@ -6,6 +6,9 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import BasicCard from "@/app/components/BasicCard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Subject } from "../../../../../backend/observer/Subject";
+import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
+import { UserNotificationObserver } from "../../../../../backend/observer/UserNotificationObserver";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -44,17 +47,21 @@ const Orders = () => {
     let counter = 0;
     while (!check) {
       fechaEntrega.setDate(fechaEntrega.getDate() + 1);
+      console.log(nombreDelDiaSegunFecha(fechaEntrega));
       if (nombreDelDiaSegunFecha(fechaEntrega) == "martes" || nombreDelDiaSegunFecha(fechaEntrega) == "jueves" || nombreDelDiaSegunFecha(fechaEntrega) == "sábado") {
         check = true;
       } else {
         counter++;
-        fechaEntrega.setDate(fechaEntrega.getDate() + 1);
+        // fechaEntrega.setDate(fechaEntrega.getDate() + 1);
       }
     }
     return fechaEntrega;
   };
 
   const handleAction = async (actionType: string, idOrder: string) => {
+    const notificationSubject = new NotificationSubject();
+    const observer = new UserNotificationObserver();
+    notificationSubject.attach(observer);
     switch (actionType) {
       case "details":
         // Aquí se redirige a la página de detalles de la orden
@@ -84,12 +91,17 @@ const Orders = () => {
         await axios.post('http://localhost:4000/api/createCommitment', data)
         await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" })
         // FALTA AGREGAR AL CENTRO DE NOTIFICACIONES
+        // En el lugar donde cambias el estado de las órdenes
+        notificationSubject.notifyObservers("Se ha confirmado una orden #" + idOrder, res.data.user_id,  idOrder);
+        // se debe desuscribir el observer despues de notificar
 
         break;
       case "decline":
         // Aquí se rechaza la orden
         console.log("ID: ", idOrder);
+        const res1 = await axios.get('http://localhost:4000/api/getOrder', { params: { id: idOrder } })
         await axios.put('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Rechazado" })
+        notificationSubject.notifyObservers("Se ha rechazado una orden #" + idOrder, res1.data.user_id,  idOrder);
         break;
       default:
         break;

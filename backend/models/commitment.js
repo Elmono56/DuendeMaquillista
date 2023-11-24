@@ -22,7 +22,7 @@ const commitmentSchema = mongoose.Schema({
     },
     startTime: {
         type: String,
-        required: true
+        required: false
     },
     endTime: {
         type: String,
