@@ -1,6 +1,6 @@
 // UserNotificationObserver.ts
 import { Observer } from './Observer';
-import axios from 'axios';
+import NotificationController from '../controllers/notificationController';
 
 export class UserNotificationObserver implements Observer {
     async notify(message: string, userId: string, orderId: string): Promise<void> {
@@ -9,6 +9,6 @@ export class UserNotificationObserver implements Observer {
         // crear la notificacion en la base de datos
         const fechaActual = Date.now();
         const fecha = new Date(fechaActual);
-        await axios.post('http://localhost:4000/api/createNotification', { message, timestamp: fecha, orderId, userId })
+        await NotificationController.createNotification('http://localhost:4000/api/createNotification', { message, timestamp: fecha, orderId, userId })
     }
 }
