@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
@@ -12,13 +12,38 @@ const Shop = () => {
     { name: "Semana", subcategories: [] },
     { name: "Mes", subcategories: [] },
   ]);
+
   const [gallery, setGallery] = useState(
+
     new Array(20).fill({
-      title: "Título de la imagen",
-      price: "$100.00",
+      id: "1",
+      name: "Título de la imagen",
+      deadline: "$100.00",
     })
   );
+  const transformDate = (date: string): string => {
+    const newDate = new Date(date); // Convertir la cadena a un objeto Date
+    const transformed = newDate.toISOString().split('T')[0]; // Obtener la parte de la fecha y formatearla
 
+    return transformed;
+  };
+  useEffect(() => {
+
+    getAppointments().then((res: any) => {
+      setGallery(res.data.map(
+        (commitment: {
+          _id: string;
+          name: string;
+          deadline: string;
+        }) => ({
+          id: commitment._id,
+          name: commitment.name,
+          deadline: transformDate(commitment.deadline),
+        })
+      ));
+
+    }, []);
+  });
   // Estado para el menú desplegable
   const [dropdownVisible, setDropdownVisible] = useState(null);
 
@@ -29,10 +54,11 @@ const Shop = () => {
       setDropdownVisible(idx);
     }
   };
-  async function getProducts() {
+  async function getAppointments() {
     const res = await axios.get(
       "http://localhost:4000/api/getCommitments"
     );
+    return res;
   }
 
   return (
@@ -87,7 +113,7 @@ const Shop = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              {gallery.map((image, idx) => (
+              {gallery.map((commitment, idx) => (
                 <div key={idx} className="border rounded-md p-4 relative">
                   <div className="absolute top-0 right-0 mt-2 mr-2">
                     <button
@@ -112,9 +138,9 @@ const Shop = () => {
                   </div>
 
                   <div className="flex flex-col items-center justify-between">
-                    <div className="text-gray-700">Asunto</div>
+                    <div className="text-gray-700">{commitment.name}</div>
                     <div className="mt-2 text-center text-gray-800">
-                      19/11/2023
+                      {commitment.deadline}
                     </div>
                     <Link
                       href="/pages/admin/eventDetails"

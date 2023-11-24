@@ -6,7 +6,7 @@ class ProductController{
     }
     async getProductById(route: string, id: any){
         const response = await axios.get(route, id);
-        return response;
+        return response.data;
     }
     async modifyProduct(route: string, data: any){
         const response = await axios.put(route, data);
