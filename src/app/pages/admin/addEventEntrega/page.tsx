@@ -15,19 +15,19 @@ const AddEventEntrega = () => {
   const [contacto, setContacto] = useState("");
 
   const handleEntrega = async () => {
-    try{
-    // Logic to handle the form submission
-    // Example: console.log({ asunto, fecha, nombre, apellido, numeroPedido, contacto });
-    const eventoAgenda = new AgendaConcrete(asunto, fecha, "true");
-    const eventoPedido = new EventoPedido(
-      eventoAgenda,
-      "Entrega",
-      [{ nombre, apellido, contacto, numeroPedido }]
-    );
-    await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', eventoPedido);
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+      const eventoAgenda = new AgendaConcrete(asunto, fecha, "true");
+      const eventoPedido = new EventoPedido(eventoAgenda, "Entrega", [
+        { nombre, apellido, contacto, numeroPedido },
+      ]);
+      await CommitmentController.createCommitment(
+        "http://localhost:4000/api/createCommitment",
+        eventoPedido
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -88,6 +88,6 @@ const AddEventEntrega = () => {
       </div>
     </div>
   );
-}};
+};
 
 export default AddEventEntrega;
