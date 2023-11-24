@@ -1,6 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import { AgendaConcrete } from "../../../../../backend/AgendaDecorator/AgendaConcrete";
+import { EventoMaquillaje } from "../../../../../backend/AgendaDecorator/AgendaTypes";
+import CommitmentController from "../../../../../backend/controllers/commitmentController";
+
 
 const AddEventMaquillaje = () => {
   const [asunto, setAsunto] = useState("");
@@ -13,17 +17,16 @@ const AddEventMaquillaje = () => {
   const [contacto, setContacto] = useState("");
 
   const handleMaquillaje = async () => {
-    // Add logic for form submission here
-    console.log({
-      asunto,
-      fecha,
+    const eventoAgenda = new AgendaConcrete(asunto, fecha, "true");
+    const eventoPedido = new EventoMaquillaje(
+      eventoAgenda,
+      "Maquillaje",
       horaInicial,
       horaFinal,
       descripcion,
-      nombre,
-      apellido,
-      contacto,
-    });
+      [{ nombre, apellido, contacto}]
+    );
+    await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', eventoPedido);
   };
 
   return (
@@ -32,7 +35,7 @@ const AddEventMaquillaje = () => {
       <div className="flex justify-center items-center h-screen">
         <div className="bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[37.6875rem] justify-between">
           <div className="text-2xl text-black font-semibold lg:pb-[20px]">
-            Entrega
+            Maquillaje
           </div>
           <input
             type="text"

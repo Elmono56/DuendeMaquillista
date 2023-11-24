@@ -1,20 +1,19 @@
-import "./EventoAgenda"
+import { EventoAgenda } from "./EventoAgenda"
 
 class AgendaConcrete implements EventoAgenda {
-    name: String;
-    deadLine: Date;
-    status: String;
-    startTime: String;
+    name: string;
+    deadline: string;
+    status: string;
 
-    constructor(pName: String, pDeadLine: Date, pStatus: String, pStartTime: String, ){
+    constructor(pName: string, pDeadLine: string, pStatus: string){
         this.name = pName;
-        this.deadLine = pDeadLine;
+        this.deadline = pDeadLine;
         this.status = pStatus;
-        this.startTime = pStartTime;
     };
     
-    public getInfo(): String {
-        return ("Nombre del evento: " + this.name + " Estado del evento: " + this.status)
+    public getInfo(): Record<string, any> {
+        return {name: this.name, deadLine: this.deadline, status: this.status};
     }
 ;
-  }
+}
+export {AgendaConcrete}

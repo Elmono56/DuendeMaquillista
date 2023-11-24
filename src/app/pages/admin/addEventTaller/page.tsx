@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import { AgendaConcrete } from "../../../../../backend/AgendaDecorator/AgendaConcrete";
+import { EventoTaller } from "../../../../../backend/AgendaDecorator/AgendaTypes";
+import CommitmentController from "../../../../../backend/controllers/commitmentController";
 
 const AddEventTaller = () => {
   const [asunto, setAsunto] = useState("");
@@ -10,8 +13,15 @@ const AddEventTaller = () => {
   const [fecha, setFecha] = useState("");
 
   const handleTaller = async () => {
-    // Logic for handling form submission
-    // Example: console.log({ asunto, fecha, horaInicial, horaFinal, descripcion });
+    const eventoAgenda = new AgendaConcrete(asunto, fecha, "true");
+    const eventoPedido = new EventoTaller(
+      eventoAgenda,
+      "Taller",
+      horaInicial,
+      horaFinal,
+      descripcion,
+    );
+    await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', eventoPedido);
   };
 
   return (
@@ -20,7 +30,7 @@ const AddEventTaller = () => {
       <div className="flex justify-center items-center h-screen">
         <div className="bg-white rounded-lg p-4 flex flex-col items-center justify-center w-[35.625rem] h-[32.6875rem] justify-between">
           <div className="text-2xl text-black font-semibold lg:pb-[20px]">
-            Entrega
+            Curso/Taller
           </div>
           <input
             type="text"

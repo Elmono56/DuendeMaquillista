@@ -1,3 +1,3 @@
-interface EventoAgenda {
-    getInfo():String;
+export interface EventoAgenda {
+    getInfo():Record<string, any>;
   }

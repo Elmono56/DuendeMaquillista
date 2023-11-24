@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/createCommitment", async (req, res) => {
     await database.connect();
     const commitment = commitmentSchema(req.body);
+    console.log(commitment);
     commitment
     .save()
     .then((data) => res.json(data))

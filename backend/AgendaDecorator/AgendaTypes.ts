@@ -1,14 +1,15 @@
 import { AgendaDecorator } from "./AgendaDecorator"
+import { EventoAgenda } from "./EventoAgenda"
 
 class EventoMaquillaje extends AgendaDecorator{
-    private endTime: Date;
-    private address: String;
+    private startTime: String;
+    private endTime: String;
     private description: String;
     private userDetail: Array<any>;
 
-    constructor(pEvento: EventoAgenda, pTipo: String, pAddres: String, pEndTime: Date, pDesc: String, pUserD: Array<any>){
+    constructor(pEvento: EventoAgenda, pTipo: String, pStartTime: String, pEndTime: String, pDesc: String, pUserD: Array<any>){
         super(pEvento,pTipo);
-        this.address = pAddres;
+        this.startTime = pStartTime;
         this.endTime = pEndTime;
         this.description = pDesc;
         this.userDetail = pUserD;
@@ -19,51 +20,65 @@ class EventoMaquillaje extends AgendaDecorator{
         return false;
     }
 
+    public getInfo(): Record<string, any> {
+        const generalInfo = this.evento.getInfo(); // Información general del evento
+        const maquillajeInfo = {
+            type: this.tipo,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            description: this.description,
+            userDetail: this.userDetail,
+        };
+        return { ...generalInfo, ...maquillajeInfo };
+    }
+
     setTipo():void{
-        this.tipo = "Servicio de Maquillaje"
-    }
-
-    getAddres():String{
-        return this.address;
-    }
-
-    setAddres(pAdd: String){
-        this.address = pAdd;
+        this.tipo = "Maquillaje"
     }
 };
 
 
 
 class EventoTaller extends AgendaDecorator{
-    private address: String;
+    private startTime: String;
+    private endTime: String;
+    private description: String;
 
-    constructor(pEvento: EventoAgenda, pTipo: String, pAddres: String){
+    constructor(pEvento: EventoAgenda, pTipo: String, pStartTime: String, pEndTime: String, pDesc: String){
         super(pEvento,pTipo);
-        this.address = pAddres;
         this.setTipo();
+        this.startTime = pStartTime;
+        this.endTime = pEndTime;
+        this.description = pDesc;
     }
 
     public permitirColision():boolean{
         return true;
     }
 
+    public getInfo(): Record<string, any> {
+        const generalInfo = this.evento.getInfo(); // Información general del evento
+        const tallerInfo = {
+            type: this.tipo,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            description: this.description,
+        };
+        return { ...generalInfo, ...tallerInfo };
+    }
+
     setTipo():void{
-        this.tipo = "Taller"
+        this.tipo = "Curso/Taller"
     }
 };
 
 
 class EventoPedido extends AgendaDecorator{
-
-    private description: String; //numPedido
     private userDetail: Array<any>;
-    private deadline: Date;
 
-    constructor(pEvento: EventoAgenda, pTipo: String, pDesc: String, pUserD: Array<any>, pDeadL: Date){
+    constructor(pEvento: EventoAgenda, pTipo: String, pUserD: Array<any>,){
         super(pEvento,pTipo);
-        this.description = pDesc;
         this.userDetail = pUserD;
-        this.deadline = pDeadL;
         this.setTipo();
     }
 
@@ -71,7 +86,18 @@ class EventoPedido extends AgendaDecorator{
         return true;
     }
 
+    public getInfo(): Record<string, any> {
+        const generalInfo = this.evento.getInfo(); // Información general del evento
+        const pedidoInfo = {
+            type: this.tipo,
+            userDetail: this.userDetail,
+        };
+        return { ...generalInfo, ...pedidoInfo };
+    }
+
     setTipo():void{
-        this.tipo = "Alistar Pedido"
+        this.tipo = "Entrega"
     }
 };
+
+export {EventoMaquillaje, EventoTaller, EventoPedido}

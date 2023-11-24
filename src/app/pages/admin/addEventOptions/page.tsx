@@ -2,15 +2,25 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import { useRouter } from "next/navigation";
 
 const AddEventOption = () => {
   const [selectedValue, setSelectedValue] = useState("");
+  const router = useRouter();
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setSelectedValue(event.target.value);
   };
 
-  const handleOption = async () => {};
+  const handleOption = () => {
+    if (selectedValue == "Entrega") {
+      router.push("/pages/admin/addEventEntrega");
+    } else if (selectedValue == "Taller") {
+      router.push("/pages/admin/addEventTaller");
+    } else if (selectedValue == "Maquillaje") {
+      router.push("/pages/admin/addEventMaquillaje");
+    }
+  };
 
   return (
     <div>
@@ -30,7 +40,7 @@ const AddEventOption = () => {
             />
           </label>
           <label>
-            Taller-taller:
+            Curso/Taller:
             <input
               type="radio"
               value="Taller"

@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import { AgendaConcrete } from "../../../../../backend/AgendaDecorator/AgendaConcrete";
+import { EventoPedido } from "../../../../../backend/AgendaDecorator/AgendaTypes";
+import CommitmentController from "../../../../../backend/controllers/commitmentController";
 
 const AddEventEntrega = () => {
   const [asunto, setAsunto] = useState("");
@@ -14,6 +17,13 @@ const AddEventEntrega = () => {
   const handleEntrega = async () => {
     // Logic to handle the form submission
     // Example: console.log({ asunto, fecha, nombre, apellido, numeroPedido, contacto });
+    const eventoAgenda = new AgendaConcrete(asunto, fecha, "true");
+    const eventoPedido = new EventoPedido(
+      eventoAgenda,
+      "Entrega",
+      [{ nombre, apellido, contacto, numeroPedido }]
+    );
+    await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', eventoPedido);
   };
 
   return (

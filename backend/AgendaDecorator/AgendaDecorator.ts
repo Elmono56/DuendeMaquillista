@@ -1,5 +1,4 @@
-import "./EventoAgenda"
-
+import { EventoAgenda } from "./EventoAgenda"
 export abstract class AgendaDecorator implements EventoAgenda {
     protected evento: EventoAgenda
     protected tipo: String;
@@ -8,11 +7,11 @@ export abstract class AgendaDecorator implements EventoAgenda {
         this.evento = pEvento,
         this.tipo = pTipo
     }
-    public getInfo(): String {
+    public getInfo(): Record<string, any> {
         return this.evento.getInfo();
     }
 
     public permitirColision():boolean{
         return true;
     }
-  }
+}
