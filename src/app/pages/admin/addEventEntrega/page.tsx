@@ -88,6 +88,6 @@ const AddEventEntrega = () => {
       </div>
     </div>
   );
-};
+}};
 
 export default AddEventEntrega;
