@@ -16,7 +16,7 @@ const AddEvent = () => {
   // let day = parseInt(parts[0], 10);
   // let month = parseInt(parts[1], 10) - 1; // Se resta 1 al mes, ya que en JavaScript los meses van de 0 a 11
   // let year = parseInt(parts[2], 10);
-  
+
   // let date = new Date(year, month, day);
   // console.log(date);
 
@@ -61,7 +61,11 @@ const AddEvent = () => {
               value={FinalHour}
             />
           </div>
-
+          <div >
+            <input type="radio" value="Maquillaje" name="gender" /> Maquillaje
+            <input type="radio" value="Curso/Taller" name="gender" /> Curso/Taller
+            <input type="radio" value="Entrega" name="gender" /> Entrega
+          </div>
           <button className="boton-global">Añadir compromiso</button>
         </div>
       </div>
