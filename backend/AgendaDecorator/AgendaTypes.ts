@@ -35,11 +35,11 @@ class EventoMaquillaje extends AgendaDecorator{
 
 
 class EventoTaller extends AgendaDecorator{
-    private addres: String;
+    private address: String;
 
     constructor(pEvento: EventoAgenda, pTipo: String, pAddres: String){
         super(pEvento,pTipo);
-        this.addres = pAddres;
+        this.address = pAddres;
         this.setTipo();
     }
 
