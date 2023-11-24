@@ -12,6 +12,9 @@ import CommitmentController from "../../../../../backend/controllers/commitmentC
 import { NotificationSubject } from "../../../../../backend/observer/NotificationSubject";
 import { UserNotificationObserver } from "../../../../../backend/observer/UserNotificationObserver";
 
+import { AgendaConcrete } from "../../../../../backend/AgendaDecorator/AgendaConcrete";
+import { EventoPedido } from "../../../../../backend/AgendaDecorator/AgendaTypes";
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const router = useRouter();
@@ -86,9 +89,13 @@ const Orders = () => {
             orderId: idOrder
           },
           deadline: getDeliveryDate(),
-          status: true
+          status: "true"
         }
-        await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', data);
+        const eventoAgenda = new AgendaConcrete(data.name, data.deadline.toString(), data.status);
+        const eventoPedido = new EventoPedido(eventoAgenda, "Entrega", [
+          { name: resUser.data.name, apellido: resUser.data.lastName, contacto: resUser.data.email, numeroPedido: idOrder },
+        ]);
+        await CommitmentController.createCommitment('http://localhost:4000/api/createCommitment', eventoPedido);
         await OrderController.updateOrderStatus('http://localhost:4000/api/updateOrderStatus', { id: idOrder, status: "Confirmado" });
         // FALTA AGREGAR AL CENTRO DE NOTIFICACIONES
         // En el lugar donde cambias el estado de las órdenes
