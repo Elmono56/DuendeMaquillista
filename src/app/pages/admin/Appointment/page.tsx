@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
+import axios from "axios";
 
 const Shop = () => {
   const [categories, setCategories] = useState([
@@ -28,6 +29,11 @@ const Shop = () => {
       setDropdownVisible(idx);
     }
   };
+  async function getProducts() {
+    const res = await axios.get(
+      "http://localhost:4000/api/getCommitments"
+    );
+  }
 
   return (
     <div>
