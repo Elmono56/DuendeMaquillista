@@ -10,9 +10,8 @@ function convertToDateObject(dateString: string): Date {
 class CommitmentController {
   async createCommitment(route: string, data: EventoAgenda) {
     const info = data.getInfo();
-    console.log(typeof info.type);
     if (info.type == "Maquillaje") {
-      const dateObject = convertToDateObject(info.deadline);
+      const dateObject = convertToDateObject(info.deadLine);
       let dataFormat = {
         name: info.name,
         type: info.type,
@@ -26,7 +25,7 @@ class CommitmentController {
       const response = await axios.post(route, dataFormat);
       return response;
     } else if (info.type == "Curso/Taller") {
-      const dateObject = convertToDateObject(info.deadline);
+      const dateObject = convertToDateObject(info.deadLine);
       let dataFormat = {
         name: info.name,
         type: info.type,
@@ -39,7 +38,7 @@ class CommitmentController {
       const response = await axios.post(route, dataFormat);
       return response;
     } else if (info.type == "Entrega") {
-      const dateObject = convertToDateObject(info.deadline);
+      const dateObject = convertToDateObject(info.deadLine);
       let dataFormat = {
         name: info.name,
         type: info.type,
